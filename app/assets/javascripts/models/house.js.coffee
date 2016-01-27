@@ -1,0 +1,1 @@
+class Lodging.Models.House extends Backbone.Model

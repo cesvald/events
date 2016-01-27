@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2016-01-16
+  end_date: 2016-01-16
+  bed_id: 
+  host_id: 
+  bed_id: 
+
+two:
+  start_date: 2016-01-16
+  end_date: 2016-01-16
+  bed_id: 
+  host_id: 
+  bed_id: 

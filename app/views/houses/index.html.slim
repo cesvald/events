@@ -1,0 +1,23 @@
+h1 Listing houses
+
+table
+  thead
+    tr
+      th Name
+      th Location
+      th
+      th
+      th
+
+  tbody
+    - @houses.each do |house|
+      tr
+        td = house.name
+        td = house.location_id
+        td = link_to 'Show', house
+        td = link_to 'Edit', house
+        td = link_to 'Destroy', house, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New House', new_house_path()

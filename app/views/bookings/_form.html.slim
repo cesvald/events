@@ -1,0 +1,16 @@
+= select_tag :location_id, options_for_select( Location.all.pluck(:name, :id) ), {include_blank: ''}
+= select_tag :house_id, nil, {include_blank: '', disabled: true}
+= select_tag :room_id, nil, {include_blank: '', disabled: true}
+= semantic_form_for @booking do |f|
+  - if @booking.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
+      ul
+        - @booking.errors.full_messages.each do |message|
+          li = message
+  = f.inputs do
+    = f.input :bed, input_html: {include_blank: '', disabled: true}
+    = f.input :host, :as => :string
+    = f.input :start_date
+    = f.input :end_date
+  = f.actions :submit

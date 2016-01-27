@@ -1,0 +1,23 @@
+h1 Listing beds
+
+table
+  thead
+    tr
+      th Number
+      th Room
+      th
+      th
+      th
+
+  tbody
+    - @beds.each do |bed|
+      tr
+        td = bed.number
+        td = bed.room
+        td = link_to 'Show', bed
+        td = link_to 'Edit', edit_bed_path(bed)
+        td = link_to 'Destroy', bed, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Bed', new_bed_path
