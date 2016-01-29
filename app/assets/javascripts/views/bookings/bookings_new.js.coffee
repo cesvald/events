@@ -6,6 +6,28 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		"change #location_id": 'populateHousesList'
 		"change #house_id": 'populateRoomsList'
 		"change #room_id": 'populateBedsList'
+		"click #clean-host-input-btn": 'cleanTokenInput'
+	initialize: ->
+
+
+		location_id = $('#location_id').val()
+		house_id = $('#house_id').val()
+		room_id = $('#room_id').val()
+		if location_id isnt ''
+			@location = @collection.get(location_id)
+			@houses = new Lodging.Collections.Houses()
+			@houses.reset(@location.get('houses'))
+
+			if house_id isnt ''
+				@house = @houses.get(house_id)
+				@rooms = new Lodging.Collections.Rooms()
+				@rooms.reset(@house.get('rooms'))
+			if room_id isnt ''
+				@room = @rooms.get($('#room_id').val())
+				@beds = new Lodging.Collections.Beds()
+				@beds.reset(@room.get('beds'))
+
+
 
 	populateHousesList: ->
 		location_id = $('#location_id').val()
@@ -57,13 +79,14 @@ class Lodging.Views.BookingsNew extends Backbone.View
 			$('#booking_bed_id').trigger('change')
 			@room = @rooms.get($('#room_id').val())
 			@beds = new Lodging.Collections.Beds()
-			console.log(@room)
 			@beds.reset(@room.get('beds'))
 			@beds.each(@appendBedOption)
 
 	appendBedOption: (bed) ->
-		console.log(bed)
 		view = new Lodging.Views.BedsOption(model: bed)
 		$('#booking_bed_id').append(view.render().el)
 
+	cleanTokenInput: ->
+		$('#token-input-booking_host_id').val('')
+		$('#booking_host_id').val('')
 

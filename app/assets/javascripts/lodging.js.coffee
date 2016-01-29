@@ -5,7 +5,13 @@ window.Lodging =
   Routers: {}
   initialize: ->
   	new Lodging.Routers.Bookings()
+  	Backbone.history.stop()
   	Backbone.history.start( pushState: true )
 
+ready = ->
+	Lodging.initialize()
+
 $(document).ready ->
-  Lodging.initialize()
+  ready()
+
+$(document).on('page:load', ready)

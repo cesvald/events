@@ -1,16 +1,42 @@
-= select_tag :location_id, options_for_select( Location.all.pluck(:name, :id) ), {include_blank: ''}
-= select_tag :house_id, nil, {include_blank: '', disabled: true}
-= select_tag :room_id, nil, {include_blank: '', disabled: true}
-= semantic_form_for @booking do |f|
-  - if @booking.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@booking.errors.count, "error")} prohibited this booking from being saved:"
-      ul
-        - @booking.errors.full_messages.each do |message|
-          li = message
-  = f.inputs do
-    = f.input :bed, input_html: {include_blank: '', disabled: true}
-    = f.input :host, :as => :string
-    = f.input :start_date
-    = f.input :end_date
-  = f.actions :submit
+= form_for @booking, html: { class: "form form-horizontal booking" } do |f|
+  = render "layouts/error_messages", :target => @booking
+  .form-group
+    = f.label :location_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+        = f.select_tag :location_id, options_for_select(Location.pluck(:name, :id), @booking.bed ? @booking.bed.room.house.location.id : nil), {:include_blank => true, :class => 'form-control'}
+    = f.error_span(:location_id)
+  .form-group
+    = f.label :house_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.select_tag :house_id, options_for_select(House.where(location: @booking.bed.room.house.location).pluck(:name, :id), @booking.bed.room.house.id), {:include_blank => true, :class => 'form-control'}
+    = f.error_span(:house_id)
+  .form-group
+    = f.label :room_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.select_tag :room_id, options_for_select(Room.where(house: @booking.bed.room.house).pluck(:name, :id), @booking.bed.room.id),{:include_blank => true, :class => 'form-control'}
+    = f.error_span(:room_id)
+  .form-group
+    = f.label :bed_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.select :bed_id, options_for_select(Bed.where(room: @booking.bed.room).pluck(:number, :id)), {}, @booking.bed ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+    = f.error_span(:bed_id)
+  .form-group
+    = f.label :host_id, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :host_id, {:class => 'form-control', :data => {:name => @booking.host.name, :id => @booking.host.id}}
+    = f.error_span(:host_id)
+  .form-group
+    = f.label :start_date, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :start_date, :class => 'form-control'
+    = f.error_span(:start_date)
+  .form-group
+    = f.label :end_date, :class => 'control-label col-lg-2'
+    .col-lg-10
+      = f.text_field :end_date, :class => 'form-control'
+    = f.error_span(:end_date)
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = f.submit nil, :class => 'btn btn-primary'
+      '
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), bookings_path, :class => 'btn'

@@ -19,10 +19,15 @@ gem 'draper'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem "therubyracer"
+gem "less-rails" 
+gem 'twitter-bootstrap-rails'
+gem "bootstrap_flash_messages"
 
 # HTML manipulation and formatting
 gem 'formtastic'
+gem 'formtastic-bootstrap'
+
 #paginator
 gem 'kaminari'
 

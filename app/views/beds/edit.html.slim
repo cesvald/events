@@ -1,8 +1,4 @@
-h1 Editing bed
-
-== render 'form'
-
-= link_to 'Show', @bed
-'|
-= link_to 'Back', beds_path
-
+- model_class = Bed
+.page-header
+  h1=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
+= render :partial => "form"
