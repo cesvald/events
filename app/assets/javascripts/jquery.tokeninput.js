@@ -495,7 +495,9 @@ $.TokenList = function (input, url_or_data, settings) {
 
     // Add a token to the token list based on user input
     function add_token (item) {
-        if($.isFunction(settings.addToken)){
+        var callback = settings.onAdd;
+
+        if(settings.uniqueSelection) {
             var result = 'hide_dropdown'
             if(typeof settings.onBeforeAdd !== 'undefined') result = settings.onBeforeAdd.call(hidden_input, item);
             if(result === 'hide_dropdown') {
@@ -507,44 +509,46 @@ $.TokenList = function (input, url_or_data, settings) {
             }
             var token = insert_token(item);
             select_token(token);
-            settings.addToken.call(hidden_input, item);
-            return false;
+            input_box.val(settings.selectionFormat(item))
+            input_box.addClass('token-occupied')
         }
-        var callback = settings.onAdd;
 
-        // See if the token already exists and select it if we don't want duplicates
-        if(token_count > 0 && settings.preventDuplicates) {
-            var found_existing_token = null;
-            token_list.children().each(function () {
-                var existing_token = $(this);
-                var existing_data = $.data(existing_token.get(0), "tokeninput");
-                if(existing_data && existing_data.id === item.id) {
-                    found_existing_token = existing_token;
-                    return false;
+        else {
+            // See if the token already exists and select it if we don't want duplicates
+            if(token_count > 0 && settings.preventDuplicates) {
+                var found_existing_token = null;
+                token_list.children().each(function () {
+                    var existing_token = $(this);
+                    var existing_data = $.data(existing_token.get(0), "tokeninput");
+                    if(existing_data && existing_data.id === item.id) {
+                        found_existing_token = existing_token;
+                        return false;
+                    }
+                });
+
+                if(found_existing_token) {
+                    select_token(found_existing_token);
+                    input_token.insertAfter(found_existing_token);
+                    input_box.focus();
+                    return;
                 }
-            });
-
-            if(found_existing_token) {
-                select_token(found_existing_token);
-                input_token.insertAfter(found_existing_token);
-                input_box.focus();
-                return;
             }
+
+            // Insert the new tokens
+            if(settings.tokenLimit == null || token_count < settings.tokenLimit) {
+                insert_token(item);
+                checkTokenLimit();
+            }
+
+            // Clear input box
+            input_box.val("");
+
+            // Don't show the help dropdown, they've got the idea
+            hide_dropdown();
+
+            // Execute the onAdd callback if defined
         }
 
-        // Insert the new tokens
-        if(settings.tokenLimit == null || token_count < settings.tokenLimit) {
-            insert_token(item);
-            checkTokenLimit();
-        }
-
-        // Clear input box
-        input_box.val("");
-
-        // Don't show the help dropdown, they've got the idea
-        hide_dropdown();
-
-        // Execute the onAdd callback if defined
         if($.isFunction(callback)) {
             callback.call(hidden_input,item);
         }
@@ -796,7 +800,8 @@ $.TokenList = function (input, url_or_data, settings) {
     // than settings.minChars
     function do_search() {
         var query = input_box.val().toLowerCase();
-        if(query && query.length) {
+        var available = !input_box.hasClass('token-occupied')
+        if(query && query.length && available) {
             if(selected_token) {
                 deselect_token($(selected_token), POSITION.AFTER);
             }
@@ -879,11 +884,24 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function run_insert(token_not_found) {
+        var params = ''
+        if(token_not_found.indexOf('@') != -1){
+            params = 'guest[email]=' + token_not_found
+        }
+        else if (token_not_found.indexOf(' ') != -1){
+            var names = token_not_found.split(' ')
+            params = 'guest[name]=' + names[0] + '&guest[surname]=' + names[1]
+        }
+        else{
+            params = 'guest[name]=' + token_not_found   
+        }
+        window.location.href = settings.insertUrl + '?' + params
+        return false
         if($.isFunction(settings.onBeforeInsert)) {
             result = settings.onBeforeInsert.call(hidden_input, token_not_found);
             if(result === false) return false;
         }
-        input_token.startLoading();
+        //input_token.startLoading();
         var ajax_params = {};
         ajax_params.data = {};
         ajax_params.url = settings.insertUrl;
@@ -894,7 +912,7 @@ $.TokenList = function (input, url_or_data, settings) {
             ajax_params.dataType = "jsonp";
         }
         ajax_params.success = function(item) {
-            input_token.endLoading();
+            //input_token.endLoading();
             input_box.val("");
             hide_dropdown();
             add_token(item);

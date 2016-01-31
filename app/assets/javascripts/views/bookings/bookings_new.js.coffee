@@ -6,10 +6,12 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		"change #location_id": 'populateHousesList'
 		"change #house_id": 'populateRoomsList'
 		"change #room_id": 'populateBedsList'
-		"click #clean-host-input-btn": 'cleanTokenInput'
+		"click #clean-guest-input-btn": 'cleanTokenInput'
+		"click .fa-minus-square-o": 'closeCalendar'
+		"click .fa-plus-square-o": 'openCalendar'
+		"click .token-occupied": 'blurTokenInput'
+
 	initialize: ->
-
-
 		location_id = $('#location_id').val()
 		house_id = $('#house_id').val()
 		room_id = $('#room_id').val()
@@ -87,6 +89,19 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		$('#booking_bed_id').append(view.render().el)
 
 	cleanTokenInput: ->
-		$('#token-input-booking_host_id').val('')
-		$('#booking_host_id').val('')
+		$('#token-input-booking_guest_id').removeClass('token-occupied')
+		$('#token-input-booking_guest_id').val('')
+		$('#token-input-booking_guest_id').focus()
+		$('#booking_guest_id').val('')
 
+	closeCalendar: (event) ->
+		$(event.target).parent().find('.calendar-wrapper:first').hide()
+		$(event.target).removeClass('fa-minus-square-o').addClass('fa-plus-square-o')
+
+	openCalendar: ->
+		$(event.target).parent().find('.calendar-wrapper:first').show()
+		$(event.target).removeClass('fa-plus-square-o').addClass('fa-minus-square-o')
+
+	blurTokenInput: (event) ->
+		$(event.target).blur()
+		$(event.target).blur()

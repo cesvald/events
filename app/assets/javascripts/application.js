@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require bootstrap
+//= require bootstrap-datepicker
 //= require underscore
 //= require backbone
 //= require lodging

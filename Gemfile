@@ -22,6 +22,7 @@ gem 'sass-rails', '~> 5.0'
 gem "therubyracer"
 gem "less-rails" 
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap-datepicker-rails'
 gem "bootstrap_flash_messages"
 
 # HTML manipulation and formatting

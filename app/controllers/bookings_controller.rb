@@ -20,8 +20,8 @@ class BookingsController < ApplicationController
 				@bookings = Booking.all
 			end
 
-			if not booking_params[:host_id].blank?
-				@bookings = @bookings.by_host(booking_params[:host_id])
+			if not booking_params[:guest_id].blank?
+				@bookings = @bookings.by_guest(booking_params[:guest_id])
 			end
 
 			if (not booking_params[:start_date].blank?) && booking_params[:end_date].blank?
@@ -46,7 +46,7 @@ class BookingsController < ApplicationController
   private
 
     def booking_params
-      params.require(:booking).permit(:start_date, :end_date, :bed_id, :host_id)
+      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id)
     end
 
     def search_params

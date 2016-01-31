@@ -35,7 +35,7 @@ SET default_with_oids = false;
 
 CREATE TABLE beds (
     id integer NOT NULL,
-    number integer,
+    number integer NOT NULL,
     room_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -62,37 +62,25 @@ ALTER SEQUENCE beds_id_seq OWNED BY beds.id;
 
 
 --
--- Name: booking; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE booking (
-    host_id integer NOT NULL,
-    bed_id integer NOT NULL,
-    start_date date NOT NULL,
-    end_date date
-);
-
-
---
 -- Name: bookings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE bookings (
-    id integer NOT NULL,
+    "[:bed_id, :guest_id]" integer NOT NULL,
     start_date date NOT NULL,
     end_date date,
-    bed_id integer,
-    host_id integer,
+    bed_id integer NOT NULL,
+    guest_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
 
 
 --
--- Name: bookings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: bookings_[:bed_id, :guest_id]_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE bookings_id_seq
+CREATE SEQUENCE "bookings_[:bed_id, :guest_id]_seq"
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -101,29 +89,31 @@ CREATE SEQUENCE bookings_id_seq
 
 
 --
--- Name: bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: bookings_[:bed_id, :guest_id]_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE bookings_id_seq OWNED BY bookings.id;
+ALTER SEQUENCE "bookings_[:bed_id, :guest_id]_seq" OWNED BY bookings."[:bed_id, :guest_id]";
 
 
 --
--- Name: hosts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: guests; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE hosts (
+CREATE TABLE guests (
     id integer NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
+    surname character varying NOT NULL,
+    email character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
 
 
 --
--- Name: hosts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: guests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE hosts_id_seq
+CREATE SEQUENCE guests_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -132,10 +122,10 @@ CREATE SEQUENCE hosts_id_seq
 
 
 --
--- Name: hosts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: guests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE hosts_id_seq OWNED BY hosts.id;
+ALTER SEQUENCE guests_id_seq OWNED BY guests.id;
 
 
 --
@@ -144,7 +134,7 @@ ALTER SEQUENCE hosts_id_seq OWNED BY hosts.id;
 
 CREATE TABLE houses (
     id integer NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -176,7 +166,7 @@ ALTER SEQUENCE houses_id_seq OWNED BY houses.id;
 
 CREATE TABLE locations (
     id integer NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -207,7 +197,7 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 CREATE TABLE rooms (
     id integer NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     house_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -285,17 +275,17 @@ ALTER TABLE ONLY beds ALTER COLUMN id SET DEFAULT nextval('beds_id_seq'::regclas
 
 
 --
+-- Name: [:bed_id, :guest_id]; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bookings ALTER COLUMN "[:bed_id, :guest_id]" SET DEFAULT nextval('"bookings_[:bed_id, :guest_id]_seq"'::regclass);
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY bookings ALTER COLUMN id SET DEFAULT nextval('bookings_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY hosts ALTER COLUMN id SET DEFAULT nextval('hosts_id_seq'::regclass);
+ALTER TABLE ONLY guests ALTER COLUMN id SET DEFAULT nextval('guests_id_seq'::regclass);
 
 
 --
@@ -339,15 +329,15 @@ ALTER TABLE ONLY beds
 --
 
 ALTER TABLE ONLY bookings
-    ADD CONSTRAINT bookings_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT bookings_pkey PRIMARY KEY ("[:bed_id, :guest_id]");
 
 
 --
--- Name: hosts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: guests_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY hosts
-    ADD CONSTRAINT hosts_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY guests
+    ADD CONSTRAINT guests_pkey PRIMARY KEY (id);
 
 
 --
@@ -383,52 +373,10 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: fk__booking_bed_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX fk__booking_bed_id ON booking USING btree (bed_id);
-
-
---
--- Name: fk__booking_host_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX fk__booking_host_id ON booking USING btree (host_id);
-
-
---
 -- Name: index_beds_on_room_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_beds_on_room_id ON beds USING btree (room_id);
-
-
---
--- Name: index_booking_on_bed_id_and_host_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_booking_on_bed_id_and_host_id ON booking USING btree (bed_id, host_id);
-
-
---
--- Name: index_booking_on_end_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_booking_on_end_date ON booking USING btree (end_date);
-
-
---
--- Name: index_booking_on_host_id_and_bed_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_booking_on_host_id_and_bed_id ON booking USING btree (host_id, bed_id);
-
-
---
--- Name: index_booking_on_start_date; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_booking_on_start_date ON booking USING btree (start_date);
 
 
 --
@@ -439,10 +387,10 @@ CREATE INDEX index_bookings_on_bed_id ON bookings USING btree (bed_id);
 
 
 --
--- Name: index_bookings_on_host_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_bookings_on_guest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_bookings_on_host_id ON bookings USING btree (host_id);
+CREATE INDEX index_bookings_on_guest_id ON bookings USING btree (guest_id);
 
 
 --
@@ -496,22 +444,6 @@ ALTER TABLE ONLY beds
 
 
 --
--- Name: fk_booking_bed_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY booking
-    ADD CONSTRAINT fk_booking_bed_id FOREIGN KEY (bed_id) REFERENCES beds(id);
-
-
---
--- Name: fk_booking_host_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY booking
-    ADD CONSTRAINT fk_booking_host_id FOREIGN KEY (host_id) REFERENCES hosts(id);
-
-
---
 -- Name: fk_bookings_bed_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -520,11 +452,11 @@ ALTER TABLE ONLY bookings
 
 
 --
--- Name: fk_bookings_host_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_bookings_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY bookings
-    ADD CONSTRAINT fk_bookings_host_id FOREIGN KEY (host_id) REFERENCES hosts(id);
+    ADD CONSTRAINT fk_bookings_guest_id FOREIGN KEY (guest_id) REFERENCES guests(id);
 
 
 --
@@ -560,8 +492,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160117035019');
 INSERT INTO schema_migrations (version) VALUES ('20160117035205');
 
 INSERT INTO schema_migrations (version) VALUES ('20160117035235');
-
-INSERT INTO schema_migrations (version) VALUES ('20160117041414');
 
 INSERT INTO schema_migrations (version) VALUES ('20160117042101');
 

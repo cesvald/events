@@ -1,19 +1,23 @@
 - model_class = Bed
 .page-header
   h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
-
-= form_tag beds_path, {class: "form form-horizontal", method: 'get'} do
+  
+= form_tag beds_path, {class: "form form-inline", method: 'get'} do
   .form-group
-    = label_tag :start_date, "Start Date", :class => 'control-label col-lg-2' 
-    .col-lg-10
-      = text_field_tag :start_date, params[:start_date], {:class => 'form-control'}
+    .row
+      .col-lg-8
+        = label_tag :start_date, "Start Date", :class => 'control-label' 
+    = text_field_tag :start_date, params[:start_date], {:class => 'form-control datepicker start-datepicker', :data => {"end-datepicker": "#end_date"}, :readonly => 'readonly'}
   .form-group
-    = label_tag :end_date, "End Date", :class => 'control-label col-lg-2' 
-    .col-lg-10
-      = text_field_tag :end_date, params[:end_date], {:class => 'form-control'}
+    .row
+      .col-lg-8
+        = label_tag :end_date, "End Date", :class => 'control-label'
+    = text_field_tag :end_date, params[:end_date], {:class => 'form-control datepicker', :readonly => 'readonly'}
   .form-group
-    .col-lg-offset-2.col-lg-10
-      = submit_tag 'Search', :class => 'btn btn-primary'
+    .row
+      .col-lg-6
+        span.invisible action
+    = submit_tag 'Search availability', :class => 'btn btn-primary'
 
 table.table.table-striped
   thead
@@ -32,7 +36,5 @@ table.table.table-striped
         td= bed.number
         td
           = link_to t('.book', :default => t("helpers.links.book")), new_booking_path(:location_id => bed.room.house.location.id, :house_id => bed.room.house.id, :room_id => bed.room.id, :booking => {:bed_id => bed.id}), :class => 'btn btn-default btn-xs'
-          '
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), bed_path(bed), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")), new_bed_path, :class => 'btn btn-primary'

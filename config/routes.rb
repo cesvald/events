@@ -2,9 +2,13 @@ Rails.application.routes.draw do
   resources :bookings
   resources :beds
   resources :rooms
-  resources :locations
+  resources :locations do
+    collection do
+      get 'calendar'
+    end
+  end
   resources :houses
-  resources :hosts
+  resources :guests
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

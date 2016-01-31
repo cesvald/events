@@ -1,0 +1,20 @@
+- model_class = Guest
+.page-header
+  h1=t '.title', :default => model_class.model_name.human.titleize
+
+p
+  strong= model_class.human_attribute_name(:name) + ':'
+  br
+  = @guest.name
+p
+  strong= model_class.human_attribute_name(:surname) + ':'
+  br
+  = @guest.surname
+p
+  strong= model_class.human_attribute_name(:email) + ':'
+  br
+  = @guest.email
+
+= link_to t('.back', :default => t("helpers.links.back")), guests_path, :class => 'btn btn-default'
+'
+= link_to t('.edit', :default => t("helpers.links.edit")), edit_guest_path(@guest), :class => 'btn btn-default'

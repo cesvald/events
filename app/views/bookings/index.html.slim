@@ -10,7 +10,7 @@ table.table.table-striped
       th= "House"
       th= "Room"
       th= model_class.human_attribute_name(:bed_id)
-      th= model_class.human_attribute_name(:host_id)
+      th= model_class.human_attribute_name(:guest_id)
       th= model_class.human_attribute_name(:start_date)
       th= model_class.human_attribute_name(:end_date)
       th=t '.actions', :default => t("helpers.actions")
@@ -21,7 +21,7 @@ table.table.table-striped
         td= booking.bed.room.house.name
         td= booking.bed.room.name
         td= booking.bed.number
-        td= booking.host.name
+        td= link_to "#{booking.guest.name} #{booking.guest.surname}", guest_path(booking.guest)
         td= booking.start_date
         td= booking.end_date
         td

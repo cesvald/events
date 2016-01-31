@@ -15,9 +15,9 @@ p
   br
   = @booking.bed_id
 p
-  strong= model_class.human_attribute_name(:host_id) + ':'
+  strong= model_class.human_attribute_name(:guest_id) + ':'
   br
-  = @booking.host_id
+  = @booking.guest_id
 
 = link_to t('.back', :default => t("helpers.links.back")), bookings_path, :class => 'btn btn-default'
 '

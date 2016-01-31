@@ -30,3 +30,32 @@
 //
 // Example:
 // @link-color: #ff0000;
+
+@media (min-width: 768px) {
+  .form-inline .form-group {
+    margin: 10px 0px
+  }
+  
+  .form-inline .control-label {
+  	margin-right: 5px;
+  	margin-left: 10px
+  }
+	
+	.form-inline .form-control {
+  	min-width: 115px
+  }
+}
+
+.form-control[readonly] {
+  cursor: auto;
+  background-color: #FFF;
+  opacity: 1;
+}
+
+.invisible {
+	visibility: hidden
+}
+
+.form-control.token-occupied {
+	background-color: #CEEBE5
+}

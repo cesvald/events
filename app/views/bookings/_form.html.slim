@@ -1,42 +1,54 @@
-= form_for @booking, html: { class: "form form-horizontal booking" } do |f|
+= form_for @booking, html: { class: "form form-inline booking" } do |f|
   = render "layouts/error_messages", :target => @booking
   .form-group
-    = f.label :location_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-        = f.select_tag :location_id, options_for_select(Location.pluck(:name, :id), @booking.bed ? @booking.bed.room.house.location.id : nil), {:include_blank => true, :class => 'form-control'}
+    .row
+      .col-lg-2
+        = f.label :location_id, :class => 'control-label'
+    = f.select_tag :location_id, options_for_select(Location.pluck(:name, :id), @booking.bed ? @booking.bed.room.house.location.id : nil), {:include_blank => true, :class => 'form-control'}
     = f.error_span(:location_id)
   .form-group
-    = f.label :house_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.select_tag :house_id, options_for_select(House.where(location: @booking.bed.room.house.location).pluck(:name, :id), @booking.bed.room.house.id), {:include_blank => true, :class => 'form-control'}
+    .row
+      .col-lg-2
+        = f.label :house_id, :class => 'control-label'
+    = f.select_tag :house_id, options_for_select(House.where(location: @booking.bed.room.house.location).pluck(:name, :id), @booking.bed.room.house.id), {:include_blank => true, :class => 'form-control'}
     = f.error_span(:house_id)
   .form-group
-    = f.label :room_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.select_tag :room_id, options_for_select(Room.where(house: @booking.bed.room.house).pluck(:name, :id), @booking.bed.room.id),{:include_blank => true, :class => 'form-control'}
+    .row
+      .col-lg-2
+        = f.label :room_id, :class => 'control-label'
+    = f.select_tag :room_id, options_for_select(Room.where(house: @booking.bed.room.house).pluck(:name, :id), @booking.bed.room.id),{:include_blank => true, :class => 'form-control'}
     = f.error_span(:room_id)
   .form-group
-    = f.label :bed_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.select :bed_id, options_for_select(Bed.where(room: @booking.bed.room).pluck(:number, :id)), {}, @booking.bed ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+    .row
+      .col-lg-2
+        = f.label :bed_id, :class => 'control-label'
+    = f.select :bed_id, options_for_select(Bed.where(room: @booking.bed.room).pluck(:number, :id)), {}, @booking.bed ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
     = f.error_span(:bed_id)
   .form-group
-    = f.label :host_id, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :host_id, {:class => 'form-control', :data => {:name => @booking.host.name, :id => @booking.host.id}}
-    = f.error_span(:host_id)
+    .row
+      .col-lg-2
+        = f.label :guest_id, :class => 'control-label'
+    .input-group
+      = f.text_field :guest_id, {:class => 'form-control', :data => {:guest => @booking.guest}}
+      span#clean-guest-input-btn.input-group-btn
+        button.btn.btn-default[type="button"] X
+      = f.error_span(:guest_id)
   .form-group
-    = f.label :start_date, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :start_date, :class => 'form-control'
+    .row
+      .col-lg-8
+        = f.label :start_date, :class => 'control-label'
+    = f.text_field :start_date, {:class => 'form-control datepicker start-datepicker', :readonly => 'readonly', :data => {"end-datepicker": "#booking_end_date"}}
     = f.error_span(:start_date)
   .form-group
-    = f.label :end_date, :class => 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :end_date, :class => 'form-control'
+    .row
+      .col-lg-6
+        = f.label :end_date, :class => 'control-label'
+    = f.text_field :end_date, {:class => 'form-control datepicker', :readonly => 'readonly'}
     = f.error_span(:end_date)
   .form-group
-    .col-lg-offset-2.col-lg-10
-      = f.submit nil, :class => 'btn btn-primary'
-      '
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), bookings_path, :class => 'btn'
+    .row
+      .col-lg-6
+        span.invisible action
+    = f.submit nil, :class => 'btn btn-primary'
+    '
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), bookings_path, :class => 'btn'

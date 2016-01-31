@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Lodging</title>
-  <%= include_gon %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -18,7 +17,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'EVD Hosting', root_path, class: 'navbar-brand' %>
+      <%= link_to 'EVD Guesting', root_path, class: 'navbar-brand' %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -28,7 +27,13 @@
         	<%= link_to 'Bookings', bookings_path %>
         </li>
         <li>
-        	<%= link_to 'Locations', locations_path %>
+        	<%= link_to 'Beds', beds_path %>
+        </li>
+        <li>
+          <%= link_to 'Guests', guests_path %>
+        </li>
+        <li>
+          <%= link_to 'Calendar', calendar_locations_path(date: {year: Time.now.year, month: Time.now.month}) %>
         </li>
       </ul>
     </div>
@@ -36,6 +41,6 @@
 </nav>
 <%= render partial: 'layouts/flash', locals: { flash: flash } unless flash.empty? %>
 <%= yield %>
-
+<%= include_gon %>
 </body>
 </html>

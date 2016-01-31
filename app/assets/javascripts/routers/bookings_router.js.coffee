@@ -3,16 +3,40 @@ class Lodging.Routers.Bookings extends Backbone.Router
 		"*actions": 'new'
 
 	initialize: ->
+		self = @
+
 		@locations = new Lodging.Collections.Locations()
-		@locations.reset( gon.locations )
-		$('#booking_host_id').tokenInput('/hosts.json', {
-			crossDomain: false,
-			addToken: (item) ->
-				$('#token-input-booking_host_id').val(item.name)
+		if typeof gon isnt 'undefined'
+			@locations.reset( gon.locations )
+
+		
+		$('.tokenizer-field').each ->
+			$(this).tokenizeInput()
+
+		if typeof $('#booking_guest_id').data('guest') isnt 'undefined' && $('#booking_guest_id').data('guest') isnt ''
+			guest = $('#booking_guest_id').data('guest')
+			$('#token-input-booking_guest_id').val(guest.name + " " + guest.surname + " (" + guest.email + ")")
+			$('#token-input-booking_guest_id').addClass('token-occupied')
+			$('#booking_guest_id').val($('#booking_guest_id').data('id'))
+
+		$('.datepicker').datepicker({
+	    format: 'yyyy-mm-dd'
 		})
-		if $('#booking_host_id').data('name') isnt ''
-			$('#token-input-booking_host_id').val($('#booking_host_id').data('name'))
-			$('#booking_host_id').val($('#booking_host_id').data('id'))
+
+		$('.start-datepicker').each( -> 
+			self.updateEndDate($(this)) if this.val isnt ''
+		)
+			
+
+		$('.start-datepicker').datepicker().on('change', (e) ->
+			self.updateEndDate($(e.target))
+		)
+
+	updateEndDate: (datepicker) ->
+		dateArray = datepicker.val().split("-")
+		date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
+		endDatePicker = datepicker.data("end-datepicker")
+		$(endDatePicker).datepicker('setStartDate', date)
 
 	index: ->
 		view = new Lodging.Views.BookingsIndex()
@@ -22,5 +46,23 @@ class Lodging.Routers.Bookings extends Backbone.Router
 		view = new Lodging.Views.BookingsNew(collection: @locations)
 
 	edit: (id) ->
-		alert('here')
 		view = new Lodging.Views.BookingsNew(collection: @locations)
+
+	$.fn.tokenizeInput = ->
+		tokenizeField = $(this)
+		tokenizeField.tokenInput('/guests.json', {
+			crossDomain: false,
+			propertyToSearch: ["name", "surname", "email"]
+			hintText: "Search by name or email"
+			noResultsText: "No results"
+			insertText: "Not found: Add Guest"
+			insertUrl: '/guests/new'
+			insertParam: 'email'
+			resultsLimit: 1
+			uniqueSelection: true
+			placeholder: $('#booking_guest_id').attr('placeholder')
+			selectionFormat: (item) ->
+				return "#{item.name} #{item.surname} (#{item.email})"
+			resultsFormatter: (item) ->
+				return "<li>" + "<div class='token-result-wrapper'><div>" + item.name + " " + item.surname + "</div><div>" + item.email + "</div></div></li>"
+		})

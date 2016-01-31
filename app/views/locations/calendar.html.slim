@@ -1,0 +1,44 @@
+h1= "Calendar #{@start_date.strftime('%B')} #{@start_date.year}"
+= form_tag calendar_locations_path, {method: 'get', class: "form form-horizontal"} do
+  .form-group
+    = label_tag "Year", "Year", :class => 'control-label col-lg-2'
+    .col-lg-10
+      = select_year(params[:date][:year].to_i, {start_year: 2016}, class: 'form-control')
+  .form-group
+    = label_tag "Month", "Month", :class => 'control-label col-lg-2'
+    .col-lg-10
+      = select_month(params[:date][:month].to_i, {}, class: 'form-control')
+  .form-group
+    .col-lg-offset-2.col-lg-10
+      = submit_tag "View Calendar", :class => 'btn btn-primary'
+  
+
+- @locations.each do |current_location|
+  .calendar-containor
+    i.fa.fa-minus-square-o.fa-2x
+    h2= current_location.name
+    .calendar-wrapper
+      - current_location.houses.each do |current_house|
+        .calendar-containor
+          i.fa.fa-minus-square-o.fa-lg
+          h3= current_house.name
+          .calendar-wrapper
+            table.table.table-striped
+              thead
+                tr
+                  th Room
+                  - for date in (@start_date..@end_date)
+                    th #{date.day}
+              - current_house.rooms.each do |current_room|
+                - current_room.beds.each do |bed|
+                    tr
+                      td #{bed.room.name} #{bed.number}
+                      - bookings = bed.bookings.between_dates(@start_date, @end_date)
+                      - for date in (@start_date..@end_date)
+                        - if not bookings.empty?
+                          td
+                            - for booking in bookings
+                              - if booking.start_date..booking.end_date === date
+                                = "#{booking.guest.name} #{booking.guest.surname}"
+                        - else
+                          td

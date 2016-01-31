@@ -1,0 +1,42 @@
+- model_class = Guest
+.page-header
+  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+= form_tag guests_path, method: 'get', class: "form form-inline" do |f|
+  .form-group
+    .row
+      .col-lg-2
+        = label_tag :name, "Name", :class => 'control-label'
+    = text_field_tag :by_name, params[:by_name], {class: 'form-control'}
+  .form-group
+    .row
+      .col-lg-2
+        = label_tag :by_surname, "Surname", :class => 'control-label' 
+    = text_field_tag :by_surname, params[:by_surname], {class: 'form-control'}
+  .form-group
+    .row
+      .col-lg-2
+        = label_tag :by_email, "Email", :class => 'control-label' 
+    = text_field_tag :by_email, params[:by_email], {class: 'form-control'}
+  .form-group
+    .row
+      .col-lg-6
+        span.invisible action
+    = submit_tag "Search", class: 'btn btn-primary'
+
+table.table.table-striped
+  thead
+    tr
+      th= model_class.human_attribute_name(:name)
+      th= model_class.human_attribute_name(:surname)
+      th= model_class.human_attribute_name(:email)
+      th=t '.actions', :default => t("helpers.actions")
+  tbody
+    - @guests.each do |guest|
+      tr
+        td= link_to guest.name, guest_path(guest)
+        td= guest.surname
+        td= guest.email
+        td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_guest_path(guest), :class => 'btn btn-default btn-xs'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_guest_path, :class => 'btn btn-primary'

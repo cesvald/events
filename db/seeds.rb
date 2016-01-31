@@ -3,7 +3,7 @@
 User.create email: 'valderramago@gmail.com', password: 'sbabaji7'
 
 ['Sebastian', 'Valentina', 'Maria Teresa', 'Florencia'].each do |name|
-	Host.find_or_create_by name: name
+	Guest.find_or_create_by name: name, surname: 'evd', email: "#{name}@gmail.com"
 end
 
 ashram = Location.create name: 'Ashram'
