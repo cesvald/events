@@ -17,7 +17,7 @@ class Lodging.Routers.Bookings extends Backbone.Router
 			guest = $('#booking_guest_id').data('guest')
 			$('#token-input-booking_guest_id').val(guest.name + " " + guest.surname + " (" + guest.email + ")")
 			$('#token-input-booking_guest_id').addClass('token-occupied')
-			$('#booking_guest_id').val($('#booking_guest_id').data('id'))
+			$('#booking_guest_id').val(guest.id)
 
 		$('.datepicker').datepicker({
 	    format: 'yyyy-mm-dd'

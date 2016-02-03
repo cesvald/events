@@ -15,6 +15,21 @@
     = text_field_tag :end_date, params[:end_date], {:class => 'form-control datepicker', :readonly => 'readonly'}
   .form-group
     .row
+      .col-lg-8
+        = label_tag :location_id, "Location", :class => 'control-label'
+    = select_tag :location_id, options_for_select(Location.pluck(:name, :id), (not params[:location_id].blank?) ? params[:location_id] : nil), {:include_blank => true, :class => 'form-control'}
+  .form-group
+    .row
+      .col-lg-8
+        = label_tag :house_id, "House", :class => 'control-label'
+    = select_tag :house_id, (not params[:location_id].blank?) ? options_for_select(House.where(location: params[:location_id]).pluck(:name, :id), params[:house_id]) : nil, (not params[:location_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+  .form-group
+    .row
+      .col-lg-8
+        = label_tag :room_id, "Room", :class => 'control-label'
+    = select_tag :room_id, (not params[:house_id].blank?) ? options_for_select(Room.where(house: params[:house_id]).pluck(:name, :id), params[:room_id]) : nil, (not params[:house_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+  .form-group
+    .row
       .col-lg-6
         span.invisible action
     = submit_tag 'Search availability', :class => 'btn btn-primary'
@@ -31,10 +46,10 @@ table.table.table-striped
     - @beds.each do |bed|
       tr
         td= bed.room.house.location.name
-        td= bed.room.house.name
+        td= link_to bed.room.house.name, house_path(bed.room.house), class: "record-link", target: "_blank"
         td= bed.room.name
         td= bed.number
         td
           = link_to t('.book', :default => t("helpers.links.book")), new_booking_path(:location_id => bed.room.house.location.id, :house_id => bed.room.house.id, :room_id => bed.room.id, :booking => {:bed_id => bed.id}), :class => 'btn btn-default btn-xs'
 
-= link_to t('.new', :default => t("helpers.links.new")), new_bed_path, :class => 'btn btn-primary'
+= paginate @beds

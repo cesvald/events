@@ -1,28 +1,29 @@
-h1= "Calendar #{@start_date.strftime('%B')} #{@start_date.year}"
-= form_tag calendar_locations_path, {method: 'get', class: "form form-horizontal"} do
+.page-header
+  h1= "Calendar #{@start_date.strftime('%B')} #{@start_date.year}"
+= form_tag calendar_locations_path, {method: 'get', class: "form form-inline"} do
   .form-group
-    = label_tag "Year", "Year", :class => 'control-label col-lg-2'
-    .col-lg-10
-      = select_year(params[:date][:year].to_i, {start_year: 2016}, class: 'form-control')
+    = label_tag "Year", "Year", :class => 'control-label'
+    = select_year(params[:date][:year].to_i, {start_year: 2016}, class: 'form-control')
   .form-group
-    = label_tag "Month", "Month", :class => 'control-label col-lg-2'
-    .col-lg-10
-      = select_month(params[:date][:month].to_i, {}, class: 'form-control')
+    = label_tag "Month", "Month", :class => 'control-label'
+    = select_month(params[:date][:month].to_i, {}, class: 'form-control')
   .form-group
-    .col-lg-offset-2.col-lg-10
-      = submit_tag "View Calendar", :class => 'btn btn-primary'
+    = submit_tag "View Calendar", :class => 'btn btn-primary'
   
 
 - @locations.each do |current_location|
-  .calendar-containor
-    i.fa.fa-minus-square-o.fa-2x
-    h2= current_location.name
-    .calendar-wrapper
+  .calendar-containor.panel.panel-primary
+    .panel-heading
+      i.fa.fa-minus-square-o.fa-lg
+      h4= current_location.name
+    .calendar-wrapper.panel-body
       - current_location.houses.each do |current_house|
-        .calendar-containor
-          i.fa.fa-minus-square-o.fa-lg
-          h3= current_house.name
-          .calendar-wrapper
+        .calendar-containor.panel.panel-default
+          .panel-heading
+            i.fa.fa-minus-square-o.fa-lg
+            h4= current_house.name
+            = link_to "View House Sketch", house_path(current_house), class: "record-link", target: "_blank"
+          .calendar-wrapper.panel-body
             table.table.table-striped
               thead
                 tr

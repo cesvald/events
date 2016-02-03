@@ -1,6 +1,6 @@
 class CreateBookings < ActiveRecord::Migration
   def change
-    create_table :bookings, :primary_key => [:bed_id, :guest_id] do |t|
+    create_table :bookings do |t|
       t.date :start_date, null: false
       t.date :end_date, null: true
       t.belongs_to :bed, index: true, foreign_key: true, null: false

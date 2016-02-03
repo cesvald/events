@@ -95,13 +95,14 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		$('#booking_guest_id').val('')
 
 	closeCalendar: (event) ->
-		$(event.target).parent().find('.calendar-wrapper:first').hide()
+		$(event.target).closest('.calendar-containor').find('.calendar-wrapper:first').hide()
 		$(event.target).removeClass('fa-minus-square-o').addClass('fa-plus-square-o')
-
+		$(event.target).parent().find('.record-link:first').hide()
 	openCalendar: ->
-		$(event.target).parent().find('.calendar-wrapper:first').show()
+		$(event.target).closest('.calendar-containor').find('.calendar-wrapper:first').show()
 		$(event.target).removeClass('fa-plus-square-o').addClass('fa-minus-square-o')
-
+		$(event.target).parent().find('.record-link:first').show()
+		
 	blurTokenInput: (event) ->
 		$(event.target).blur()
 		$(event.target).blur()

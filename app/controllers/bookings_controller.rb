@@ -34,13 +34,36 @@ class BookingsController < ApplicationController
 
 			if (not booking_params[:end_date].blank?) && (not booking_params[:start_date].blank?)
 				@bookings = @bookings.between_dates(booking_params[:start_date], booking_params[:end_date])
-			end		
+			end
+
 		end
+
+		@bookings = Kaminari.paginate_array(@bookings).page params[:page]
 
 	end
 
 	def new
 		@booking = Booking.new
+	end
+
+	def create
+		@booking = Booking.new(booking_params)
+    @booking.save
+    if not @booking.errors.empty?
+    	respond_with(@booking)
+    else
+    	redirect_to bookings_path
+    end
+	end
+
+	def update
+		@booking = Booking.find(params[:id])
+		@booking.update(booking_params)
+		if not @booking.errors.empty?
+    	respond_with(@booking)
+    else
+    	redirect_to bookings_path
+    end
 	end
 
   private

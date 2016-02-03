@@ -1,7 +1,7 @@
 class HousesController < ApplicationController
 
   inherit_resources
-	actions :index, :create, :update, :destroy
+	actions :index, :create, :update, :destroy, :show, :edit
 	respond_to :html, :json
 
 	def index
@@ -11,6 +11,6 @@ class HousesController < ApplicationController
   private
 
     def house_params
-      params.require(:house).permit(:name, :location_id)
+      params.require(:house).permit(:name, :location_id, :sketch)
     end
 end

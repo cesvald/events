@@ -67,6 +67,7 @@ gem 'has_scope', '0.6.0'
 gem 'spectator-validates_email',  require: 'validates_email'
 gem 'inherited_resources'
 gem 'gon'
+gem 'carrierwave'
 
 # Ordering
 gem 'ranked-model'

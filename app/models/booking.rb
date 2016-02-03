@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
   
   def available
   	if self.bed
-	  	current_booking = self.bed.occupied?(self.start_date, self.end_date)
+	  	current_booking = self.bed.occupied?(self.start_date, self.end_date, self.id.blank? ? 0 : self.id)
 	  	if current_booking
 				errors.add(:occupied, "This bed is occupied from #{current_booking.start_date} to #{current_booking.end_date}")
 			end

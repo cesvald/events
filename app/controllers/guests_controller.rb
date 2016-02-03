@@ -7,7 +7,7 @@ class GuestsController < ApplicationController
 	respond_to :html, :json
 
 	def index
-		@guests = params[:q] ? Guest.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}) : apply_scopes(Guest).all
+		@guests = params[:q] ? Guest.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(Guest).page(params[:page])
 		respond_to do |format|
 			format.html
 			format.json  {render :json => @guests.map(&:attributes)}

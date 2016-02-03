@@ -19,13 +19,13 @@
     .row
       .col-lg-2
         = f.label :bed_id, class: 'control-label'
-    = f.select :bed_id, params[:room_id] ? options_for_select(Bed.where(room: params[:room_id]).pluck(:number, :id)) : [], {}, params[:room_id] ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+    = f.select :bed_id, (not params[:room_id].blank?) ? options_for_select(Bed.where(room: params[:room_id]).pluck(:number, :id), params[:booking][:bed_id]) : [], {:include_blank => true}, (not params[:room_id].blank?) ? {:class => 'form-control'} : {:class => 'form-control', :disabled => true}
   .form-group
     .row
       .col-lg-2
         = f.label :guest_id, class: 'control-label'
     .input-group
-      = f.text_field :guest_id, (params.has_key?(:booking) && (not params[:booking][:guest_id].blank?)) ? { :class => 'form-control', :data => { :guest => Guest.find(params[:booking][:guest_id]) } } : {:class => 'form-control' }
+      = f.text_field :guest_id, (params.has_key?(:booking) && (not params[:booking][:guest_id].blank?)) ? { :class => 'form-control tokenizer-field', :data => { :guest => Guest.find(params[:booking][:guest_id]) } } : {:class => 'form-control tokenizer-field' }
       span#clean-guest-input-btn.input-group-btn
         button.btn.btn-default[type="button"] X
   .form-group

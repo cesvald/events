@@ -13,14 +13,14 @@ SET client_min_messages = warning;
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+-- CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+-- COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
@@ -66,7 +66,7 @@ ALTER SEQUENCE beds_id_seq OWNED BY beds.id;
 --
 
 CREATE TABLE bookings (
-    "[:bed_id, :guest_id]" integer NOT NULL,
+    id integer NOT NULL,
     start_date date NOT NULL,
     end_date date,
     bed_id integer NOT NULL,
@@ -77,10 +77,10 @@ CREATE TABLE bookings (
 
 
 --
--- Name: bookings_[:bed_id, :guest_id]_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: bookings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE "bookings_[:bed_id, :guest_id]_seq"
+CREATE SEQUENCE bookings_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -89,10 +89,10 @@ CREATE SEQUENCE "bookings_[:bed_id, :guest_id]_seq"
 
 
 --
--- Name: bookings_[:bed_id, :guest_id]_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE "bookings_[:bed_id, :guest_id]_seq" OWNED BY bookings."[:bed_id, :guest_id]";
+ALTER SEQUENCE bookings_id_seq OWNED BY bookings.id;
 
 
 --
@@ -135,6 +135,7 @@ ALTER SEQUENCE guests_id_seq OWNED BY guests.id;
 CREATE TABLE houses (
     id integer NOT NULL,
     name character varying NOT NULL,
+    sketch character varying,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -275,10 +276,10 @@ ALTER TABLE ONLY beds ALTER COLUMN id SET DEFAULT nextval('beds_id_seq'::regclas
 
 
 --
--- Name: [:bed_id, :guest_id]; Type: DEFAULT; Schema: public; Owner: -
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY bookings ALTER COLUMN "[:bed_id, :guest_id]" SET DEFAULT nextval('"bookings_[:bed_id, :guest_id]_seq"'::regclass);
+ALTER TABLE ONLY bookings ALTER COLUMN id SET DEFAULT nextval('bookings_id_seq'::regclass);
 
 
 --
@@ -329,7 +330,7 @@ ALTER TABLE ONLY beds
 --
 
 ALTER TABLE ONLY bookings
-    ADD CONSTRAINT bookings_pkey PRIMARY KEY ("[:bed_id, :guest_id]");
+    ADD CONSTRAINT bookings_pkey PRIMARY KEY (id);
 
 
 --

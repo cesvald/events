@@ -1,12 +1,5 @@
 p#notice = notice
 
-p
-  strong Name:
-  = @house.name
-p
-  strong Location:
-  = @house.location_id
-
-= link_to 'Edit', edit_house_path(@house)
-'|
-= link_to 'Back', houses_path
+h2 = "#{@house.location.name} #{@house.name}"
+'
+= image_tag  @house.sketch.url

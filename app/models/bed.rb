@@ -4,8 +4,11 @@ class Bed < ActiveRecord::Base
   has_many :guests, through: :bookings
 
   scope :available, ->(start_date, end_date) { joins('LEFT JOIN bookings ON bookings.bed_id = beds.id').where("(start_date IS NULL AND end_date IS NULL) OR (start_date < :start_date OR start_date > :end_date) AND (end_date < :start_date AND end_date > :end_date)", {start_date: start_date, end_date: end_date})}
+  scope :by_location, ->(location_id) { joins( room: [ house: [ :location ] ] ).where('locations.id = :location_id', {location_id: location_id}) }
+  scope :by_house, ->(house_id) { joins( room: [ :house ] ).where('houses.id = :house_id', {house_id: house_id}) }
+  scope :by_room, ->(room_id) { joins( :room ).where('rooms.id = :room_id', {room_id: room_id}) }
 
-  def occupied?(start_date, end_date)
-  	self.bookings.where("(start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date)", {start_date: start_date, end_date: end_date}).first
+  def occupied?(start_date, end_date, booking_id = 0)
+  	self.bookings.where("((start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date)) AND (id != :booking_id)", {start_date: start_date, end_date: end_date, booking_id: booking_id}).first
   end
 end
