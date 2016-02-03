@@ -15,13 +15,13 @@
   .calendar-containor.panel.panel-primary
     .panel-heading
       i.fa.fa-minus-square-o.fa-lg
-      h4= current_location.name
+      h4= " #{current_location.name} "
     .calendar-wrapper.panel-body
       - current_location.houses.each do |current_house|
         .calendar-containor.panel.panel-default
           .panel-heading
             i.fa.fa-minus-square-o.fa-lg
-            h4= current_house.name
+            h4= " #{current_house.name} "
             = link_to "View House Sketch", house_path(current_house), class: "record-link", target: "_blank"
           .calendar-wrapper.panel-body
             table.table.table-striped
