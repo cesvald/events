@@ -26,11 +26,12 @@ class Lodging.Routers.Bookings extends Backbone.Router
 		$('.start-datepicker').each( -> 
 			self.updateEndDate($(this)) if this.val isnt ''
 		)
-			
-
+		
 		$('.start-datepicker').datepicker().on('change', (e) ->
 			self.updateEndDate($(e.target))
 		)
+
+		$('.alert').delay(5000).slideUp(1000)
 
 	updateEndDate: (datepicker) ->
 		dateArray = datepicker.val().split("-")

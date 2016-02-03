@@ -1,5 +1,11 @@
 .flash
   - for key, msg in flash
-    div class="#{key} wrapper alert"
-      div class=key
-        == msg
+  	- if key == 'notice'
+    	div class="alert alert-success"
+    		== msg
+    - if key == 'failure'
+     	div class="alert alert-danger"
+    		== msg
+
+    
+	
