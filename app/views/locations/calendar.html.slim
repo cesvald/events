@@ -39,7 +39,7 @@
                         - if not bookings.empty?
                           td
                             - for booking in bookings
-                              - if booking.start_date..booking.end_date === date
+                              - if date.between? booking.start_date, booking.end_date
                                 = "#{booking.guest.name} #{booking.guest.surname}"
                         - else
                           td
