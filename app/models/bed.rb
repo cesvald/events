@@ -9,6 +9,6 @@ class Bed < ActiveRecord::Base
   scope :by_room, ->(room_id) { joins( :room ).where('rooms.id = :room_id', {room_id: room_id}) }
 
   def occupied?(start_date, end_date, booking_id = 0)
-  	self.bookings.where("((start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date)) AND (id != :booking_id)", {start_date: start_date, end_date: end_date, booking_id: booking_id}).first
+  	self.bookings.where("((start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date) OR (start_date < :start_date AND end_date > :end_date)) AND (id != :booking_id)", {start_date: start_date, end_date: end_date, booking_id: booking_id}).first
   end
 end
