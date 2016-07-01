@@ -29,6 +29,11 @@ gem "bootstrap_flash_messages"
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 
+# xml manipulation
+gem 'rubyzip', '= 1.0.0'
+gem 'axlsx', '= 2.0.1'
+gem 'axlsx_rails'
+
 #paginator
 gem 'kaminari'
 

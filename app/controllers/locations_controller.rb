@@ -2,15 +2,20 @@ class LocationsController < ApplicationController
 
 	inherit_resources
   actions :index, :create, :update, :destroy, :show, :new
-  respond_to :html, :json
-
+  skip_before_action :authenticate_user, only: :calendar
   def calendar
-		@locations = Location.includes(houses: [ rooms: [ :beds ] ]).all
-		date_params[:year] = Time.now.year if date_params[:year].blank?
-		date_params[:month] = Time.now.month if date_params[:month].blank?
-
-		@start_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, 1)
-		@end_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, -1)
+    respond_to do |format|
+      @locations = Location.includes(houses: [ rooms: [ :beds ] ]).all
+  		date_params[:year] = Time.now.year if date_params[:year].blank?
+  		date_params[:month] = Time.now.month if date_params[:month].blank?
+  
+  		@start_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, 1)
+  		@end_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, -1)
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename='Calendar #{@start_date.strftime('%B %Y')}.xlsx'"
+      }
+      format.html
+    end
 	end
 
   private

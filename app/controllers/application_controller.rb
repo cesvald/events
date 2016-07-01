@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   	respond_to do |format|
 	  	format.html { redirect_to new_session_path(User.new) if !user_signed_in? }
 	  	format.json { render json: {success: false, message: "Please sign in"} if !user_signed_in? }
+	  	format.xlsx
 	  end
   end
 

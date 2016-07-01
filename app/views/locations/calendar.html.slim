@@ -9,7 +9,8 @@
     = select_month(params[:date][:month].to_i, {}, class: 'form-control')
   .form-group
     = submit_tag "View Calendar", :class => 'btn btn-primary btn-left-space'
-  
+    | &nbsp
+    = link_to "Download Excel", calendar_locations_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
 
 - @locations.each do |current_location|
   .calendar-containor.panel.panel-primary
