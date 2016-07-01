@@ -14,7 +14,7 @@ title = wb.styles.add_style b: true, sz: 14
 						current_house.rooms.each do |current_room|
 							current_room.beds.each do |bed|
 								beds[index] = "#{bed.room.name} #{bed.number}"
-								bookings = bed.bookings.between_dates(@start_date, @end_date)
+								bookings = bed.bookings.between_dates(@start_date, @end_date).order(start_date: :asc)
 								guests_text = ""
 								bookings.each do |booking|
 									guests_text += "#{booking.guest.name} #{booking.guest.surname}\r#{booking.start_date}   #{booking.end_date}\r\r"
