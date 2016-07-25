@@ -2,7 +2,7 @@ xlsx_package.use_shared_strings = true
 wb = xlsx_package.workbook
 table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
 table_cell = wb.styles.add_style alignment: {horizontal: :center}
-wb.add_worksheet(name: "Guests by Year") do |sheet|
+wb.add_worksheet(name: "Monthly Guests") do |sheet|
     header_months = []
     header_months << "Location"
     for i in 0..11
