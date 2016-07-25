@@ -1,0 +1,29 @@
+.page-header
+		h1= "Guests by Year"
+= form_tag monthly_guests_reports_bookings_path, {method: 'get', class: "form form-inline form-bottom-space"} do
+	.form-group
+		= label_tag "Year", "Year", :class => 'control-label'
+		= select_year(params[:date][:year].to_i, {start_year: 2016}, class: 'form-control')
+	.form-group
+    = submit_tag "View Report", :class => 'btn btn-primary btn-left-space'
+    | &nbsp
+    = link_to "Download Excel", monthly_guests_reports_bookings_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
+    
+table.table.table-striped
+		thead
+				tr
+						th
+								| Location
+						- for i in 0..11
+								th.text-center= @date_for_months.strftime "%B"
+								- @date_for_months = @date_for_months + 1.month
+		- @locations_bookings.each do |location|
+				tr
+						th
+								= location[:name]
+						- location[:bookings_year].each do |month|
+								td.text-center
+										= month.take.total_guests
+
+		
+				

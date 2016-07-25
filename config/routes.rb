@@ -9,7 +9,15 @@ Rails.application.routes.draw do
   end
   resources :houses
   resources :guests
-
+  
+  namespace :reports do
+    resources :bookings, only: [:index] do
+      collection do
+        get 'monthly_guests'
+      end
+    end
+  end
+  
   devise_for :users, controllers: { sessions: "users/sessions" }
   
   # The priority is based upon order of creation: first created -> highest priority.

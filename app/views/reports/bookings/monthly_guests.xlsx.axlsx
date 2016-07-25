@@ -1,0 +1,21 @@
+xlsx_package.use_shared_strings = true
+wb = xlsx_package.workbook
+table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
+table_cell = wb.styles.add_style alignment: {horizontal: :center}
+wb.add_worksheet(name: "Guests by Year") do |sheet|
+    header_months = []
+    header_months << "Location"
+    for i in 0..11
+        header_months << @date_for_months.strftime("%B")
+        @date_for_months = @date_for_months + 1.month
+    end
+    sheet.add_row header_months, style: table_header
+    @locations_bookings.each do |location|
+        bookings_year = []
+	    bookings_year << location[:name]
+		location[:bookings_year].each do |month|
+            bookings_year << month.take.total_guests
+        end
+        sheet.add_row bookings_year, style: table_cell, widths: [10] * sheet.column_info.count
+    end
+end
