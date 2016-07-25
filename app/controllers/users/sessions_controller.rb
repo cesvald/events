@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   skip_before_filter :authenticate_user
-
+  
   # GET /resource/sign_in
   # def new
   #   super
