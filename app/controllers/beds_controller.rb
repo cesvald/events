@@ -21,7 +21,7 @@ class BedsController < InheritedResources::Base
 			@beds = Bed.includes(room: [ house: [ :location ] ]).page(params[:page])
 		end
 	end
-
+	
   private
 
     def bed_params

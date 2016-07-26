@@ -1,5 +1,5 @@
 .page-header
-		h1= "Guests by Year"
+		h1= "Occupancy of Beds"
 = form_tag monthly_guests_reports_bookings_path, {method: 'get', class: "form form-inline form-bottom-space"} do
 	.form-group
 		= label_tag "Year", "Year", :class => 'control-label'
@@ -8,22 +8,36 @@
     = submit_tag "View Report", :class => 'btn btn-primary btn-left-space'
     | &nbsp
     = link_to "Download Excel", monthly_guests_reports_bookings_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
-    
-table.table.table-striped
-		thead
-				tr
-						th
-								| Location
-						- for i in 0..11
-								th.text-center= @date_for_months.strftime "%B"
-								- @date_for_months = @date_for_months + 1.month
-		- @locations_bookings.each do |location|
-				tr
-						th
-								= location[:name]
-						- location[:bookings_year].each do |month|
-								td.text-center
-										= month.take.total_guests
 
-		
-				
+- @locations_bookings.each do |location|
+	h3= location[:name]
+	table.table.table-striped
+		thead
+			tr
+				th
+				- for i in 0..11
+					th.text-center= @date_for_months.strftime "%B"
+					- @date_for_months = @date_for_months + 1.month
+			tr
+				th
+					| Days occupied
+				- location[:bookings_year].each do |bookings_month|
+					td.text-center
+						= bookings_month[:days_occupied]
+			/*
+				tr
+					th
+						| Beds occupied
+					- location[:bookings_year].each do |bookings_month|
+						td.text-center
+							= bookings_month[:beds_occupied]
+			tr
+				th
+					| % Occupancy
+				- location[:bookings_year].each do |bookings_month|
+					td.text-center
+						= "#{bookings_month[:occupancy_rate]}%"
+	br			
+
+	
+			

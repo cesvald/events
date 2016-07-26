@@ -129,6 +129,40 @@ ALTER SEQUENCE guests_id_seq OWNED BY guests.id;
 
 
 --
+-- Name: historicals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE historicals (
+    id integer NOT NULL,
+    name character varying,
+    value numeric,
+    start_date date,
+    location_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: historicals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE historicals_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: historicals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE historicals_id_seq OWNED BY historicals.id;
+
+
+--
 -- Name: houses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -293,6 +327,13 @@ ALTER TABLE ONLY guests ALTER COLUMN id SET DEFAULT nextval('guests_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY historicals ALTER COLUMN id SET DEFAULT nextval('historicals_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY houses ALTER COLUMN id SET DEFAULT nextval('houses_id_seq'::regclass);
 
 
@@ -339,6 +380,14 @@ ALTER TABLE ONLY bookings
 
 ALTER TABLE ONLY guests
     ADD CONSTRAINT guests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: historicals_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY historicals
+    ADD CONSTRAINT historicals_pkey PRIMARY KEY (id);
 
 
 --
@@ -402,6 +451,13 @@ CREATE INDEX index_bookings_on_start_date_and_end_date ON bookings USING btree (
 
 
 --
+-- Name: index_historicals_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_historicals_on_location_id ON historicals USING btree (location_id);
+
+
+--
 -- Name: index_houses_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -461,6 +517,14 @@ ALTER TABLE ONLY bookings
 
 
 --
+-- Name: fk_historicals_location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY historicals
+    ADD CONSTRAINT fk_historicals_location_id FOREIGN KEY (location_id) REFERENCES locations(id);
+
+
+--
 -- Name: fk_houses_location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -495,4 +559,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160117035205');
 INSERT INTO schema_migrations (version) VALUES ('20160117035235');
 
 INSERT INTO schema_migrations (version) VALUES ('20160117042101');
+
+INSERT INTO schema_migrations (version) VALUES ('20160726175948');
 

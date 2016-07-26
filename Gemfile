@@ -14,6 +14,9 @@ gem 'schema_associations'
 
 gem 'devise', '~> 3.5.3'
 
+# Observers
+gem 'rails-observers'
+
 # Decorators
 gem 'draper'
 

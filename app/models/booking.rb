@@ -13,7 +13,7 @@ class Booking < ActiveRecord::Base
   scope :by_guest, ->(guest_id) { where('guest_id = :guest_id', {guest_id: guest_id}) }
   scope :by_start_date, ->(start_date) { where('start_date >= :start_date', {start_date: start_date}) }
   scope :by_end_date, ->(end_date) { where('end_date = :end_date', {end_date: end_date}) }
-  scope :between_dates, ->(start_date, end_date) { where('(start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date)', {start_date: start_date, end_date: end_date}) }
+  scope :between_dates, ->(start_date, end_date) { where('(start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date) OR (start_date < :start_date AND end_date > :end_date)', {start_date: start_date, end_date: end_date}) }
   
   def available
   	if self.bed
