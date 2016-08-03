@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
   		@start_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, 1)
   		@end_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, -1)
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename='Calendar #{@start_date.strftime('%B %Y')}.xlsx'"
+        response.headers['Content-Disposition'] = "attachment; filename=\"Calendar #{@start_date.strftime('%B %Y')}.xlsx\""
       }
       format.html
     end

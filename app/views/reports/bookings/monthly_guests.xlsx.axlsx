@@ -2,20 +2,27 @@ xlsx_package.use_shared_strings = true
 wb = xlsx_package.workbook
 table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
 table_cell = wb.styles.add_style alignment: {horizontal: :center}
-wb.add_worksheet(name: "Monthly Guests") do |sheet|
-    header_months = []
-    header_months << "Location"
-    for i in 0..11
-        header_months << @date_for_months.strftime("%B")
-        @date_for_months = @date_for_months + 1.month
-    end
-    sheet.add_row header_months, style: table_header
+title = wb.styles.add_style b: true, sz: 14
+wb.add_worksheet(name: "Occupancy of Beds") do |sheet|
     @locations_bookings.each do |location|
-        bookings_year = []
-	    bookings_year << location[:name]
-		location[:bookings_year].each do |month|
-            bookings_year << month.take.total_guests
+        sheet.add_row [location[:name]], style: title    
+        header_months = []
+        header_months << ""
+        for i in 0..11
+            header_months << @date_for_months.strftime("%B")
+            @date_for_months = @date_for_months + 1.month
         end
-        sheet.add_row bookings_year, style: table_cell, widths: [10] * sheet.column_info.count
+        sheet.add_row header_months, style: table_header
+        days_occupied = ["Days occupied"]
+        location[:bookings_year].each do |bookings_month|
+            days_occupied << bookings_month[:days_occupied]
+        end
+        sheet.add_row days_occupied, style: table_cell
+        pur_occupancy = ["% Occupancy"]
+        location[:bookings_year].each do |bookings_month|
+           pur_occupancy << "#{bookings_month[:occupancy_rate]}%" 
+        end
+        sheet.add_row pur_occupancy, style: table_cell
+        sheet.add_row []
     end
 end

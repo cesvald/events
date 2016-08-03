@@ -3,7 +3,7 @@ class Reports::BookingsController < ApplicationController
 		skip_before_action :authenticate_user, only: :monthly_guests
 		
 		def monthly_guests
-				date_params[:year] = Time.now.year if date_params[:year].blank?
+			date_params[:year] = Time.now.year if date_params[:year].blank?
 			locations = Location.all
 			@locations_bookings = []
 			locations.each do |location|
@@ -28,7 +28,7 @@ class Reports::BookingsController < ApplicationController
 			@date_for_months = Date.new(date_params[:year].to_i, 1, 1)
 			respond_to do |format|
 				format.xlsx {
-					response.headers['Content-Disposition'] = "attachment; filename='Monthly Guests #{@date_for_months.strftime('%Y')}.xlsx'"
+					response.headers['Content-Disposition'] = "attachment; filename=\"Occupancy of Beds #{@date_for_months.strftime('%Y')}.xlsx\""
 				}
 				format.html
 			end
