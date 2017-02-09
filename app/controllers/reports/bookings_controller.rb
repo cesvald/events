@@ -12,8 +12,8 @@ class Reports::BookingsController < ApplicationController
 				bookings_year = []
 				while start_date < end_date do
 					total_beds = location.historicals.where("name = ? AND start_date <= ?", 'total_beds', start_date).order(start_date: :desc).limit(1).first.value
-					bookings = Booking.between_dates(start_date, start_date.end_of_month).joins(bed: [room: [house: [:location]]]).where("locations.id = ?", location.id)
-					beds_occupied = Booking.between_dates(start_date, start_date.end_of_month).joins(bed: [room: [house: [:location]]]).select("COUNT(DISTINCT beds.id) AS beds_occupied").where("locations.id = ?", location.id).take.beds_occupied
+					bookings = Booking.between_dates(start_date, start_date.end_of_month).joins(bed: [room: [house: [:location]]]).where("locations.id = ? AND houses.open_stay = FALSE", location.id)
+					beds_occupied = Booking.between_dates(start_date, start_date.end_of_month).joins(bed: [room: [house: [:location]]]).select("COUNT(DISTINCT beds.id) AS beds_occupied").where("locations.id = ? AND houses.open_stay = FALSE", location.id).take.beds_occupied
 					total_days_occupied = 0
 					bookings.each do |booking|
 						booking.start_date = start_date if booking.start_date < start_date

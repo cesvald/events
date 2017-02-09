@@ -172,7 +172,8 @@ CREATE TABLE houses (
     sketch character varying,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    open_stay boolean DEFAULT false
 );
 
 
@@ -561,4 +562,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160117035235');
 INSERT INTO schema_migrations (version) VALUES ('20160117042101');
 
 INSERT INTO schema_migrations (version) VALUES ('20160726175948');
+
+INSERT INTO schema_migrations (version) VALUES ('20170209029833');
+
+INSERT INTO schema_migrations (version) VALUES ('20170209030519');
 
