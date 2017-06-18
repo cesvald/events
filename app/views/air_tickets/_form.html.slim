@@ -1,0 +1,11 @@
+= semantic_form_for @air_ticket do |f|
+  = f.inputs do
+    = f.input :participant
+    = f.input :arrive_at
+    = f.input :arrive_to
+    = f.input :leave_at
+    = f.input :leave_from
+    = f.input :estimated_at
+
+  = f.actions do
+    = f.action :submit, as: :input

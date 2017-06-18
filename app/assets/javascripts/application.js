@@ -14,12 +14,12 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
-//= require bootstrap
 //= require bootstrap-datepicker
 //= require underscore
 //= require backbone
 //= require lodging
 //= require_tree ../templates
+//= require_tree ./apis
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views

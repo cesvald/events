@@ -1,0 +1,27 @@
+h1 Listing payments
+
+table
+  thead
+    tr
+      th Participant
+      th Paid at
+      th Amount
+      th Description
+      th
+      th
+      th
+
+  tbody
+    - @payments.each do |payment|
+      tr
+        td = payment.participant
+        td = payment.paid_at
+        td = payment.amount
+        td = payment.description
+        td = link_to 'Show', payment
+        td = link_to 'Edit', edit_payment_path(payment)
+        td = link_to 'Destroy', payment, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Payment', new_payment_path

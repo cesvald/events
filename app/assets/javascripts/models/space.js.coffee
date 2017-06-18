@@ -1,0 +1,1 @@
+class Lodging.Models.Space extends Backbone.Model

@@ -2,7 +2,8 @@ class BookingsController < ApplicationController
 	inherit_resources
 	respond_to :html, :json
 	before_action :add_locations
-
+	before_action :check_profiles
+	
 	def index
 		@booking = Booking.new
 		if not params.has_key?(:booking)
@@ -79,5 +80,15 @@ class BookingsController < ApplicationController
     def add_locations
     	@locations = Location.includes( houses: [ rooms: [:beds] ] )
 			gon.jbuilder "app/views/locations/index.json.jbuilder", as: "locations"
+    end
+    
+    def check_profiles
+    	if not current_user.hoster?
+    		if current_user.eventer?
+    			return redirect_to events_path
+    		else
+    			sign_out current_user
+    		end
+    	end
     end
 end

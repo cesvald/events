@@ -1,0 +1,25 @@
+h1 Listing spaces
+
+table
+  thead
+    tr
+      th Event
+      th Place
+      th Amount
+      th
+      th
+      th
+
+  tbody
+    - @spaces.each do |space|
+      tr
+        td = space.event
+        td = space.place
+        td = space.amount
+        td = link_to 'Show', space
+        td = link_to 'Edit', edit_space_path(space)
+        td = link_to 'Destroy', space, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Space', new_space_path

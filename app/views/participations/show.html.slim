@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Space:
+  = @participation.space
+p
+  strong Modality:
+  = @participation.modality
+p
+  strong Amount:
+  = @participation.amount
+
+= link_to 'Edit', edit_participation_path(@participation)
+'|
+= link_to 'Back', participations_path

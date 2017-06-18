@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Event:
+  = @space.event
+p
+  strong Place:
+  = @space.place
+p
+  strong Amount:
+  = @space.amount
+
+= link_to 'Edit', edit_space_path(@space)
+'|
+= link_to 'Back', spaces_path

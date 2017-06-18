@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Participant:
+  = @payment.participant
+p
+  strong Paid at:
+  = @payment.paid_at
+p
+  strong Amount:
+  = @payment.amount
+p
+  strong Description:
+  = @payment.description
+
+= link_to 'Edit', edit_payment_path(@payment)
+'|
+= link_to 'Back', payments_path

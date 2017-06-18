@@ -1,0 +1,1 @@
+class Lodging.Models.Modality extends Backbone.Model

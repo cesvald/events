@@ -1,21 +1,113 @@
-= form_for @guest, html: { class: "form form-horizontal guest" } do |f|
-  .form-group
-    = f.label :name, :class => 'control-label col-lg-1'
-    .col-lg-3
-      = f.text_field :name, :class => 'form-control'
-    = f.error_span(:name)
-  .form-group
-    = f.label :surname, :class => 'control-label col-lg-1'
-    .col-lg-3
-      = f.text_field :surname, :class => 'form-control'
-    = f.error_span(:surname)
-  .form-group
-    = f.label :email, :class => 'control-label col-lg-1'
-    .col-lg-3
-      = f.text_field :email, :class => 'form-control'
-    = f.error_span(:email)
-  .form-group
-    .col-lg-offset-2.col-lg-10
-      = f.submit nil, :class => 'btn btn-primary'
+= form_for @guest, html: { class: "form form-horizontal guest text-left" } do |f|
+  .row
+    .form-group.col-lg-4
+      = f.label :name, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :name, :class => 'form-control'
+      = f.error_span(:name)
+    .form-group.col-lg-4
+      = f.label :surname, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :surname, :class => 'form-control'
+      = f.error_span(:surname)
+    .form-group.col-lg-4
+      = f.label :email, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :email, :class => 'form-control'
+      = f.error_span(:email)
+    .form-group.col-lg-4
+      = f.label :country, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :country, :class => 'form-control'
+      f.error_span(:country)
+    .form-group.col-lg-4
+      = f.label :city, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :city, :class => 'form-control'
+      f.error_span(:city)
+    .form-group.col-lg-4
+      = f.label :phone_number, :class => 'control-label two-line col-lg-3 '
+      .col-lg-9
+        = f.text_field :phone_number, :class => 'form-control'
+      f.error_span(:phone_number)
+    .form-group.col-lg-4
+      = f.label :mobile_number, :class => 'control-label two-line col-lg-3'
+      .col-lg-9
+        = f.text_field :mobile_number, :class => 'form-control'
+      f.error_span(:mobile_number)
+    .form-group.col-lg-4.text-left
+      = f.label :identification, :class => 'control-label two-line col-lg-6'
+      .col-lg-6
+        = f.text_field :identification, :class => 'form-control'
+      f.error_span(:identification)
+    .form-group.col-lg-4
+      = f.label :civil_status, :class => 'control-label two-line col-lg-3'
+      .col-lg-9
+        = f.select :civil_status, [:Casado, :Soltero, :Divorciado, :Viudo], {:include_blank => true}, {:class => 'form-control'}
+      f.error_span(:civil_status)
+    .form-group.col-lg-4
+      = f.label :profession, :class => 'control-label two-line col-lg-4'
+      .col-lg-8
+        = f.text_field :profession, :class => 'form-control'
+      f.error_span(:profession)
+    .form-group.col-lg-4
+      = f.label :nationality, :class => 'control-label col-lg-3'
+      .col-lg-9
+        = f.text_field :nationality, :class => 'form-control'
+      f.error_span(:nationality)
+  br
+  h2 Otros datos:
+  .row
+    .form-group.col-lg-8
+      = f.label :health_condition, :class => 'control-label col-lg-5'
+      .col-lg-7
+        = f.text_area :health_condition, :class => 'form-control'
+      f.error_span(:health_condition)
+  .form-group.col-lg-8
+    = f.label :receive_drug, :class => 'control-label col-lg-5'
+    .col-lg-7
+      = f.text_area :receive_drug, :class => 'form-control'
+    f.error_span(:receive_drug)
+  .form-group.col-lg-8
+    = f.label :symptoms, :class => 'control-label two-line col-lg-5'
+    .col-lg-7
+      = f.text_area :symptoms, :class => 'form-control'
+    f.error_span(:symptoms)
+  br
+  .form-group.col-lg-8
+    = f.label :contact_name, :class => 'control-label two-line col-lg-5'
+    .col-lg-7
+      = f.text_field :contact_name, :class => 'form-control'
+    f.error_span(:contact_name)
+  .form-group.col-lg-8
+    = f.label :contact_kin, :class => 'control-label col-lg-5'
+    .col-lg-7
+      = f.text_field :contact_kin, :class => 'form-control'
+    f.error_span(:contact_kin)
+  .form-group.col-lg-8
+    = f.label :contact_number, :class => 'control-label col-lg-5'
+    .col-lg-7
+      = f.text_field :contact_number, :class => 'form-control'
+    f.error_span(:contact_number)
+  .form-group.col-lg-8
+    = f.label :hotel, :class => 'control-label two-line col-lg-5'
+    .col-lg-7
+      = f.text_field :hotel, :class => 'form-control'
+    f.error_span(:hotel)
+  .form-group.col-lg-8
+    = f.label :local_number, :class => 'control-label two-line col-lg-5'
+    .col-lg-7
+      = f.text_field :local_number, :class => 'form-control'
+    f.error_span(:local_number)
+  .form-group.col-lg-8
+    = f.label :comments, :class => 'control-label col-lg-5'
+    .col-lg-7
+      = f.text_area :comments, :class => 'form-control'
+    f.error_span(:comments)
+  
+
+  .form-group.col-lg-5
+    .col-lg-offset-2
+      = f.submit nil, :class=> 'btn btn-primary'
       '
       = link_to t('.cancel', :default => t("helpers.links.cancel")), guests_path, :class => 'btn btn-default'

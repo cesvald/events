@@ -1,0 +1,23 @@
+.page-header
+	h1 Lista de Participantes
+	= link_to 'Nuevo Participante', new_event_participant_path(@event), class: "btn btn-primary btn-header"
+	
+br
+
+table.table
+  thead
+    tr
+      th Guest
+      th Participation
+      th
+      th
+      th
+
+  tbody
+    - @participants.each do |participant|
+      tr
+        td = participant.guest
+        td = participant.participation
+        td = link_to 'Show', participant
+        td = link_to 'Edit', edit_participant_path(participant)
+        td = link_to 'Destroy', participant, data: {:confirm => 'Are you sure?'}, :method => :delete

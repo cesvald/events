@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Participant:
+  = @air_ticket.participant
+p
+  strong Arrive at:
+  = @air_ticket.arrive_at
+p
+  strong Arrive to:
+  = @air_ticket.arrive_to
+p
+  strong Leave at:
+  = @air_ticket.leave_at
+p
+  strong Leave from:
+  = @air_ticket.leave_from
+p
+  strong Estimated at:
+  = @air_ticket.estimated_at
+
+= link_to 'Edit', edit_air_ticket_path(@air_ticket)
+'|
+= link_to 'Back', air_tickets_path

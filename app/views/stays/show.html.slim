@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Participant:
+  = @stay.participant
+p
+  strong Space:
+  = @stay.space
+p
+  strong Start at:
+  = @stay.start_at
+p
+  strong End at:
+  = @stay.end_at
+
+= link_to 'Edit', edit_stay_path(@stay)
+'|
+= link_to 'Back', stays_path

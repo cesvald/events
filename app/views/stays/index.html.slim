@@ -1,0 +1,27 @@
+h1 Listing stays
+
+table
+  thead
+    tr
+      th Participant
+      th Space
+      th Start at
+      th End at
+      th
+      th
+      th
+
+  tbody
+    - @stays.each do |stay|
+      tr
+        td = stay.participant
+        td = stay.space
+        td = stay.start_at
+        td = stay.end_at
+        td = link_to 'Show', stay
+        td = link_to 'Edit', edit_stay_path(stay)
+        td = link_to 'Destroy', stay, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Stay', new_stay_path

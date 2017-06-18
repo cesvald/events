@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @modality.name
+p
+  strong Event:
+  = @modality.event
+
+= link_to 'Edit', edit_modality_path(@modality)
+'|
+= link_to 'Back', modalities_path

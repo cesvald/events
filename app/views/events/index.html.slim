@@ -1,0 +1,29 @@
+.page-header
+	h1 Lista de Eventos
+	= link_to 'Nuevo Evento', new_event_path, class: "btn btn-primary btn-header"
+	
+br
+
+table.table
+	thead
+		tr
+			th Nombre
+			th Empieza el
+			th Termina el
+			th
+
+	tbody
+		- @events.each do |event|
+			tr
+				td = event.name
+				td = event.start_at
+				td = event.end_at
+				td
+					.btn-group
+						button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+							| Acciones
+							span.caret
+						ul.dropdown-menu
+							li = link_to 'Entrar', event_participants_path(event)
+							li = link_to 'Editar', edit_event_path(event)
+							li = link_to 'Eliminar', event, data: {:confirm => 'Estás seguro de eliminar este evento?'}, :method => :delete

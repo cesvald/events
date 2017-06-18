@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  participant_id: 
+  arrive_at: 2017-06-18 14:03:58
+  arrive_to: MyString
+  leave_at: 2017-06-18 14:03:58
+  leave_from: MyString
+  estimated_at: 2017-06-18 14:03:58
+
+two:
+  participant_id: 
+  arrive_at: 2017-06-18 14:03:58
+  arrive_to: MyString
+  leave_at: 2017-06-18 14:03:58
+  leave_from: MyString
+  estimated_at: 2017-06-18 14:03:58

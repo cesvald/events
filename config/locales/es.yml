@@ -1,0 +1,99 @@
+es:
+    activerecord:
+        models:
+            user: Usuario
+            air_ticket: Boleto
+            bed: Cama
+            booking: Reserva
+            event: Evento
+            guest: Huésped
+            house: Casa
+            location: Ubicación
+            modalitie: Modalidad
+            participant: Participante
+            participation: Participación
+            payment: Pago
+            place: Lugar
+            profile: Perfil
+            room: Habitación
+            space: Espacio
+            stay: Estadía
+        attributes:
+            user:
+                current_password: Contraseña actual
+                email: Correo electrónico
+                password: Contraseña
+                password_confirmation: Confirmación de la contraseña
+                remember_me: Recordarme
+                reset_password_token: Restablecer token contraseña
+                unlock_token: Desbloquear token
+            air_ticket:
+                arrive_at: "Llega el"
+                arrive_to: "Lugar"
+                leave_at: "Salida el"
+                leave_from: "Lugar"
+                estimated_at: "Llegada estimada a Cuenca"
+            bed:
+                number: "Número"
+            booking:
+                start_date: "Inicia el"
+                end_date: "Termina el"
+            event:
+                name: "Nombre"
+                start_at: "Inicia el"
+                end_at: "Termina el"
+                active: "Activo"
+            guest:
+                name: "Nombre"
+                surname: Apellido
+                email: Email
+                country: País
+                city: Ciudad
+                phone_number: "Teléfono Casa"
+                mobile_number: "Teléfono Móvil"
+                identification: "Número de Pasaporte / Cédula"
+                civil_status: "Estado Civil"
+                profession: "Profesión u ocupación"
+                nationality: "Nacionalidad"
+                health_condition: "¿Posee alguna condición de salud que requiera control médico especial?" 
+                receive_drug: "¿Recibe algún fármaco de prescripción médica y uso delicado?"
+                symptoms: "¿Presenta algún síntoma no usual (diarrea, nausea, vómito, dolor de cabeza, cuerpo o garganta)?"
+                contact_name: "En caso de emergencia podemos contactar a: (nombre)"
+                contact_kin: Parentesco
+                contact_number: "Teléfono de contacto"
+                hotel: "¿En qué hotel se está hospedando en Cuenca durante el Encuentro?"
+                local_number: "¿Cuenta con algún número de teléfono local: (hotel, móvil)?"
+                comments: "Comentarios adicionales"
+            house:
+                name: "Nombre"
+                sketch: Diagrama
+            location:
+                name: Nombre
+            modality:
+                name: Nombre
+            participation:
+                amount: Valor
+            payment:
+                paid_at: "Pagado el"
+                amount: "Valor"
+                description: Descripción
+            place:
+                name: "Nombre"
+            room:
+                name: "Nombre"
+            space:
+                name: "Nombre"
+            stay:
+                start_at: "Inicial el"
+                end_at: "Termina el"
+            
+                
+    formtastic:
+        yes: 'Si'
+        no: 'No'
+        create: 'Crear %{model}'
+        update: 'Actualizar %{model}'
+        submit: 'Crear %{model}'
+        cancel: 'Cancelar %{model}'
+        reset: 'Reiniciar %{model}'
+        required: 'obligatorio'

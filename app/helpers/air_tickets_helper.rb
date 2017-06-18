@@ -1,0 +1,2 @@
+module AirTicketsHelper
+end
