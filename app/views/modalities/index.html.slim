@@ -1,23 +1,21 @@
-h1 Listing modalities
-
-table
-  thead
-    tr
-      th Name
-      th Event
-      th
-      th
-      th
-
-  tbody
-    - @modalities.each do |modality|
-      tr
-        td = modality.name
-        td = modality.event
-        td = link_to 'Show', modality
-        td = link_to 'Edit', edit_modality_path(modality)
-        td = link_to 'Destroy', modality, data: {:confirm => 'Are you sure?'}, :method => :delete
+.page-header
+	h1 Lista de Modalidades
+	= link_to 'Nueva Modalidad', new_event_modality_path, class: "btn btn-primary btn-header"
 
 br
 
-= link_to 'New Modality', new_modality_path
+table.table
+  thead
+    tr
+      th Nombre
+      th Espacios
+      th
+      th
+  tbody
+    - @modalities.each do |modality|
+      tr
+        td = modality
+        td = modality.spaces_to_s
+        td = link_to 'Editar', edit_modality_path(modality), class: "btn btn-xs btn-default"
+        td = link_to 'Eliminar', modality, data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-xs btn-danger"
+

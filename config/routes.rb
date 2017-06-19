@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
   
   resources :places
-  resources :participations
   
   resources :events do
-    resources :spaces, shallow: true
     resources :modalities, shallow: true
-    resources :participants, shallow: true do
+    resources :participants do
       resources :air_tickets, shallow: true
       resources :payments, shallow: true
       resources :stays, shallow: true

@@ -1,8 +1,7 @@
-= semantic_form_for @space do |f|
+= semantic_form_for [@event, @space] do |f|
   = f.inputs do
-    = f.input :event
     = f.input :place
-    = f.input :amount
+    = f.input :amount, label: "Valor por noche (USD)"
 
   = f.actions do
     = f.action :submit, as: :input

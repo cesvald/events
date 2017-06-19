@@ -27,6 +27,10 @@ gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap-datepicker-rails'
 gem "bootstrap_flash_messages"
+gem 'bootstrap_form'
+
+# Rails-JQuery nested manager
+gem "nested_form"
 
 # HTML manipulation and formatting
 gem 'formtastic'

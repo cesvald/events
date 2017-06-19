@@ -105,4 +105,4 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		
 	blurTokenInput: (event) ->
 		$(event.target).blur()
-		$(event.target).blur()
+		

@@ -1,8 +1,8 @@
-h1 Editing modality
+h1= "Editar Modalida #{@modality}"
 
 == render 'form'
 
-= link_to 'Show', @modality
-'|
-= link_to 'Back', modalities_path
+br
+
+= link_to 'Volver', event_modalities_path(@modality.event), class: "btn btn-default"
 

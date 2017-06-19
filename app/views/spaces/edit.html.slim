@@ -2,7 +2,6 @@ h1 Editing space
 
 == render 'form'
 
-= link_to 'Show', @space
-'|
-= link_to 'Back', spaces_path
+br
 
+= link_to 'Volver', event_spaces_path(@space.event), class: "btn btn-default"

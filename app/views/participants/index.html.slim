@@ -7,8 +7,8 @@ br
 table.table
   thead
     tr
-      th Guest
-      th Participation
+      th Huésped
+      th Participación
       th
       th
       th
@@ -18,6 +18,5 @@ table.table
       tr
         td = participant.guest
         td = participant.participation
-        td = link_to 'Show', participant
-        td = link_to 'Edit', edit_participant_path(participant)
-        td = link_to 'Destroy', participant, data: {:confirm => 'Are you sure?'}, :method => :delete
+        td = link_to 'Editar', edit_event_participant_path(@event, participant), class: "btn btn-xs btn-default"
+        td = link_to 'Eliminar', [@event, participant], data: {:confirm => '¿Estás seguro de eliminar este participante?'}, :method => :delete, class: "btn btn-xs btn-danger"

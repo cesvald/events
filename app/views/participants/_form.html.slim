@@ -1,8 +1,20 @@
-= semantic_form_for [@event, @participant] do |f|
-  = f.inputs do
-    = f.input :guest, as: :string
-    = select_tag :modality_id, @event.modalities.pluck(:id, :name), value: (@participant.participation ? @participant.modality.id : nil)
-    = select_tag :space_id, @event.spaces.joins(:place).pluck("spaces.id", "places.name"), value: (@participant.participation ? @participant.participation.space.id : nil)
+= form_for [@event, @participant] do |f|
+  = render "layouts/error_messages", :target => @participant
+  .form-group
+    = f.label :guest_id, class: "control-label"
+    .input-group
+      = f.text_field :guest_id, :data => {:guest => @participant.guest}
+      span#clean-guest-input-btn.input-group-btn class="(action_name == 'edit' ? 'invisible', '')"
+        button.btn.btn-default[type="button"] X
+  .form-group
+    .form-label
+      label.control-label Modalidad
+    .form-wrapper
+      = select_tag :modality_id, options_for_select(@event.modalities.pluck(:name, :id), @participant.space ? @participant.space.modality.id : nil), class: "form-control", include_blank: true
+  .form-group
+    .form-label
+      label.control-label Espacio
+    .form-wrapper
+      = f.select :space_id, (@participant.space.nil? ? [] : options_for_select(@participant.space.modality.spaces.joins(:place).pluck("places.name", "spaces.id"), @participant.space.id)), class: "form-control", include_blank: true
 
-  = f.actions do
-    = f.action :submit, as: :input
+  = f.submit nil, :class => 'btn btn-primary'

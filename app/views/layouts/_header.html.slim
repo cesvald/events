@@ -22,7 +22,6 @@ nav.navbar.navbar-default
 					- if session.has_key?(:profile) and session[:profile] == 'eventer'
 						- if @event
 							li = link_to "Participantes", event_participants_path(@event)
-							li = link_to "Espacios", event_spaces_path(@event)
 							li = link_to "Modalidades", event_modalities_path(@event)
 				ul.nav.navbar-nav.navbar-right
 					- if current_user.hoster?

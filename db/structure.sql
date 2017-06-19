@@ -353,7 +353,7 @@ ALTER SEQUENCE modalities_id_seq OWNED BY modalities.id;
 CREATE TABLE participants (
     id integer NOT NULL,
     guest_id integer,
-    participation_id integer,
+    space_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -376,39 +376,6 @@ CREATE SEQUENCE participants_id_seq
 --
 
 ALTER SEQUENCE participants_id_seq OWNED BY participants.id;
-
-
---
--- Name: participations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE participations (
-    id integer NOT NULL,
-    space_id integer,
-    modality_id integer,
-    amount numeric,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: participations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE participations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: participations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE participations_id_seq OWNED BY participations.id;
 
 
 --
@@ -582,9 +549,9 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE spaces (
     id integer NOT NULL,
-    event_id integer,
+    modality_id integer,
     place_id integer,
-    amount numeric,
+    amount numeric DEFAULT 0,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -616,7 +583,7 @@ ALTER SEQUENCE spaces_id_seq OWNED BY spaces.id;
 CREATE TABLE stays (
     id integer NOT NULL,
     participant_id integer,
-    space_id integer,
+    place_id integer,
     start_at timestamp without time zone,
     end_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
@@ -746,13 +713,6 @@ ALTER TABLE ONLY modalities ALTER COLUMN id SET DEFAULT nextval('modalities_id_s
 --
 
 ALTER TABLE ONLY participants ALTER COLUMN id SET DEFAULT nextval('participants_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY participations ALTER COLUMN id SET DEFAULT nextval('participations_id_seq'::regclass);
 
 
 --
@@ -892,14 +852,6 @@ ALTER TABLE ONLY participants
 
 
 --
--- Name: participations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY participations
-    ADD CONSTRAINT participations_pkey PRIMARY KEY (id);
-
-
---
 -- Name: payments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1027,24 +979,10 @@ CREATE INDEX index_participants_on_guest_id ON participants USING btree (guest_i
 
 
 --
--- Name: index_participants_on_participation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_participants_on_space_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_participants_on_participation_id ON participants USING btree (participation_id);
-
-
---
--- Name: index_participations_on_modality_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_participations_on_modality_id ON participations USING btree (modality_id);
-
-
---
--- Name: index_participations_on_space_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_participations_on_space_id ON participations USING btree (space_id);
+CREATE INDEX index_participants_on_space_id ON participants USING btree (space_id);
 
 
 --
@@ -1076,10 +1014,10 @@ CREATE INDEX index_rooms_on_house_id ON rooms USING btree (house_id);
 
 
 --
--- Name: index_spaces_on_event_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_spaces_on_modality_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_spaces_on_event_id ON spaces USING btree (event_id);
+CREATE INDEX index_spaces_on_modality_id ON spaces USING btree (modality_id);
 
 
 --
@@ -1097,10 +1035,10 @@ CREATE INDEX index_stays_on_participant_id ON stays USING btree (participant_id)
 
 
 --
--- Name: index_stays_on_space_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_stays_on_place_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_stays_on_space_id ON stays USING btree (space_id);
+CREATE INDEX index_stays_on_place_id ON stays USING btree (place_id);
 
 
 --
@@ -1189,27 +1127,11 @@ ALTER TABLE ONLY participants
 
 
 --
--- Name: fk_participants_participation_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_participants_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY participants
-    ADD CONSTRAINT fk_participants_participation_id FOREIGN KEY (participation_id) REFERENCES participations(id);
-
-
---
--- Name: fk_participations_modality_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY participations
-    ADD CONSTRAINT fk_participations_modality_id FOREIGN KEY (modality_id) REFERENCES modalities(id);
-
-
---
--- Name: fk_participations_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY participations
-    ADD CONSTRAINT fk_participations_space_id FOREIGN KEY (space_id) REFERENCES spaces(id);
+    ADD CONSTRAINT fk_participants_space_id FOREIGN KEY (space_id) REFERENCES spaces(id);
 
 
 --
@@ -1245,11 +1167,11 @@ ALTER TABLE ONLY rooms
 
 
 --
--- Name: fk_spaces_event_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_spaces_modality_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY spaces
-    ADD CONSTRAINT fk_spaces_event_id FOREIGN KEY (event_id) REFERENCES events(id);
+    ADD CONSTRAINT fk_spaces_modality_id FOREIGN KEY (modality_id) REFERENCES modalities(id);
 
 
 --
@@ -1269,11 +1191,11 @@ ALTER TABLE ONLY stays
 
 
 --
--- Name: fk_stays_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fk_stays_place_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY stays
-    ADD CONSTRAINT fk_stays_space_id FOREIGN KEY (space_id) REFERENCES spaces(id);
+    ADD CONSTRAINT fk_stays_place_id FOREIGN KEY (place_id) REFERENCES places(id);
 
 
 --
@@ -1311,8 +1233,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170618082148');
 INSERT INTO schema_migrations (version) VALUES ('20170618133334');
 
 INSERT INTO schema_migrations (version) VALUES ('20170618134344');
-
-INSERT INTO schema_migrations (version) VALUES ('20170618135126');
 
 INSERT INTO schema_migrations (version) VALUES ('20170618135818');
 

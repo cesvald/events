@@ -9,7 +9,7 @@ es:
             guest: Huésped
             house: Casa
             location: Ubicación
-            modalitie: Modalidad
+            modality: Modalidad
             participant: Participante
             participation: Participación
             payment: Pago
@@ -82,7 +82,9 @@ es:
             room:
                 name: "Nombre"
             space:
+                place: "Lugar"
                 name: "Nombre"
+                amount: "Valor por noche de estadía (USD)"
             stay:
                 start_at: "Inicial el"
                 end_at: "Termina el"

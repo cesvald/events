@@ -20,10 +20,10 @@ class Lodging.Routers.Bookings extends Backbone.Router
 			$('#booking_guest_id').val(guest.id)
 
 		$('.datepicker').datepicker({
-	    format: 'yyyy-mm-dd'
+	    	format: 'yyyy-mm-dd'
 		})
 
-		$('.start-datepicker').each( -> 
+		$('.start-datepicker').each( ->
 			self.updateEndDate($(this)) if this.val isnt ''
 		)
 		
