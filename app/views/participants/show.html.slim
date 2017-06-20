@@ -1,5 +1,6 @@
 .page-header
 	h4= @participant.guest
+	= link_to 'Información personal', edit_guest_path(@participant.guest), class: "btn btn-primary btn-header btn-xs small-link"
 
 .participant-body
   p.modality

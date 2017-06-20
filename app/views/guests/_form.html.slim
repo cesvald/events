@@ -56,7 +56,9 @@
         = f.text_field :nationality, :class => 'form-control'
       f.error_span(:nationality)
   br
-  h2 Otros datos:
+  br
+  .page-header
+    h4 Otros datos:
   .row
     .form-group.col-lg-8
       = f.label :health_condition, :class => 'control-label col-lg-5'
@@ -105,9 +107,6 @@
       = f.text_area :comments, :class => 'form-control'
     f.error_span(:comments)
   
-
-  .form-group.col-lg-5
-    .col-lg-offset-2
+  .row
+    .form-group.col-lg-5
       = f.submit nil, :class=> 'btn btn-primary'
-      '
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), guests_path, :class => 'btn btn-default'
