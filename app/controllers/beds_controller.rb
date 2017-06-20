@@ -1,4 +1,4 @@
-class BedsController < InheritedResources::Base
+class BedsController < BaseHostingController
 
 	def index
 		@locations = Location.includes( houses: [ rooms: [:beds] ] )

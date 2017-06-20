@@ -4,7 +4,7 @@
     = f.label :guest_id, class: "control-label"
     .input-group
       = f.text_field :guest_id, :data => {:guest => @participant.guest}
-      span#clean-guest-input-btn.input-group-btn class="(action_name == 'edit' ? 'invisible', '')"
+      span#clean-guest-input-btn.input-group-btn class=(action_name == 'edit' ? 'invisible' : '')
         button.btn.btn-default[type="button"] X
   .form-group
     .form-label
@@ -15,6 +15,6 @@
     .form-label
       label.control-label Espacio
     .form-wrapper
-      = f.select :space_id, (@participant.space.nil? ? [] : options_for_select(@participant.space.modality.spaces.joins(:place).pluck("places.name", "spaces.id"), @participant.space.id)), class: "form-control", include_blank: true
+      = f.select :space_id, (@participant.space.nil? ? [] : options_for_select(@participant.space.modality.spaces.joins(:place).pluck("places.name || ' (' || spaces.amount || ' USD)'", "spaces.id"), @participant.space.id)), {}, {class: "form-control", include_blank: true}
 
   = f.submit nil, :class => 'btn btn-primary'

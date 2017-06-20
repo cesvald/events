@@ -13,6 +13,7 @@
  *= require formtastic
  *= require formtastic-bootstrap
  *= require bootstrap-datepicker3
+ *= require bootstrap-datetimepicker
  *= require_self
  *= require_tree .
  */

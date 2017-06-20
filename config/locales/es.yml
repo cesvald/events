@@ -28,10 +28,10 @@ es:
                 reset_password_token: Restablecer token contraseña
                 unlock_token: Desbloquear token
             air_ticket:
-                arrive_at: "Llega el"
-                arrive_to: "Lugar"
+                arrive_at: "Llegada el"
+                arrive_to: "Llegada a"
                 leave_at: "Salida el"
-                leave_from: "Lugar"
+                leave_from: "Salida desde"
                 estimated_at: "Llegada estimada a Cuenca"
             bed:
                 number: "Número"
@@ -88,6 +88,8 @@ es:
             stay:
                 start_at: "Inicial el"
                 end_at: "Termina el"
+                place: "Espacio"
+                amount: "Valor por noche"
             
                 
     formtastic:
@@ -99,3 +101,5 @@ es:
         cancel: 'Cancelar %{model}'
         reset: 'Reiniciar %{model}'
         required: 'obligatorio'
+            
+            

@@ -25,9 +25,15 @@ gem 'sass-rails', '~> 5.0'
 gem "therubyracer"
 gem "less-rails" 
 gem 'twitter-bootstrap-rails'
-gem 'bootstrap-datepicker-rails'
 gem "bootstrap_flash_messages"
 gem 'bootstrap_form'
+
+# bootstrap-datepicker-rails
+gem 'bootstrap-datepicker-rails'
+
+# bootstrap-datetime-picker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # Rails-JQuery nested manager
 gem "nested_form"

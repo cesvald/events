@@ -1,11 +1,18 @@
-= semantic_form_for @air_ticket do |f|
-  = f.inputs do
-    = f.input :participant
-    = f.input :arrive_at
-    = f.input :arrive_to
-    = f.input :leave_at
-    = f.input :leave_from
-    = f.input :estimated_at
+= bootstrap_form_for [@event, @participant, @air_ticket] do |f|
+  .row
+    .field.col-lg-4
+      = f.text_field :arrive_at, value: f.object.arrive_at.nil? ? nil : l(f.object.arrive_at)
+      = f.error_span(:arrive_at)
+    .field.col-lg-4
+      = f.text_field :leave_at, value: f.object.leave_at.nil? ? nil : l(f.object.leave_at)
+      = f.error_span(:leave_at)
+  .row
+    .field.col-lg-4
+      = f.text_field :arrive_to
+    .field.col-lg-4
+      = f.text_field :leave_from
+  .row
+    .field.col-lg-4
+      = f.text_field :estimated_at, value: f.object.estimated_at.nil? ? nil : l(f.object.estimated_at)
 
-  = f.actions do
-    = f.action :submit, as: :input
+  = f.submit nil, :class => 'btn btn-primary'

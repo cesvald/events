@@ -7,7 +7,6 @@ class CreateAirTickets < ActiveRecord::Migration
       t.datetime :leave_at
       t.string :leave_from
       t.datetime :estimated_at
-
       t.timestamps null: false
     end
   end

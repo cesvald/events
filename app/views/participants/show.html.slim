@@ -1,12 +1,113 @@
-p#notice = notice
+.page-header
+	h4= @participant.guest
 
-p
-  strong Guest:
-  = @participant.guest
-p
-  strong Participation:
-  = @participant.participation
-
-= link_to 'Edit', edit_participant_path(@participant)
-'|
-= link_to 'Back', participants_path
+.participant-body
+  p.modality
+    b Modo de Participación: 
+    span= @participant.space
+  
+  br
+  
+  h5 Información del viaje
+  |&nbsp;
+  - if @participant.air_ticket.nil?
+    = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
+    br
+    br
+  - if not @participant.air_ticket.nil?
+    table.table.table-actions
+      thead
+        tr
+          th Llega el
+          th Sale el
+          th Llega a
+          th Sale desde
+          th Llegada estimada a Cuenca
+          th
+          th
+      tr
+        td= l @participant.air_ticket.arrive_at
+        td= l @participant.air_ticket.leave_at
+        td= @participant.air_ticket.arrive_to
+        td= @participant.air_ticket.leave_from
+        td= l @participant.air_ticket.estimated_at
+        td.actions
+          = link_to "Editar", edit_event_participant_air_ticket_path(@event, @participant, @participant.air_ticket), class: "btn btn-xs btn-default"
+          |&nbsp;
+          = link_to "Eliminar", [@event, @participant, @participant.air_ticket], method: :delete, data: {confirm: "Estás seguro de eliminar este boleto aereo"}, class: "btn btn-xs btn-danger"
+    br
+  
+  h5 Estadías
+  |&nbsp;
+  = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
+  br
+  table.table.table-actions
+    thead
+      tr
+        th Espacio
+        th Desde el
+        th Hasta el
+        th Valor total
+        th
+        th
+    - @participant.stays.each do |stay|
+      tr
+        td= stay.place
+        td= l stay.start_at, format: :date
+        td= l stay.end_at, format: :date
+        td= stay.display_detailed_total_amount
+        td
+          = link_to "Editar", edit_event_participant_stay_path(@event, @participant, stay), class: "btn btn-xs btn-default"
+          |&nbsp;
+          = link_to "Eliminar", [@event, @participant, stay], method: :delete, data: {confirm: "Estás seguro de eliminar esta estadía"}, class: "btn btn-xs btn-danger"
+  
+  br
+  
+  h5 Pagos
+  |&nbsp;
+  = link_to "Adicionar Pago", new_event_participant_payment_path(@event, @participant), class: 'btn btn-primary btn-xs'
+  br
+  table.table.table-actions
+    thead
+      tr
+        th Pagado el
+        th Valor
+        th Descripción
+        th
+        th
+    - @participant.payments.each do |payment|
+      tr
+        td= l payment.paid_at
+        td= payment.amount
+        td= payment.description
+        td.actions
+          = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"
+          |&nbsp;
+          = link_to "Eliminar", [@event, @participant, payment], method: :delete, data: {confirm: "Estás seguro de eliminar este pago"}, class: "btn btn-xs btn-danger"
+  
+  
+  table.table
+    thead
+      tr
+        th
+          h5 Resumen de un vistazo
+        th
+    tr
+      td= @participant.space.display_modality_space
+      td= @participant.space.display_amount
+    tr
+      td Total Estadías
+      td= @participant.display_stays_total_amount
+    tr.payment
+      td Total Pagado
+      td= "(#{@participant.display_payments_total_amount})"
+    tr
+      td
+        b Total
+      td
+        b= @participant.display_due
+  
+  = link_to 'Volver', event_participants_path(@event), class: "btn btn-default"
+  
+  br
+  br

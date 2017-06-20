@@ -1,4 +1,4 @@
-class PlacesController < InheritedResources::Base
+class PlacesController < BaseEventController
 
   private
 

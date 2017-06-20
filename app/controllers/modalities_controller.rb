@@ -1,4 +1,4 @@
-class ModalitiesController < InheritedResources::Base
+class ModalitiesController < BaseEventController
   
   belongs_to :event, optional: true
   

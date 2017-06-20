@@ -1,7 +1,29 @@
 .page-header
 	h1 Lista de Participantes
 	= link_to 'Nuevo Participante', new_event_participant_path(@event), class: "btn btn-primary btn-header"
-	
+
+h2 Buscar Por
+= form_tag event_participants_path, method: :get do
+  .row
+    .form-group.col-lg-3
+      = label_tag :by_guest, nil, class: "control-label"
+      .input-group
+        = text_field_tag :by_guest, nil, :data => {:guest => (params[:by_guest] && !params[:by_guest].blank?) ? Guest.find(params[:by_guest]) : "" }, class: "form-control"
+        span#clean-guest-btn.input-group-btn
+          button.btn.btn-default[type="button"] X
+    .form-group.col-lg-3
+      = label_tag :by_modality, nil, class: "control-label"
+      = select_tag :by_modality, options_for_select(@event.modalities.pluck(:name, :id), params[:by_modality]), include_blank: true, class: "form-control"
+    .form-group.col-lg-3
+      = label_tag :by_space, nil, class: "control-label"
+      = select_tag :by_space, nil, include_blank: true, class: "form-control", disabled: :disabled, :data => { :space => params[:by_space] }
+    .form-group.col-lg-2
+      = label_tag :by_confirmed, nil, class: "control-label"
+      = select_tag :by_confirmed, options_for_select([["Si", 0], ["No", 1]], params[:by_confirmed]), include_blank: true, class: "form-control"
+    .form-group.col-lg-1
+      = label_tag :by_con, nil, class: "control-label invisible"
+      = submit_tag "Buscar", class: "btn btn-primary"
+br
 br
 
 table.table
@@ -9,7 +31,7 @@ table.table
     tr
       th Huésped
       th Participación
-      th
+      th Confirmado 
       th
       th
 
@@ -17,6 +39,16 @@ table.table
     - @participants.each do |participant|
       tr
         td = participant.guest
-        td = participant.participation
-        td = link_to 'Editar', edit_event_participant_path(@event, participant), class: "btn btn-xs btn-default"
-        td = link_to 'Eliminar', [@event, participant], data: {:confirm => '¿Estás seguro de eliminar este participante?'}, :method => :delete, class: "btn btn-xs btn-danger"
+        td = participant.space
+        td = participant.display_confirmed
+        td
+          .btn-group
+						button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+							| Acciones
+							span.caret
+						ul.dropdown-menu
+						  li = link_to 'Ver Detalles', [@event, participant]
+						  li = link_to 'Cambiar participación', edit_event_participant_path(@event, participant)
+						  li = link_to 'Eliminar', [@event, participant], data: {:confirm => '¿Estás seguro de eliminar este participante?'}, :method => :delete
+        
+        

@@ -1,4 +1,4 @@
-class HousesController < ApplicationController
+class HousesController < BaseHostingController
 
   inherit_resources
 	actions :index, :create, :update, :destroy, :show, :edit

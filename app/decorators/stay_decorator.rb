@@ -1,6 +1,15 @@
 class StayDecorator < Draper::Decorator
-  delegate_all
-
+  decorates :stay
+  include Draper::LazyHelpers
+  
+  def display_amount
+    number_to_currency source.amount, unit: 'USD', precision: 0, delimiter: '.'
+  end
+  
+  def display_total_amount
+    number_to_currency source.total_amount, unit: 'USD', precision: 0, delimiter: '.'
+  end
+  
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

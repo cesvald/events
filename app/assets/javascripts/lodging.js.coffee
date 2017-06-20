@@ -8,6 +8,9 @@ window.Lodging =
   	new Lodging.Routers.Bookings() if controller == "bookings"
   	new Lodging.Routers.Participants() if controller == "participants"
   	new Lodging.Routers.Modalities() if controller == "modalities"
+  	new Lodging.Routers.AirTickets() if controller == "air_tickets"
+  	new Lodging.Routers.Stays() if controller == "stays"
+  	new Lodging.Routers.Payments() if controller == "payments"
   	Backbone.history.stop()
   	Backbone.history.start( pushState: true )
 

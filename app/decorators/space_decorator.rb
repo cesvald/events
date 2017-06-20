@@ -1,5 +1,15 @@
 class SpaceDecorator < Draper::Decorator
-  delegate_all
+  
+  decorates :space
+  include Draper::LazyHelpers
+  
+  def display_amount
+    number_to_currency source.amount, unit: 'USD', precision: 0, delimiter: '.'
+  end
+  
+  def display_modality_space
+    "Modalidad #{source.modality} en #{source.place}"
+  end
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

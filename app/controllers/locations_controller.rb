@@ -1,4 +1,4 @@
-class LocationsController < ApplicationController
+class LocationsController < BaseHostingController
 
 	inherit_resources
   actions :index, :create, :update, :destroy, :show, :new

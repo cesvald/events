@@ -11,8 +11,10 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 		if $('#participant_guest_id').data('guest') isnt null && $('#participant_guest_id').data('guest') isnt ''
 			guest = $('#participant_guest_id').data('guest')
 			$('#token-input-participant_guest_id').val(guest.name + " " + guest.surname + " (" + guest.email + ")")
+			$('#token-input-participant_guest_id').attr('readonly', 'readonly')
 			$('#token-input-participant_guest_id').addClass('token-occupied')
 			$('#participant_guest_id').val(guest.id)
+			
 		
 		@modalities = new Lodging.Collections.Modalities()
 		@modalities.reset(gon.modalities)

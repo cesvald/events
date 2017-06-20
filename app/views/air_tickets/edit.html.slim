@@ -1,8 +1,10 @@
-h1 Editing air_ticket
+h1 Editar Boleto Aereo
+
+br
 
 == render 'form'
 
-= link_to 'Show', @air_ticket
-'|
-= link_to 'Back', air_tickets_path
+br
+
+= link_to 'Volver', event_participant_path(@air_ticket.participant.space.modality.event, @air_ticket.participant), class:"btn btn-default"
 

@@ -586,6 +586,7 @@ CREATE TABLE stays (
     place_id integer,
     start_at timestamp without time zone,
     end_at timestamp without time zone,
+    amount numeric,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

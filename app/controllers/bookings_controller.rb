@@ -1,6 +1,7 @@
-class BookingsController < ApplicationController
-	inherit_resources
+class BookingsController < BaseHostingController
+	
 	respond_to :html, :json
+	
 	before_action :add_locations
 	before_action :check_profiles
 	

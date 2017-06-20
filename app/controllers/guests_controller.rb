@@ -1,5 +1,7 @@
 class GuestsController < ApplicationController
+	
 	inherit_resources
+	
 	has_scope :by_name
 	has_scope :by_surname
 	has_scope :by_email

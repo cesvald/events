@@ -1,5 +1,7 @@
-h1 New air_ticket
-
+h3= "Nuevo Boleto Aereo para #{@participant.guest}"
+br
 == render 'form'
 
-= link_to 'Back', air_tickets_path
+br
+
+= link_to 'Volver', event_participant_air_tickets_path(@event, @participant)

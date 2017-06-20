@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   resources :events do
     resources :modalities, shallow: true
     resources :participants do
-      resources :air_tickets, shallow: true
-      resources :payments, shallow: true
-      resources :stays, shallow: true
+      resources :air_tickets
+      resources :payments
+      resources :stays
     end  
   end
   

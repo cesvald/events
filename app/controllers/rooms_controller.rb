@@ -1,4 +1,4 @@
-class RoomsController < InheritedResources::Base
+class RoomsController < BaseHostingController
 
   private
 
