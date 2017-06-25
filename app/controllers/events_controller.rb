@@ -29,8 +29,11 @@ class EventsController < BaseEventController
       guest.city = row['country']
       guest.city = row['phone_number']
       guest.save
+      puts 'Contacto guardado: ' + row['email']
       modality = @event.modalities.where(name: row['modality']).first
+      puts 'La modalidad: ' + row['modality'] + ' si fue encontrada'
       space = modality.spaces.joins(:place).where("places.name = ?", row['space']).first
+      puts 'El espacio: ' + row['space'] + ' si fue encontrado'
       participant = Participant.create(guest: guest, space: space)
       if participant
         puts 'El participante ' + participant.id.to_s + " se ha importado correctamente"
