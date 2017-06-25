@@ -47,8 +47,8 @@ es:
                 name: "Nombre"
                 surname: Apellido
                 email: Email
-                country: País
-                city: Ciudad
+                country: "País de residencia"
+                city: "Ciudad residencia"
                 phone_number: "Teléfono Casa"
                 mobile_number: "Teléfono Móvil"
                 identification: "Número de Pasaporte / Cédula"
@@ -64,6 +64,8 @@ es:
                 hotel: "¿En qué hotel se está hospedando en Cuenca durante el Encuentro?"
                 local_number: "¿Cuenta con algún número de teléfono local: (hotel, móvil)?"
                 comments: "Comentarios adicionales"
+                is_initiate: "Es Iniciado"
+                age: Edad
             house:
                 name: "Nombre"
                 sketch: Diagrama

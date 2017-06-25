@@ -192,7 +192,9 @@ CREATE TABLE guests (
     contact_number character varying,
     hotel character varying,
     local_number character varying,
-    comments text
+    comments text,
+    is_initiate boolean,
+    age integer
 );
 
 
@@ -389,7 +391,8 @@ CREATE TABLE payments (
     amount numeric,
     description text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    type character varying
 );
 
 
@@ -1244,4 +1247,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170618140522');
 INSERT INTO schema_migrations (version) VALUES ('20170618140726');
 
 INSERT INTO schema_migrations (version) VALUES ('20170618141732');
+
+INSERT INTO schema_migrations (version) VALUES ('20170621142819');
+
+INSERT INTO schema_migrations (version) VALUES ('20170625212559');
 

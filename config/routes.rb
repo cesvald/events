@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :places
   
   resources :events do
+    member do
+      get :new_import
+      post :import
+    end
     resources :modalities, shallow: true
     resources :participants do
       resources :air_tickets
