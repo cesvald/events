@@ -34,7 +34,7 @@ class EventsController < BaseEventController
       if participant
         puts 'El participante ' + participant.id + " se ha importado correctamente"
       else
-        puts 'No se pudo importar al participante ' + participant.id ' porque ' participant.errors.full_messages
+        puts 'No se pudo importar al participante ' + participant.id + ' porque ' + participant.errors.full_messages
       end
     end
   end
