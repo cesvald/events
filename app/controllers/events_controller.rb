@@ -30,12 +30,12 @@ class EventsController < BaseEventController
       guest.city = row['phone_number']
       guest.save
       modality = @event.modalities.where(name: row['modality']).first
-      space = modality.spaces.joins('place').where("places.name = ?", row['space']).first
+      space = modality.spaces.joins(:place).where("places.name = ?", row['space']).first
       participant = Participant.create(guest: guest, space: space)
       if participant
-        puts 'El participante ' + participant.id + " se ha importado correctamente"
+        puts 'El participante ' + participant.id.to_s + " se ha importado correctamente"
       else
-        puts 'No se pudo importar al participante ' + participant.id + ' porque ' + participant.errors.full_messages
+        puts 'No se pudo importar al participante ' + participant.id.to_s + ' porque ' + participant.errors.full_messages
       end
     end
   end
