@@ -17,7 +17,7 @@ class EventsController < BaseEventController
     csv_file = params[:file]
     puts 'INICIO ------------------------:   '
     CSV.foreach(csv_file.path, :headers => true, :col_sep => ';', encoding:'iso-8859-1:utf-8') do |row|
-      guest = Guest.where(email: row[:email]).first
+      guest = Guest.where(email: row['email']).first
       if not guest
         guest = Guest.new(email: row['email'])
         puts 'Creando nuevo contacto en importacion con email: ' + row['email']

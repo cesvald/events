@@ -6,6 +6,8 @@ class Guest < ActiveRecord::Base
 	scope :by_surname, ->(surname) { where( 'surname ILIKE :surname', {surname: "%#{surname}%"} ) }
 	scope :by_email, ->(email) { where( 'email ILIKE :email', {email: "%#{email}%"} ) }
 	
+	validates_uniqueness_of :email
+	
 	def to_s
 		"#{name} #{surname} (#{email})"
 	end
