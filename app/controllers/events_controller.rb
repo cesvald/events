@@ -1,6 +1,6 @@
 class EventsController < BaseEventController
   
-  custom_actions :resource => [:new_import, :import]
+  custom_actions :resource => [:new_import]
   
   require 'csv'
   
@@ -13,23 +13,24 @@ class EventsController < BaseEventController
   end
   
   def import
-    csv_file = params[:csv_file]
+    @event = Event.find params[:id]
+    csv_file = params[:file]
     puts 'INICIO ------------------------:   '
     CSV.foreach(csv_file.path, :headers => true, :col_sep => ';', encoding:'iso-8859-1:utf-8') do |row|
       guest = Guest.where(email: row[:email]).first
       if not guest
-        guest = Guest.new(email: row[:email])
-        puts 'Creando nuevo contacto en importacion con email: ' + row[:email]
+        guest = Guest.new(email: row['email'])
+        puts 'Creando nuevo contacto en importacion con email: ' + row['email']
       end
-      guest.name = row[:name]
-      guest.surname = row[:surname]
-      guest.age = row[:age]
-      guest.city = row[:city]
-      guest.city = row[:country]
-      guest.city = row[:phone_number]
+      guest.name = row['name']
+      guest.surname = row['surname']
+      guest.age = row['age']
+      guest.city = row['city']
+      guest.city = row['country']
+      guest.city = row['phone_number']
       guest.save
-      modality = @event.modalities.where(name: row[:modality]).first
-      space = modality.spaces.joins(:place).where("places.name = ?", row[:space]).first
+      modality = @event.modalities.where(name: row['modality']).first
+      space = modality.spaces.joins('place').where("places.name = ?", row['space']).first
       participant = Participant.create(guest: guest, space: space)
       if participant
         puts 'El participante ' + participant.id + " se ha importado correctamente"
