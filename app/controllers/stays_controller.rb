@@ -3,6 +3,15 @@ class StaysController < BaseEventController
   belongs_to :participant, optional: true
   before_action :set_event
   
+  def new
+    new! do |format|
+      format.html {
+        gon.end_pre_date = @participant.modality.start_at
+        gon.start_post_date = @participant.modality.end_at
+      }
+    end
+  end
+  
   def create
     create! { event_participant_path(@event, @participant) }
   end

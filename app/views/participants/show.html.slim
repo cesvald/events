@@ -45,14 +45,17 @@
   table.table.table-actions
     thead
       tr
+        th 
         th Espacio
         th Desde el
         th Hasta el
         th Valor total
         th
         th
-    - @participant.stays.each do |stay|
+    - @participant.stays.order(:start_at).each do |stay|
       tr
+        td
+          b= stay.when_to_s
         td= stay.place
         td= l stay.start_at, format: :date
         td= l stay.end_at, format: :date

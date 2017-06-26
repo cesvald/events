@@ -1,6 +1,7 @@
 class Participant < ActiveRecord::Base
   
   belongs_to :guest
+  
   belongs_to :space
   
   has_one :air_ticket
@@ -48,6 +49,10 @@ class Participant < ActiveRecord::Base
   
   def due
     space.amount + stays_total_amount - payments_total_amount
+  end
+  
+  def modality
+    space.modality
   end
   
 end

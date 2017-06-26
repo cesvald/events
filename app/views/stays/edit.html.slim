@@ -1,8 +1,15 @@
-h1 Editar Estadía
+h4
+    b Editar 
+    = " Estadía para #{@participant.guest}"
+    br
+    br
+    = "Está en la modalidad #{@participant.modality} desde el #{l @participant.modality.start_at, format: :date} hasta el #{l @participant.modality.end_at, format: :date}"
+
+br
 
 == render 'form'
 
 br
 
-= link_to 'Volver', event_participant_path(@stay.participant.space.modality.event, @stay.participant)
+= link_to 'Volver', event_participant_path(@stay.participant.space.modality.event, @stay.participant), class: "btn btn-default"
 

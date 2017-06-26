@@ -73,6 +73,8 @@ es:
                 name: Nombre
             modality:
                 name: Nombre
+                start_at: "Empieza el"
+                end_at: "Termina el"
             participation:
                 amount: Valor
             payment:
@@ -92,7 +94,8 @@ es:
                 start_at: "Inicial el"
                 end_at: "Termina el"
                 place: "Espacio"
-                amount: "Valor por noche"
+                amount: "Valor por noche (USD)"
+                place_id: "Espacio"
             
                 
     formtastic:

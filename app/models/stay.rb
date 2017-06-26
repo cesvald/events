@@ -1,8 +1,8 @@
 class Stay < ActiveRecord::Base
-  belongs_to :participants
+  belongs_to :participant
   belongs_to :space
   
-  delegate :display_amount, :display_total_amount, to: :decorator
+  delegate :display_amount, :display_total_amount, :display_detailed_total_amount, to: :decorator
 
   # Using decorators
   def decorator
@@ -17,12 +17,7 @@ class Stay < ActiveRecord::Base
     days * amount
   end
   
-  def display_detailed_total_amount
-    "#{days} días * #{display_amount} = #{display_total_amount}"
-  end
-  
-  def trim num
-    i, f = num.to_i, num.to_f
-    i == f ? i : f
+  def when_to_s
+    start_at < participant.modality.end_at ? 'Estadía Pre' : 'Estadía Post'
   end
 end

@@ -325,7 +325,9 @@ CREATE TABLE modalities (
     name character varying,
     event_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    start_at timestamp without time zone,
+    end_at timestamp without time zone
 );
 
 
@@ -1251,4 +1253,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170618141732');
 INSERT INTO schema_migrations (version) VALUES ('20170621142819');
 
 INSERT INTO schema_migrations (version) VALUES ('20170625212559');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626020107');
 

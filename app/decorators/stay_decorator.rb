@@ -10,6 +10,10 @@ class StayDecorator < Draper::Decorator
     number_to_currency source.total_amount, unit: 'USD', precision: 0, delimiter: '.'
   end
   
+  def display_detailed_total_amount
+    "#{source.days} noches * #{source.display_amount} = #{source.display_total_amount}"
+  end
+  
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
