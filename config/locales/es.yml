@@ -43,6 +43,7 @@ es:
                 start_at: "Inicia el"
                 end_at: "Termina el"
                 active: "Activo"
+                deposit_amount: "Depósito de seguridad (USD)"
             guest:
                 name: "Nombre"
                 surname: Apellido
@@ -96,8 +97,14 @@ es:
                 place: "Espacio"
                 amount: "Valor por noche (USD)"
                 place_id: "Espacio"
-            
-                
+    
+    participant:
+        deposit:
+            state:
+                pending: "Pendiente"
+                given: "Abonado"
+                refunded: "Reembolsado"
+
     formtastic:
         yes: 'Si'
         no: 'No'
@@ -107,5 +114,4 @@ es:
         cancel: 'Cancelar %{model}'
         reset: 'Reiniciar %{model}'
         required: 'obligatorio'
-            
             

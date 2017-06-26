@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     end
     resources :modalities, shallow: true
     resources :participants do
+      member do
+        get :next_deposit_state
+      end
       resources :air_tickets
       resources :payments
       resources :stays

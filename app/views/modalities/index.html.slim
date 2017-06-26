@@ -9,8 +9,8 @@ table.table
     tr
       th Nombre
       th Espacios
-      th Empieza El
-      th Termina El
+      th Empieza
+      th Termina
       th
       th
   tbody
@@ -22,4 +22,3 @@ table.table
         td = l modality.end_at, format: :date
         td = link_to 'Editar', edit_modality_path(modality), class: "btn btn-xs btn-default"
         td = link_to 'Eliminar', modality, data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-xs btn-danger"
-

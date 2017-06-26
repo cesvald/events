@@ -8,6 +8,8 @@ class ParticipantsController < BaseEventController
 	has_scope :by_space
 	has_scope :by_confirmed
   
+  
+  
   def create
     create! { event_participants_path(@event) }
   end
@@ -20,6 +22,13 @@ class ParticipantsController < BaseEventController
     destroy! do |format|
       format.html { redirect_to :back }
     end
+  end
+  
+  def next_deposit_state
+    @participant = Participant.find(params[:id])
+    @participant.next_deposit_state
+    @participant.save!
+    redirect_to event_participant_path(@event, @participant)
   end
   
   private

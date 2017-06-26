@@ -1,10 +1,12 @@
 = bootstrap_form_for @event do |f|
   .row
-    .field.col-lg-4
+    .field.col-lg-3
       = f.text_field :name
-    .field.col-lg-4
+    .field.col-lg-3
       = f.text_field :start_at 
-    .field.col-lg-4
+    .field.col-lg-3
       = f.text_field :end_at
+    .field.col-lg-3
+      = f.number_field :deposit_amount
   
   = f.primary

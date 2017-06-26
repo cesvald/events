@@ -27,6 +27,16 @@ class Participant < ActiveRecord::Base
     @decorator ||= ParticipantDecorator.new(self)
   end
   
+  [:given, :refunded, :pending].each do |name|
+    define_method "deposit_#{name}" do
+			self.deposit_state = "#{name}"
+		end
+		
+		define_method "deposit_#{name}?" do
+			self.deposit_state == "#{name}"
+		end
+  end
+    
   def confirmed?
     air_ticket || !payments.empty?
   end
@@ -55,4 +65,23 @@ class Participant < ActiveRecord::Base
     space.modality
   end
   
+  def next_deposit_state_action
+    if deposit_pending?
+      return 'Deposito Abonado'
+    elsif deposit_given?
+      return 'Deposito Reembolsado'
+    elsif deposit_refunded?
+      return 'Reiniciar a Pendiente'
+    end
+  end
+  
+  def next_deposit_state
+    if deposit_pending?
+      deposit_given
+    elsif deposit_given?
+      deposit_refunded
+    elsif deposit_refunded?
+      deposit_pending
+    end
+  end
 end

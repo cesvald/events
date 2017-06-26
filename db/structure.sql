@@ -142,7 +142,8 @@ CREATE TABLE events (
     end_at date,
     active boolean,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deposit_amount numeric DEFAULT 0
 );
 
 
@@ -359,7 +360,8 @@ CREATE TABLE participants (
     guest_id integer,
     space_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deposit_state character varying DEFAULT 'pending'::character varying
 );
 
 
@@ -1255,4 +1257,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170621142819');
 INSERT INTO schema_migrations (version) VALUES ('20170625212559');
 
 INSERT INTO schema_migrations (version) VALUES ('20170626020107');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626044501');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626050435');
 
