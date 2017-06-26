@@ -4,7 +4,7 @@
   .field.col-lg-3
     = f.number_field :amount
   .field.col-lg-3
-    = f.select :type, options_for_select(["Efectivo", "Paypal", "Banco"], params[:type])
+    = f.select :method, options_for_select(["Efectivo", "Paypal", "Banco"], f.object.method.nil? ? nil : l(f.object.method))
   .field.col-lg-3
     = f.text_area :description
     

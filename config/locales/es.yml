@@ -79,6 +79,7 @@ es:
                 paid_at: "Pagado el"
                 amount: "Valor"
                 description: Descripción
+                method: "Medio"
             place:
                 name: "Nombre"
             room:

@@ -392,7 +392,7 @@ CREATE TABLE payments (
     description text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    type character varying
+    method character varying
 );
 
 

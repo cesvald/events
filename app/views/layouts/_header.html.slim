@@ -1,36 +1,30 @@
 nav.navbar.navbar-default
 	.container
 		.navbar-header
-			button.navbar-toggle.collapsed[type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"]
-				span.sr-only
-					| Toggle navigation
-				span.icon-bar
-				span.icon-bar
-				span.icon-bar
 			- if session.has_key?(:profile) and session[:profile] == 'eventer'
 				= link_to 'EVD Eventos', events_path, class: 'navbar-brand'
 			- else
 				= link_to 'EVD Hospedaje', bookings_path, class: 'navbar-brand'
 		- if current_user
-			#bs-example-navbar-collapse-1.collapse.navbar-collapse
-				ul.nav.navbar-nav
-					- if session.has_key?(:profile) and session[:profile] == 'hoster'
-						li = link_to 'Reservas', bookings_path
-						li = link_to 'Camas', beds_path
-						li = link_to 'Huéspedes', guests_path
-						li = link_to 'Calendario', calendar_locations_path(date: {year: Time.now.year, month: Time.now.month})
-					- if session.has_key?(:profile) and session[:profile] == 'eventer'
-						- if @event and not @event.id.nil?
-							li = link_to "Participantes", event_participants_path(@event)
-							li = link_to "Modalidades", event_modalities_path(@event)
-				ul.nav.navbar-nav.navbar-right
-					- if session.has_key?(:profile) and session[:profile] == 'hoster'
-						li.dropdown
-							a.dropdown-toggle[href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"]
-								|  Reports
-								span.caret
-							ul.dropdown-menu
-								li
-									=  link_to "Occupancy of Beds", monthly_guests_reports_bookings_path(date: {year: Time.now.year})
-					li
-						= link_to "Cerrar Sesión", destroy_user_session_path, :method => :delete
+			ul.nav.navbar-nav
+				- if session.has_key?(:profile) and session[:profile] == 'hoster'
+					li = link_to 'Reservas', bookings_path
+					li = link_to 'Camas', beds_path
+					li = link_to 'Huéspedes', guests_path
+					li = link_to 'Calendario', calendar_locations_path(date: {year: Time.now.year, month: Time.now.month})
+				- if session.has_key?(:profile) and session[:profile] == 'eventer'
+					- if @event and not @event.id.nil?
+						li = link_to "Participantes", event_participants_path(@event)
+						li = link_to "Modalidades", event_modalities_path(@event)
+			ul.nav.navbar-nav.navbar-right
+				li.dropdown
+					a.dropdown-toggle href="#" data-toggle="dropdown" role="button"
+						= current_user.email
+						span.caret
+					ul.dropdown-menu
+						- if session.has_key?(:profile) and session[:profile] == 'hoster'
+							li = link_to "Reporte Camas Ocupadas", monthly_guests_reports_bookings_path(date: {year: Time.now.year})
+							li = link_to "Administrar Eventos", events_path
+						- else
+							li = link_to "Administrar Hospedaje", bookings_path
+						li = link_to "Cerrar Sesión", destroy_user_session_path, :method => :delete

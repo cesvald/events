@@ -73,13 +73,15 @@
       tr
         th Pagado el
         th Valor
+        th Medio
         th Descripción
         th
         th
     - @participant.payments.each do |payment|
       tr
-        td= l payment.paid_at
-        td= payment.amount
+        td= l payment.paid_at, format: :date
+        td= payment.display_amount
+        td= payment.method
         td= payment.description
         td.actions
           = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"
