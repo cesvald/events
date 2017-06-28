@@ -31,6 +31,19 @@ class ParticipantsController < BaseEventController
     redirect_to event_participant_path(@event, @participant)
   end
   
+  def send_suscription_mail
+		@participants = apply_scopes(@event.participants)
+		@participants.each do |participant|
+			tokenControl = TokenControl.where(guest: participant.guest).first
+			tokenControl = TokenControl.new(guest: participant.guest) if not tokenControl
+			tokenControl.auth_token = generate_auth_token
+			tokenControl.save
+			GuestMailer.suscription(participant.guest, tokenControl.auth_token).deliver!
+			tokenControl.state = 'sent'
+			tokenControl.save
+		end
+	end
+	
   private
 
     def participant_params
@@ -48,6 +61,10 @@ class ParticipantsController < BaseEventController
     
     def collection
       @event.participantes
+    end
+    
+    def generate_auth_token
+    	SecureRandom.uuid.gsub(/\-/,'')
     end
 end
 

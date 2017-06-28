@@ -132,6 +132,36 @@ ALTER SEQUENCE bookings_id_seq OWNED BY bookings.id;
 
 
 --
+-- Name: configurations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE configurations (
+    id integer NOT NULL,
+    name character varying,
+    value text
+);
+
+
+--
+-- Name: configurations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE configurations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: configurations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE configurations_id_seq OWNED BY configurations.id;
+
+
+--
 -- Name: events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -619,6 +649,37 @@ ALTER SEQUENCE stays_id_seq OWNED BY stays.id;
 
 
 --
+-- Name: token_controls; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE token_controls (
+    id integer NOT NULL,
+    guest_id integer,
+    auth_token text,
+    state character varying DEFAULT 'pending'::character varying
+);
+
+
+--
+-- Name: token_controls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE token_controls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: token_controls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE token_controls_id_seq OWNED BY token_controls.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -672,6 +733,13 @@ ALTER TABLE ONLY beds ALTER COLUMN id SET DEFAULT nextval('beds_id_seq'::regclas
 --
 
 ALTER TABLE ONLY bookings ALTER COLUMN id SET DEFAULT nextval('bookings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY configurations ALTER COLUMN id SET DEFAULT nextval('configurations_id_seq'::regclass);
 
 
 --
@@ -776,6 +844,13 @@ ALTER TABLE ONLY stays ALTER COLUMN id SET DEFAULT nextval('stays_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY token_controls ALTER COLUMN id SET DEFAULT nextval('token_controls_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -801,6 +876,14 @@ ALTER TABLE ONLY beds
 
 ALTER TABLE ONLY bookings
     ADD CONSTRAINT bookings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY configurations
+    ADD CONSTRAINT configurations_pkey PRIMARY KEY (id);
 
 
 --
@@ -913,6 +996,14 @@ ALTER TABLE ONLY spaces
 
 ALTER TABLE ONLY stays
     ADD CONSTRAINT stays_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: token_controls_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY token_controls
+    ADD CONSTRAINT token_controls_pkey PRIMARY KEY (id);
 
 
 --
@@ -1047,6 +1138,13 @@ CREATE INDEX index_stays_on_participant_id ON stays USING btree (participant_id)
 --
 
 CREATE INDEX index_stays_on_place_id ON stays USING btree (place_id);
+
+
+--
+-- Name: index_token_controls_on_guest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_token_controls_on_guest_id ON token_controls USING btree (guest_id);
 
 
 --
@@ -1207,6 +1305,14 @@ ALTER TABLE ONLY stays
 
 
 --
+-- Name: fk_token_controls_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY token_controls
+    ADD CONSTRAINT fk_token_controls_guest_id FOREIGN KEY (guest_id) REFERENCES guests(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -1261,4 +1367,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170626020107');
 INSERT INTO schema_migrations (version) VALUES ('20170626044501');
 
 INSERT INTO schema_migrations (version) VALUES ('20170626050435');
+
+INSERT INTO schema_migrations (version) VALUES ('20170628014850');
+
+INSERT INTO schema_migrations (version) VALUES ('20170628023302');
 

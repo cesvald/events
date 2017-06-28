@@ -12,10 +12,13 @@ Rails.application.routes.draw do
       member do
         get :next_deposit_state
       end
+      collection do
+        get 'send_suscription_mail'
+      end
       resources :air_tickets
       resources :payments
       resources :stays
-    end  
+    end
   end
   
   resources :bookings
@@ -27,7 +30,16 @@ Rails.application.routes.draw do
     end
   end
   resources :houses
-  resources :guests
+  resources :guests do
+    member do
+      get 'auto_edit'
+      post 'auto_update'
+    end
+    collection do
+      get 'not_access_allowed'
+      get 'auto_update_success'
+    end
+  end
   
   namespace :reports do
     resources :bookings, only: [:index] do

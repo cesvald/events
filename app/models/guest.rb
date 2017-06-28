@@ -8,6 +8,10 @@ class Guest < ActiveRecord::Base
 	
 	validates_uniqueness_of :email
 	
+	def full_name
+		"#{name} #{surname}"
+	end
+	
 	def to_s
 		"#{name} #{surname} (#{email})"
 	end

@@ -17,7 +17,6 @@ class Participant < ActiveRecord::Base
     elsif is_confirmed.to_i == 1
       joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.participant_id').where('air_tickets.participant_id IS NULL AND payments.participant_id IS NULL')
     end
-    
   }
   
   delegate :display_stays_total_amount, :display_payments_total_amount, :display_due, to: :decorator
@@ -84,4 +83,5 @@ class Participant < ActiveRecord::Base
       deposit_pending
     end
   end
+  
 end
