@@ -1,6 +1,6 @@
 class GuestMailer < ActionMailer::Base
   require 'mail'
-  address = Mail::Address.new 'escuelavaloresdivinos@iniciadossky.com' # ex: "john@example.com"
+  address = Mail::Address.new 'eventos@evdsky.com' # ex: "john@example.com"
   address.display_name = 'Escuela Valores Divinos'   # ex: "John Doe"
   
   # Set the From or Reply-To header to the following:
