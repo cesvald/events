@@ -1,6 +1,6 @@
 class GuestMailer < ActionMailer::Base
   require 'mail'
-  address = Mail::Address.new 'eventos@escuelavaloresdivinos.org' # ex: "john@example.com"
+  address = Mail::Address.new 'escuelavaloresdivinos@iniciadossky.com' # ex: "john@example.com"
   address.display_name = 'Escuela Valores Divinos'   # ex: "John Doe"
   
   # Set the From or Reply-To header to the following:
@@ -20,6 +20,7 @@ class GuestMailer < ActionMailer::Base
     m = mail({
       to: guest.email,
       subject: "Información Previa Actividades Julio",
+      reply_to: "eventos@evdsky.com"
     }) do |format|
       format.html { render layout: 'email' }
     end
