@@ -14,13 +14,16 @@ class GuestMailer < ActionMailer::Base
   def suscription(guest, auth_token)
     @auth_token = auth_token
     @guest = guest
+    
+    attachments['Responsabilidad Personal_GENERAL_Julio 2017.pdf'] = File.read('private/Responsabilidad Personal_GENERAL_Julio 2017.pdf')
+        
     m = mail({
       to: guest.email,
       subject: "Información Previa Actividades Julio",
-      content_type: "text/html"
     }) do |format|
       format.html { render layout: 'email' }
     end
+    
   end
   
 end
