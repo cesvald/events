@@ -33,9 +33,11 @@ class ParticipantsController < BaseEventController
   
   def send_suscription_mail
 		@participants = apply_scopes(@event.participants)
+		puts "The total participants are: " + @participants.count.to_s
 		@participants.each do |participant|
 			tokenControl = TokenControl.where(guest: participant.guest).first
 			tokenControl = TokenControl.create(guest: participant.guest, auth_token: generate_auth_token) if not tokenControl
+			puts "Token for " + participant.guest.email
 			if tokenControl.state == 'pending'
   			GuestMailer.suscription(participant.guest, tokenControl.auth_token).deliver!
   			tokenControl.state = 'sent'
