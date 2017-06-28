@@ -29,7 +29,9 @@ class GuestsController < ApplicationController
 	def update
 		update! do |success|
 			success.html {
-				flash[:notice] = "Contacto actualizado exitosamente" if current_user
+				if current_user
+					flash[:notice] = "Contacto actualizado exitosamente"
+				end
 				redirect_to session[:previous_url]
 			}
 		end

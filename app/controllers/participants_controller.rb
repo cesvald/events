@@ -35,9 +35,7 @@ class ParticipantsController < BaseEventController
 		@participants = apply_scopes(@event.participants)
 		@participants.each do |participant|
 			tokenControl = TokenControl.where(guest: participant.guest).first
-			tokenControl = TokenControl.new(guest: participant.guest) if not tokenControl
-			tokenControl.auth_token = generate_auth_token
-			tokenControl.save
+			tokenControl = TokenControl.create(guest: participant.guest, auth_token: generate_auth_token) if not tokenControl
 			GuestMailer.suscription(participant.guest, tokenControl.auth_token).deliver!
 			tokenControl.state = 'sent'
 			tokenControl.save
@@ -60,7 +58,7 @@ class ParticipantsController < BaseEventController
     end
     
     def collection
-      @event.participantes
+      @event.participants
     end
     
     def generate_auth_token

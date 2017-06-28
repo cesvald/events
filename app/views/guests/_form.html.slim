@@ -1,5 +1,6 @@
 = form_for @guest, html: { class: "form form-horizontal guest text-left" } do |f|
   .row
+    = hidden_field_tag :auth_token, params[:auth_token]
     .form-group.col-lg-4
       = f.label :name, :class => 'control-label col-lg-3'
       .col-lg-9
