@@ -36,9 +36,11 @@ class ParticipantsController < BaseEventController
 		@participants.each do |participant|
 			tokenControl = TokenControl.where(guest: participant.guest).first
 			tokenControl = TokenControl.create(guest: participant.guest, auth_token: generate_auth_token) if not tokenControl
-			GuestMailer.suscription(participant.guest, tokenControl.auth_token).deliver!
-			tokenControl.state = 'sent'
-			tokenControl.save
+			if tokenControl.state == 'pending'
+  			GuestMailer.suscription(participant.guest, tokenControl.auth_token).deliver!
+  			tokenControl.state = 'sent'
+  			tokenControl.save
+  		end
 		end
 	end
 	
