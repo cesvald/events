@@ -2,7 +2,7 @@ class Participant < ActiveRecord::Base
   
   belongs_to :guest
   
-  belongs_to :space
+  has_and_belongs_to_many :spaces
   
   has_one :air_ticket
   has_many :payments

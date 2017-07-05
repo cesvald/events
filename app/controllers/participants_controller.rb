@@ -48,6 +48,10 @@ class ParticipantsController < BaseEventController
 		end
 	end
 	
+	def update
+		update! { event_participant_path(@event, @participant) }
+	end
+	
 	private
 
 		def participant_params

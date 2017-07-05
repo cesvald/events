@@ -58,3 +58,8 @@ end
 		end
 	end
 end
+
+['Ashram', 'Morada', 'Cuenta propia', 'Seva', 'Cercanos'].each do |name|
+	Place.create(name: name)
+end
+
