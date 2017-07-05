@@ -39,3 +39,5 @@ table.table.table-striped
         td= guest.email
         td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_guest_path(guest), :class => 'btn btn-default btn-xs'
+
+= paginate @guests

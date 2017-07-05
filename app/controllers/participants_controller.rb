@@ -8,14 +8,12 @@ class ParticipantsController < BaseEventController
 	has_scope :by_guest
 	has_scope :by_confirmed
 	
-	
-	
 	def create
 		create! { event_participants_path(@event) }
 	end
 	
 	def index
-		@participants = apply_scopes(@event.participants)
+		@participants = apply_scopes(@event.participants).page(params[:page]).per(1)
 	end
 	
 	def destroy
