@@ -2,15 +2,15 @@ class Participant < ActiveRecord::Base
   
   belongs_to :guest
   
-  has_many :participant_spaces
+  has_many :participant_spaces, dependent: :delete_all
   accepts_nested_attributes_for :participant_spaces, :allow_destroy => true
   
   has_many :spaces, through: :participant_spaces
   
-  has_one :air_ticket
-  has_many :payments
+  has_one :air_ticket, dependent: :delete_all
+  has_many :payments, dependent: :delete_all
   
-  has_many :stays
+  has_many :stays, dependent: :delete_all
   
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }
   scope :by_space, ->(space_id) { where('participant_spaces.space_id = ?', space_id) }

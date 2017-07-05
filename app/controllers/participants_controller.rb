@@ -33,7 +33,6 @@ class ParticipantsController < BaseEventController
 	
 	def send_suscription_mail
 		@participants = apply_scopes(@event.participants)
-		puts "The total participants are: " + @participants.count("DISTINCT(participants.id)").to_s
 		@participants.each do |participant|
 			tokenControl = TokenControl.where(guest: participant.guest).first
 			tokenControl = TokenControl.create(guest: participant.guest, auth_token: generate_auth_token) if not tokenControl
