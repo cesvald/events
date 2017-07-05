@@ -65,7 +65,7 @@ class Participant < ActiveRecord::Base
   end
   
   def payments_spaces
-    payments.where(reason: 'Eventos').sum("amount")
+    payments.where(reason: 'Evento').sum("amount")
   end
   
   def payments_stays
