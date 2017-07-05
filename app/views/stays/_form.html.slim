@@ -7,6 +7,6 @@
     .field.col-lg-3
       = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at)
     .field.col-lg-3
-      = f.number_field :amount
+      = f.number_field :amount, step: "any"
       
   = f.submit nil, :class => 'btn btn-primary'

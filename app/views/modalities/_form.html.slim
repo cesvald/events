@@ -12,7 +12,7 @@
       .field.col-lg-4
         = builder.select :place_id, options_for_select(Place.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id))
       .field.col-lg-4
-        = builder.number_field :amount
+        = builder.number_field :amount, step: "any"
       .field.col-lg-4
         label.invisible.control-label eliminar
         div= builder.link_to_remove "Eliminar", class: "btn btn-danger"

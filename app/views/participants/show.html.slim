@@ -77,6 +77,7 @@
         th Pagado el
         th Valor
         th Medio
+        th Razón
         th Descripción
         th
         th
@@ -85,6 +86,7 @@
         td= l payment.paid_at, format: :date
         td= payment.display_amount
         td= payment.method
+        td= payment.reason
         td= payment.description
         td.actions
           = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"

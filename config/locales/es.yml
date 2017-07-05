@@ -83,6 +83,7 @@ es:
                 amount: "Valor"
                 description: Descripción
                 method: "Medio"
+                reason: "Razón"
             place:
                 name: "Nombre"
             room:

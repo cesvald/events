@@ -426,7 +426,8 @@ CREATE TABLE payments (
     description text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    method character varying
+    method character varying,
+    reason character varying DEFAULT 'Evento'::character varying
 );
 
 
@@ -1371,4 +1372,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170626050435');
 INSERT INTO schema_migrations (version) VALUES ('20170628014850');
 
 INSERT INTO schema_migrations (version) VALUES ('20170628023302');
+
+INSERT INTO schema_migrations (version) VALUES ('20170705014159');
 
