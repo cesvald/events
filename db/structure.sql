@@ -382,13 +382,42 @@ ALTER SEQUENCE modalities_id_seq OWNED BY modalities.id;
 
 
 --
+-- Name: participant_spaces; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE participant_spaces (
+    id integer NOT NULL,
+    participant_id integer,
+    space_id integer
+);
+
+
+--
+-- Name: participant_spaces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE participant_spaces_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: participant_spaces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE participant_spaces_id_seq OWNED BY participant_spaces.id;
+
+
+--
 -- Name: participants; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE participants (
     id integer NOT NULL,
     guest_id integer,
-    space_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     deposit_state character varying DEFAULT 'pending'::character varying
@@ -789,6 +818,13 @@ ALTER TABLE ONLY modalities ALTER COLUMN id SET DEFAULT nextval('modalities_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY participant_spaces ALTER COLUMN id SET DEFAULT nextval('participant_spaces_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY participants ALTER COLUMN id SET DEFAULT nextval('participants_id_seq'::regclass);
 
 
@@ -936,6 +972,14 @@ ALTER TABLE ONLY modalities
 
 
 --
+-- Name: participant_spaces_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY participant_spaces
+    ADD CONSTRAINT participant_spaces_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: participants_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1072,17 +1116,24 @@ CREATE INDEX index_modalities_on_event_id ON modalities USING btree (event_id);
 
 
 --
+-- Name: index_participant_spaces_on_participant_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_participant_spaces_on_participant_id ON participant_spaces USING btree (participant_id);
+
+
+--
+-- Name: index_participant_spaces_on_space_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_participant_spaces_on_space_id ON participant_spaces USING btree (space_id);
+
+
+--
 -- Name: index_participants_on_guest_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_participants_on_guest_id ON participants USING btree (guest_id);
-
-
---
--- Name: index_participants_on_space_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_participants_on_space_id ON participants USING btree (space_id);
 
 
 --
@@ -1226,19 +1277,27 @@ ALTER TABLE ONLY modalities
 
 
 --
+-- Name: fk_participant_spaces_participant_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY participant_spaces
+    ADD CONSTRAINT fk_participant_spaces_participant_id FOREIGN KEY (participant_id) REFERENCES participants(id);
+
+
+--
+-- Name: fk_participant_spaces_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY participant_spaces
+    ADD CONSTRAINT fk_participant_spaces_space_id FOREIGN KEY (space_id) REFERENCES spaces(id);
+
+
+--
 -- Name: fk_participants_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY participants
     ADD CONSTRAINT fk_participants_guest_id FOREIGN KEY (guest_id) REFERENCES guests(id);
-
-
---
--- Name: fk_participants_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY participants
-    ADD CONSTRAINT fk_participants_space_id FOREIGN KEY (space_id) REFERENCES spaces(id);
 
 
 --
@@ -1374,4 +1433,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170628014850');
 INSERT INTO schema_migrations (version) VALUES ('20170628023302');
 
 INSERT INTO schema_migrations (version) VALUES ('20170705014159');
+
+INSERT INTO schema_migrations (version) VALUES ('20170705032632');
+
+INSERT INTO schema_migrations (version) VALUES ('20170705164854');
 

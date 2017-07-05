@@ -3,9 +3,9 @@ class ParticipantsController < BaseEventController
 	before_action :set_event
 	before_action :send_modalities, only: [:edit, :new, :index]
 	
-	has_scope :by_guest
 	has_scope :by_modality
 	has_scope :by_space
+	has_scope :by_guest
 	has_scope :by_confirmed
 	
 	
@@ -55,7 +55,7 @@ class ParticipantsController < BaseEventController
 	private
 
 		def participant_params
-			params.require(:participant).permit(:guest_id, :space_id)
+			params.require(:participant).permit(:guest_id, :space_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :_destroy])
 		end
 		
 		def set_event

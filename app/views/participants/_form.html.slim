@@ -1,4 +1,4 @@
-= form_for [@event, @participant] do |f|
+= nested_form_for [@event, @participant] do |f|
   = render "layouts/error_messages", :target => @participant
   .form-group
     = f.label :guest_id, class: "control-label"
@@ -6,15 +6,32 @@
       = f.text_field :guest_id, :data => {:guest => @participant.guest}
       span#clean-guest-input-btn.input-group-btn class=(action_name == 'edit' ? 'invisible' : '')
         button.btn.btn-default[type="button"] X
-  .form-group
-    .form-label
-      label.control-label Modalidad
-    .form-wrapper
-      = select_tag :modality_id, options_for_select(@event.modalities.pluck(:name, :id), @participant.space ? @participant.space.modality.id : nil), class: "form-control", include_blank: true
-  .form-group
-    .form-label
-      label.control-label Espacio
-    .form-wrapper
-      = f.select :space_id, (@participant.space.nil? ? [] : options_for_select(@participant.space.modality.spaces.joins(:place).pluck("places.name || ' (' || spaces.amount || ' USD)'", "spaces.id"), @participant.space.id)), {}, {class: "form-control", include_blank: true}
-
+  
+  h4 Modalidades
+  = f.fields_for :participant_spaces do |builder|
+    .row
+      .col-lg-4
+        .form-group
+          .form-label
+            label.control-label Modalidad
+          .form-wrapper
+            = select_tag :modality_id, options_for_select(@event.modalities.pluck(:name, :id), builder.object.nil? || builder.object.space.nil? ? nil : builder.object.space.modality.id), class: "form-control modality_select", include_blank: true
+      .col-lg-4  
+        .form-group
+          .form-label
+            label.control-label Espacio
+          .form-wrapper
+            = builder.select :space_id, (builder.object.nil? || builder.object.space.nil? ? [] : options_for_select(builder.object.space.modality.spaces.joins(:place).pluck("places.name || ' (' || spaces.amount || ' USD)'", "spaces.id"), builder.object.space.id)), {}, {class: "form-control space_select", include_blank: true}
+      .col-lg-4  
+        .form-group
+          .form-label.invisible.control-label eliminar
+          div= builder.link_to_remove "Eliminar", class: "btn btn-danger"
+    
+    br
+    
+  = f.link_to_add "Adicionar modalidad", :participant_spaces, class: "btn btn-sm btn-default"
+  
+  br
+  br
+  br
   = f.submit nil, :class => 'btn btn-primary'

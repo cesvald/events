@@ -41,7 +41,7 @@ table.table
     - @participants.each do |participant|
       tr
         td = participant.guest
-        td = participant.space
+        td = participant.spaces_to_s
         td = participant.display_confirmed
         td
           .btn-group

@@ -9,7 +9,7 @@ class Event < ActiveRecord::Base
     end
     
     def participants
-        Participant.joins(space: :modality).where("modalities.event_id = ?", id)
+        Participant.joins(spaces: :modality).where("modalities.event_id = ?", id).select("DISTINCT(participants.id), participants.guest_id")
     end
     
     def to_s
