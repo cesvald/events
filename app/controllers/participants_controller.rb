@@ -13,7 +13,7 @@ class ParticipantsController < BaseEventController
 	end
 	
 	def index
-		@participants = apply_scopes(@event.participants).page(params[:page]).per(1)
+		@participants = apply_scopes(@event.participants).page(params[:page])
 	end
 	
 	def destroy
