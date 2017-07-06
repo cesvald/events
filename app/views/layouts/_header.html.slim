@@ -16,6 +16,7 @@ nav.navbar.navbar-default
 					- if @event and not @event.id.nil?
 						li = link_to "Participantes", event_participants_path(@event)
 						li = link_to "Modalidades", event_modalities_path(@event)
+						li = link_to 'Contactos', guests_path
 			ul.nav.navbar-nav.navbar-right
 				li.dropdown
 					a.dropdown-toggle href="#" data-toggle="dropdown" role="button"
