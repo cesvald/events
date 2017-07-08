@@ -3,6 +3,7 @@ class Space < ActiveRecord::Base
   belongs_to :modality
   
   has_many :participant_spaces, dependent: :delete_all
+  has_many :participants, through: :participant_spaces
   
   scope :by_event, -> (event) { joins(:modality).where('modalities.event_id = ?', event.id) }
   

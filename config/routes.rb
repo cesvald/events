@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     member do
       get :new_import
       post :import
+      get :report_detail
+      get :report_general
     end
     resources :modalities, shallow: true
     resources :participants do

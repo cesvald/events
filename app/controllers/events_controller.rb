@@ -43,6 +43,28 @@ class EventsController < BaseEventController
     end
   end
   
+  def report_detail
+    @participants = Event.find(params[:id]).participants
+    @by = params[:by]
+    respond_to do |format|
+			format.xlsx {
+				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""
+			}
+			format.html
+		end
+  end
+  
+  def report_general
+    @event = Event.find params[:id]
+    @by = params[:by]
+    respond_to do |format|
+			format.xlsx {
+				response.headers['Content-Disposition'] = "attachment; filename=\"Occupancy of Beds #{@date_for_months.strftime('%Y')}.xlsx\""
+			}
+			format.html
+		end
+  end
+  
   private
     def event_params
       params.require(:event).permit(:name, :start_at, :end_at, :active, :deposit_amount)

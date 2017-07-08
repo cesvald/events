@@ -18,6 +18,6 @@ class Stay < ActiveRecord::Base
   end
   
   def when_to_s
-    start_at < participant.modality.end_at ? 'Estadía Pre' : 'Estadía Post'
+    start_at < participant.spaces.last.modality.end_at ? 'Estadía Pre' : 'Estadía Post'
   end
 end

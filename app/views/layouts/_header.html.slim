@@ -17,6 +17,15 @@ nav.navbar.navbar-default
 						li = link_to "Participantes", event_participants_path(@event)
 						li = link_to "Modalidades", event_modalities_path(@event)
 						li = link_to 'Contactos', guests_path
+						li.dropdown
+							a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 
+								| Reportes
+								span.caret
+							ul.dropdown-menu
+								li
+									= link_to "Detalle por modalidades", report_detail_event_path({id: @event.id, by: "spaces", format: "xlsx"})
+									= link_to "Detalle por estadías", report_detail_event_path({id: @event.id, by: "stays", format: "xlsx"})
+
 			ul.nav.navbar-nav.navbar-right
 				li.dropdown
 					a.dropdown-toggle href="#" data-toggle="dropdown" role="button"

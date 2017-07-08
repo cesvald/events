@@ -84,10 +84,6 @@ class Participant < ActiveRecord::Base
     due_spaces + due_stays
   end
   
-  def modality
-    spaces.first.modality
-  end
-  
   def next_deposit_state_action
     if deposit_pending?
       return 'Deposito Abonado'

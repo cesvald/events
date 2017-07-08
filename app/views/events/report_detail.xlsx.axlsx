@@ -1,0 +1,18 @@
+xlsx_package.use_shared_strings = true
+wb = xlsx_package.workbook
+table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
+table_cell = wb.styles.add_style alignment: {horizontal: :center}
+title = wb.styles.add_style b: true, sz: 14
+wb.add_worksheet(name: "Participantes - eventos") do |sheet|
+    if params[:by] == "spaces"
+        sheet.add_row ["Nombre", "Apellido", "Email", "País", "Modalidades", "Pagos", "Deuda"], style: table_header
+        Event.find(params[:id]).participants.each do |participant|
+            sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), participant.payments_spaces, participant.due_spaces]
+        end
+    else
+        sheet.add_row ["Nombre", "Apellido", "Email", "País", "Total estadías", "Pagos", "Deuda"], style: table_header
+        Event.find(params[:id]).participants.each do |participant|
+            sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.stays_amount, participant.due_stays]
+        end
+    end
+end

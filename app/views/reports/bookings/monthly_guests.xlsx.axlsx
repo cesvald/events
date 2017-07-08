@@ -5,7 +5,7 @@ table_cell = wb.styles.add_style alignment: {horizontal: :center}
 title = wb.styles.add_style b: true, sz: 14
 wb.add_worksheet(name: "Occupancy of Beds") do |sheet|
     @locations_bookings.each do |location|
-        sheet.add_row [location[:name]], style: title    
+        sheet.add_row [location[:name]], style: title
         header_months = []
         header_months << ""
         for i in 0..11
