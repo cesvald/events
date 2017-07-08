@@ -52,6 +52,10 @@ class Participant < ActiveRecord::Base
     "#{guest} - #{spaces_to_s}"
   end
   
+  def stays_days
+    stays.sum("date_part('day', age(end_at, start_at))").to_i
+  end
+  
   def stays_amount
     stays.sum("amount * date_part('day', age(end_at, start_at))")
   end
