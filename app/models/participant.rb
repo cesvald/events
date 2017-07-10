@@ -115,4 +115,5 @@ class Participant < ActiveRecord::Base
     end
     to_s.html_safe
   end
+  
 end

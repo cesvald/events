@@ -1,13 +1,11 @@
 h4
-    = "Editar Boleto Aereo para #{@participant.guest}"
-    br
-    br
-    = "Está en la modalidad #{@participant.modality} desde el #{l @participant.modality.start_at, format: :date} hasta el #{l @participant.modality.end_at, format: :date}"
+    b Editar Boleto Aereo
+    = " para #{@participant.guest}"
 br
 
 == render 'form'
 
 br
 
-= link_to 'Volver', event_participant_path(@air_ticket.participant.space.modality.event, @air_ticket.participant), class:"btn btn-default"
+= link_to 'Volver', event_participant_path(@event, @air_ticket.participant), class:"btn btn-default"
 

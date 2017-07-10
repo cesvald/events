@@ -1,9 +1,7 @@
 h4
-    = "Nueva Estadía para #{@participant.guest}"
-    br
-    br
-    = "Está en la modalidad #{@participant.modality} desde el #{l @participant.modality.start_at, format: :date} hasta el #{l @participant.modality.end_at, format: :date}"
-
+    b Nueva Estadía
+    = " para #{@participant.guest}"
+    
 == render 'form'
 
 br
