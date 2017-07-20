@@ -1419,11 +1419,27 @@ INSERT INTO schema_migrations (version) VALUES ('20170618140726');
 
 INSERT INTO schema_migrations (version) VALUES ('20170618141732');
 
-INSERT INTO schema_migrations (version) VALUES ('20170711142508');
+INSERT INTO schema_migrations (version) VALUES ('20170621142819');
 
-INSERT INTO schema_migrations (version) VALUES ('20170720010645');
+INSERT INTO schema_migrations (version) VALUES ('20170625212559');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626020107');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626044501');
+
+INSERT INTO schema_migrations (version) VALUES ('20170626050435');
+
+INSERT INTO schema_migrations (version) VALUES ('20170628014850');
+
+INSERT INTO schema_migrations (version) VALUES ('20170628023302');
+
+INSERT INTO schema_migrations (version) VALUES ('20170705014159');
 
 INSERT INTO schema_migrations (version) VALUES ('20170705032632');
 
 INSERT INTO schema_migrations (version) VALUES ('20170705164854');
+
+INSERT INTO schema_migrations (version) VALUES ('20170711142508');
+
+INSERT INTO schema_migrations (version) VALUES ('20170720010645');
 
