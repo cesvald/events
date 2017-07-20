@@ -45,14 +45,17 @@
   table.table.table-actions
     thead
       tr
+        th 
         th Espacio
         th Desde el
         th Hasta el
         th Valor total
         th
         th
-    - @participant.stays.each do |stay|
+    - @participant.stays.order(:start_at).each do |stay|
       tr
+        td
+          b= stay.when_to_s
         td= stay.place
         td= l stay.start_at, format: :date
         td= l stay.end_at, format: :date
@@ -73,40 +76,60 @@
       tr
         th Pagado el
         th Valor
+        th Medio
+        th Razón
         th Descripción
         th
         th
     - @participant.payments.each do |payment|
       tr
-        td= l payment.paid_at
-        td= payment.amount
+        td= l payment.paid_at, format: :date
+        td= payment.display_amount
+        td= payment.method
+        td= payment.reason
         td= payment.description
         td.actions
           = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"
           |&nbsp;
           = link_to "Eliminar", [@event, @participant, payment], method: :delete, data: {confirm: "Estás seguro de eliminar este pago"}, class: "btn btn-xs btn-danger"
   
+  h5
+    = "Depósito de seguridad por #{@event.display_deposit_amount}"
+    |&nbsp;
+    |&nbsp;
+    |&nbsp;
+    |&nbsp;
+    span class=("deposit-state #{@participant.deposit_state}")
+      = t("participant.deposit.state.#{@participant.deposit_state}")
+  |&nbsp;
+  |&nbsp;
+  = link_to @participant.next_deposit_state_action, next_deposit_state_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
   
-  table.table
-    thead
-      tr
-        th
-          h5 Resumen de un vistazo
-        th
-    tr
-      td= @participant.space.display_modality_space
-      td= @participant.space.display_amount
-    tr
-      td Total Estadías
-      td= @participant.display_stays_total_amount
-    tr.payment
-      td Total Pagado
-      td= "(#{@participant.display_payments_total_amount})"
-    tr
-      td
-        b Total
-      td
-        b= @participant.display_due
+  br
+  br
+  br
+  .row
+    .col-lg-offset-1.col-lg-10
+      table.table
+        thead
+          tr
+            th
+              h5 Resumen de un vistazo
+            th
+        tr
+          td= @participant.space.display_modality_space
+          td= @participant.space.display_amount
+        tr
+          td Total Estadías
+          td= @participant.display_stays_total_amount
+        tr.payment
+          td Total Pagado
+          td= "(#{@participant.display_payments_total_amount})"
+        tr
+          td
+            b Total
+          td
+            b= @participant.display_due
   
   = link_to 'Volver', event_participants_path(@event), class: "btn btn-default"
   

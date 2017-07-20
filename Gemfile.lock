@@ -277,6 +277,8 @@ GEM
       activesupport (>= 3.1, < 5.0)
       railties (>= 3.1, < 5.0)
       slim (~> 3.0)
+    sparkpost_rails (1.4.0)
+      rails (>= 4.0, < 5.1)
     spectator-validates_email (0.2.0)
       activemodel (>= 3.0.0)
     spring (1.6.1)
@@ -355,6 +357,7 @@ DEPENDENCIES
   schema_plus
   sdoc (~> 0.4.0)
   slim-rails
+  sparkpost_rails
   spectator-validates_email
   spring
   therubyracer

@@ -1,9 +1,13 @@
 = bootstrap_form_for [@event, @participant, @payment] do |f|
-  .field.col-lg-4
+  .field.col-lg-3
     = f.text_field :paid_at, value: f.object.paid_at.nil? ? nil : l(f.object.paid_at)
-  .field.col-lg-4
-    = f.number_field :amount
-  .field.col-lg-4
+  .field.col-lg-3
+    = f.number_field :amount, pattern:"\d+(\.\d*)?", step:'any'
+  .field.col-lg-3
+    = f.select :method, options_for_select(["Efectivo", "Paypal", "Banco"], f.object.method.nil? ? nil : f.object.method)
+  .field.col-lg-3
+    = f.select :reason, options_for_select(["Estadia", "Evento"], f.object.reason.nil? ? nil : f.object.reason)
+  .field.col-lg-3
     = f.text_area :description
     
   = f.submit nil, :class => 'btn btn-primary'

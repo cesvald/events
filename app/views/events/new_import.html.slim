@@ -1,0 +1,9 @@
+h1 Importar Participantes
+
+= form_tag import_event_path(@event), multipart: true
+    = file_field_tag :file
+    br
+    = submit_tag "Importar"
+br
+
+= link_to 'Volver', events_path, class: "btn btn-small btn-default"

@@ -1,13 +1,9 @@
 class PaymentDecorator < Draper::Decorator
-  delegate_all
-
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  decorates :stay
+  include Draper::LazyHelpers
+  
+  def display_amount
+    number_to_currency source.amount, unit: 'USD', precision: 2, delimiter: '.'
+  end
 
 end

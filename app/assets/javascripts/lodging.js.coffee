@@ -11,6 +11,7 @@ window.Lodging =
   	new Lodging.Routers.AirTickets() if controller == "air_tickets"
   	new Lodging.Routers.Stays() if controller == "stays"
   	new Lodging.Routers.Payments() if controller == "payments"
+  	new Lodging.Routers.Events() if controller == "events"
   	Backbone.history.stop()
   	Backbone.history.start( pushState: true )
 

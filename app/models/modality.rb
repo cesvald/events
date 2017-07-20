@@ -4,6 +4,8 @@ class Modality < ActiveRecord::Base
 	
 	accepts_nested_attributes_for :spaces
 	
+	validates_presence_of :name, :start_at, :end_at
+	
 	def to_s
 		name
 	end

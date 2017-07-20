@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :profiles
   
-  [:eventer, :hoster].each do |name|
+  [:eventer, :hoster, :admin].each do |name|
     define_method "#{name}?" do
 			not profiles.where(name: name).empty?
 		end

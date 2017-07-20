@@ -43,12 +43,13 @@ es:
                 start_at: "Inicia el"
                 end_at: "Termina el"
                 active: "Activo"
+                deposit_amount: "Depósito de seguridad (USD)"
             guest:
                 name: "Nombre"
                 surname: Apellido
                 email: Email
-                country: País
-                city: Ciudad
+                country: "País de residencia"
+                city: "Ciudad residencia"
                 phone_number: "Teléfono Casa"
                 mobile_number: "Teléfono Móvil"
                 identification: "Número de Pasaporte / Cédula"
@@ -64,6 +65,8 @@ es:
                 hotel: "¿En qué hotel se está hospedando en Cuenca durante el Encuentro?"
                 local_number: "¿Cuenta con algún número de teléfono local: (hotel, móvil)?"
                 comments: "Comentarios adicionales"
+                is_initiate: "Es Iniciado"
+                age: Edad
             house:
                 name: "Nombre"
                 sketch: Diagrama
@@ -71,12 +74,16 @@ es:
                 name: Nombre
             modality:
                 name: Nombre
+                start_at: "Empieza el"
+                end_at: "Termina el"
             participation:
                 amount: Valor
             payment:
                 paid_at: "Pagado el"
                 amount: "Valor"
                 description: Descripción
+                method: "Medio"
+                reason: "Razón"
             place:
                 name: "Nombre"
             room:
@@ -89,9 +96,16 @@ es:
                 start_at: "Inicial el"
                 end_at: "Termina el"
                 place: "Espacio"
-                amount: "Valor por noche"
-            
-                
+                amount: "Valor por noche (USD)"
+                place_id: "Espacio"
+    
+    participant:
+        deposit:
+            state:
+                pending: "Pendiente"
+                given: "Abonado"
+                refunded: "Reembolsado"
+
     formtastic:
         yes: 'Si'
         no: 'No'
@@ -101,5 +115,4 @@ es:
         cancel: 'Cancelar %{model}'
         reset: 'Reiniciar %{model}'
         required: 'obligatorio'
-            
             

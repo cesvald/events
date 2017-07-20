@@ -2,13 +2,17 @@
   .field.row
     .col-lg-4
       = f.text_field :name
+    .col-lg-4
+      = f.text_field :start_at, value: f.object.start_at.nil? ? nil : l(f.object.start_at)
+    .col-lg-4
+      = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at)
   h4 Espacios
   = f.fields_for :spaces do |builder|
     .row
       .field.col-lg-4
         = builder.select :place_id, options_for_select(Place.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id))
       .field.col-lg-4
-        = builder.number_field :amount
+        = builder.number_field :amount, step: "any"
       .field.col-lg-4
         label.invisible.control-label eliminar
         div= builder.link_to_remove "Eliminar", class: "btn btn-danger"
