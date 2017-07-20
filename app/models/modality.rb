@@ -1,8 +1,8 @@
 class Modality < ActiveRecord::Base
 	belongs_to :event
-	has_many :spaces
+	has_many :spaces, dependent: :delete_all
 	
-	accepts_nested_attributes_for :spaces
+	accepts_nested_attributes_for :spaces, :allow_destroy => true
 	
 	validates_presence_of :name, :start_at, :end_at
 	

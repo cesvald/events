@@ -41,7 +41,7 @@ table.table
     - @participants.each do |participant|
       tr
         td = participant.guest
-        td = participant.space
+        td = participant.spaces_to_s
         td = participant.display_confirmed
         td
           .btn-group
@@ -54,3 +54,4 @@ table.table
 						  li = link_to 'Eliminar', [@event, participant], data: {:confirm => '¿Estás seguro de eliminar este participante?'}, :method => :delete
         
         
+= paginate @participants

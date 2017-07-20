@@ -1,18 +1,18 @@
 = bootstrap_nested_form_for [@event, @modality] do |f|
   .field.row
     .col-lg-4
-      = f.text_field :name
+      = f.text_field :name, required: true
     .col-lg-4
-      = f.text_field :start_at, value: f.object.start_at.nil? ? nil : l(f.object.start_at)
+      = f.text_field :start_at, value: f.object.start_at.nil? ? nil : l(f.object.start_at), required: true
     .col-lg-4
-      = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at)
+      = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at), required: true
   h4 Espacios
   = f.fields_for :spaces do |builder|
     .row
       .field.col-lg-4
         = builder.select :place_id, options_for_select(Place.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id))
       .field.col-lg-4
-        = builder.number_field :amount, step: "any"
+        = builder.number_field :amount, step: "any", required: true
       .field.col-lg-4
         label.invisible.control-label eliminar
         div= builder.link_to_remove "Eliminar", class: "btn btn-danger"

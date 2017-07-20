@@ -1,18 +1,18 @@
 = bootstrap_form_for [@event, @participant, @air_ticket] do |f|
   .row
     .field.col-lg-4
-      = f.text_field :arrive_at, value: f.object.arrive_at.nil? ? nil : l(f.object.arrive_at)
+      = f.text_field :arrive_at, value: f.object.arrive_at.nil? ? nil : l(f.object.arrive_at), required: true
       = f.error_span(:arrive_at)
     .field.col-lg-4
-      = f.text_field :leave_at, value: f.object.leave_at.nil? ? nil : l(f.object.leave_at)
+      = f.text_field :leave_at, value: f.object.leave_at.nil? ? nil : l(f.object.leave_at), required: true
       = f.error_span(:leave_at)
   .row
     .field.col-lg-4
-      = f.text_field :arrive_to
+      = f.text_field :arrive_to, required: true
     .field.col-lg-4
-      = f.text_field :leave_from
+      = f.text_field :leave_from, required: true
   .row
     .field.col-lg-4
-      = f.text_field :estimated_at, value: f.object.estimated_at.nil? ? nil : l(f.object.estimated_at)
+      = f.text_field :estimated_at, value: f.object.estimated_at.nil? ? nil : l(f.object.estimated_at), required: true
 
   = f.submit nil, :class => 'btn btn-primary'

@@ -42,8 +42,8 @@ class AirTicketsController < BaseEventController
     end
     
     def add_stays
-      Stay.create(participant: @participant, place: Place.first, start_at: @air_ticket.estimated_at.beginning_of_day, end_at: @participant.modality.start_at.beginning_of_day, amount: 0) if @air_ticket.arrive_at < @participant.modality.start_at
-      Stay.create(participant: @participant, place: Place.first, start_at: @participant.modality.end_at.beginning_of_day, end_at: @air_ticket.leave_at.beginning_of_day, amount: 0) if @participant.modality.end_at < @air_ticket.leave_at
+      Stay.create(participant: @participant, place: Place.first, start_at: @air_ticket.estimated_at.beginning_of_day, end_at: @participant.modalities_start_at.beginning_of_day, amount: 0) if @air_ticket.arrive_at < @participant.modalities_start_at
+      Stay.create(participant: @participant, place: Place.first, start_at: @participant.modalities_end_at.beginning_of_day, end_at: @air_ticket.leave_at.beginning_of_day, amount: 0) if @participant.modalities_end_at < @air_ticket.leave_at
     end
 end
 

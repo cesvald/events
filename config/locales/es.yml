@@ -115,4 +115,11 @@ es:
         cancel: 'Cancelar %{model}'
         reset: 'Reiniciar %{model}'
         required: 'obligatorio'
-            
+    
+    views:
+        pagination:
+            previous: "&lt; Anterior"
+            next: "Siguiente &gt;"
+            truncate: "..."
+            last: "Última"
+            first: "Primera"

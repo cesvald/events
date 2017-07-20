@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     member do
       get :new_import
       post :import
+      get :report_detail
+      get :report_general
     end
     resources :modalities, shallow: true
     resources :participants do
@@ -21,7 +23,10 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :bookings
+  resources :bookings do
+    resources :payments
+  end
+  
   resources :beds
   resources :rooms
   resources :locations do

@@ -3,7 +3,7 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 	el: 'body'
 
 	events:
-		"change #modality_id": 'populateSpacesList'
+		"change .modality_select": 'populateSpacesList'
 		
 	initialize: ->
 		$('#participant_guest_id').tokenizeInput()
@@ -21,22 +21,26 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 		
 	populateSpacesList: (event) ->
 		modality_id = event.target.value
+		participantSelect = $(event.target).closest('.fields').find('.space_select')
 		if modality_id is ''
-			$('#participant_space_id').attr('disabled', 'disabled')
-			$('#participant_space_id').val('')
-			$('#participant_space_id').trigger('change')
+			participantSelect.attr('disabled', 'disabled')
+			participantSelect.val('')
+			participantSelect.trigger('change')
 		else
-			$('#participant_space_id').removeAttr('disabled')
-			$('#participant_space_id').html('<option value=""></option>')
-			$('#participant_space_id').trigger('change')
+			participantSelect.removeAttr('disabled')
+			participantSelect.html('<option value=""></option>')
+			participantSelect.trigger('change')
+			participantSelect.addClass('active-space')
 			@modality = @modalities.get(modality_id)
 			@spaces = new Lodging.Collections.Spaces()
 			@spaces.reset(@modality.get('spaces'))
 			@spaces.each(@appendSpaceOption)
-	
+			participantSelect.removeClass('active-space')
+			
 	appendSpaceOption: (space)->
+		console.log space
 		view = new Lodging.Views.SpacesOption(model: space)
-		$('#participant_space_id').append(view.render().el)
+		$('.active-space').append(view.render().el)
 		
 	$.fn.tokenizeInput = ->
 		tokenizeField = $(this)
