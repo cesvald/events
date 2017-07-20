@@ -389,7 +389,9 @@ CREATE TABLE payments (
     amount numeric,
     description text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    payable_id integer,
+    payable_type character varying
 );
 
 
@@ -994,6 +996,20 @@ CREATE INDEX index_payments_on_participant_id ON payments USING btree (participa
 
 
 --
+-- Name: index_payments_on_payable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_payments_on_payable_id ON payments USING btree (payable_id);
+
+
+--
+-- Name: index_payments_on_payable_type_and_payable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_payments_on_payable_type_and_payable_id ON payments USING btree (payable_type, payable_id);
+
+
+--
 -- Name: index_profiles_users_on_profile_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1244,4 +1260,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170618140522');
 INSERT INTO schema_migrations (version) VALUES ('20170618140726');
 
 INSERT INTO schema_migrations (version) VALUES ('20170618141732');
+
+INSERT INTO schema_migrations (version) VALUES ('20170711142508');
+
+INSERT INTO schema_migrations (version) VALUES ('20170711144028');
 

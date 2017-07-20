@@ -1,9 +1,9 @@
 class BedObserver < ActiveRecord::Observer
 	
 	def after_create(bed)
-		if not bed.room.house.open_stay?
+		if not bed.room.house.open_stay? and not Historical.all.empty?
 			current_total_beds = Historical.where("location_id = :location_id AND start_date <= :start_date", {location_id: bed.room.house.location.id, start_date: Date.today}).last
-			if current_total_beds.start_date == Date.today.beginning_of_month
+			if current_total_beds && current_total_beds.start_date == Date.today.beginning_of_month
 				current_total_beds.value += 1
 				current_total_beds.save
 			else

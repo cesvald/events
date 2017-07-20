@@ -71,7 +71,7 @@ class BookingsController < BaseHostingController
   private
 
     def booking_params
-      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id)
+      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id, :amount)
     end
 
     def search_params

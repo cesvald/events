@@ -15,11 +15,19 @@ class Booking < ActiveRecord::Base
   scope :by_end_date, ->(end_date) { where('end_date = :end_date', {end_date: end_date}) }
   scope :between_dates, ->(start_date, end_date) { where('(start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date) OR (start_date < :start_date AND end_date > :end_date)', {start_date: start_date, end_date: end_date}) }
   
+   def account
+    if self.account > 0
+      self.account
+    else  
+      errors.add(:account, "La cantidad debe ser mayor a cero")
+		end
+  end
+  
   def available
     if self.bed
       current_booking = self.bed.occupied?(self.start_date, self.end_date, self.id.blank? ? 0 : self.id)
       if current_booking
-				errors.add(:occupied, "This bed is occupied from #{current_booking.start_date} to #{current_booking.end_date}")
+				errors.add(:occupied, "Esta cama esta ocupada desde: #{current_booking.start_date} hasta  #{current_booking.end_date}")
 			end
 		end
   end
@@ -27,7 +35,7 @@ class Booking < ActiveRecord::Base
   def valid_dates
     if self.start_date && self.end_date
       if self.end_date < self.start_date
-        errors.add(:invalid_dates, "The end date must be after the start date")
+        errors.add(:invalid_dates, "La fecha final debe ser mayor a la fecha inicial")
       end
     end
   end
