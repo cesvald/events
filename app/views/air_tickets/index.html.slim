@@ -28,4 +28,35 @@ table
 
 br
 
+= link_to 'Nuevo ticket aéreo', new_air_ticket_path
+h1 Listing air_tickets
+
+table
+  thead
+    tr
+      th Participant
+      th Arrive at
+      th Arrive to
+      th Leave at
+      th Leave from
+      th Estimated at
+      th
+      th
+      th
+
+  tbody
+    - @air_tickets.each do |air_ticket|
+      tr
+        td = air_ticket.participant
+        td = air_ticket.arrive_at
+        td = air_ticket.arrive_to
+        td = air_ticket.leave_at
+        td = air_ticket.leave_from
+        td = air_ticket.estimated_at
+        td = link_to 'Show', air_ticket
+        td = link_to 'Edit', edit_air_ticket_path(air_ticket)
+        td = link_to 'Destroy', air_ticket, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
 = link_to 'New Air ticket', new_air_ticket_path

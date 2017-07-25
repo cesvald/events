@@ -38,6 +38,19 @@ es:
             booking:
                 start_date: "Inicia el"
                 end_date: "Termina el"
+                location: "Ubicación"
+                location_id: "Ubicación"
+                amount: "Valor"
+                bed_id: "Cama"
+                bed: "Cama"
+                house_id: "Casa"
+                house: "Casa"
+                guest_id: "Huésped"
+                guest: "Huésped"
+                room_id: "Cuarto"
+                room: "Cuarto"
+              
+         
             event:
                 name: "Nombre"
                 start_at: "Inicia el"
@@ -46,8 +59,8 @@ es:
                 deposit_amount: "Depósito de seguridad (USD)"
             guest:
                 name: "Nombre"
-                surname: Apellido
-                email: Email
+                surname: "Apellido"
+                email: "Correo electrónico"
                 country: "País de residencia"
                 city: "Ciudad residencia"
                 phone_number: "Teléfono Casa"
@@ -123,3 +136,13 @@ es:
             truncate: "..."
             last: "Última"
             first: "Primera"
+            
+    helpers:
+        actions: "Acciones"
+        links:
+            edit: "Editar"
+            destroy: "Eliminar"
+            new: "Nuevo"
+            confirm: "Confirmación"
+            book: "Reservar"
+            
