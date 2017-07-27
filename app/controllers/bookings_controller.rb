@@ -4,6 +4,7 @@ class BookingsController < BaseHostingController
 	
 	before_action :add_locations
 	before_action :check_profiles
+	before_action :check_location_profile, only: [:create, :update, :delete]
 	
 	def index
 		@booking = Booking.new
@@ -90,6 +91,13 @@ class BookingsController < BaseHostingController
     		else
     			sign_out current_user
     		end
+    	end
+    end
+    
+    def check_location_profile
+    	if not can? :manage, @booking
+    		flash[:warning] = "No tiene permisos para realizar esta acción"
+    		redirect_to(:back)
     	end
     end
 end
