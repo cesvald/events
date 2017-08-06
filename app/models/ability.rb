@@ -10,6 +10,5 @@ class Ability
       (booking.location == 'Ashram' and current_user.admin_ashram?) || (booking.location == 'Morada' and current_user.admin_morada?)
     end
     
-    
   end
 end

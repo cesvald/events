@@ -4,7 +4,7 @@ class BookingsController < BaseHostingController
 	
 	before_action :add_locations
 	before_action :check_profiles
-	before_action :check_location_profile, only: [:create, :update, :delete]
+	#before_action :check_location_profile, only: [:create, :update, :delete]
 	
 	def index
 		@booking = Booking.new
@@ -40,7 +40,7 @@ class BookingsController < BaseHostingController
 			end
 
 		end
-
+		@bookings = @bookings.order(start_date: :desc)
 		@bookings = Kaminari.paginate_array(@bookings).page params[:page]
 
 	end
