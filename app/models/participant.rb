@@ -107,7 +107,7 @@ class Participant < ActiveRecord::Base
       deposit_pending
     end
   end
-
+  
   def spaces_to_s
     to_s = ''
     spaces.each do |space|
@@ -116,4 +116,11 @@ class Participant < ActiveRecord::Base
     to_s.html_safe
   end
   
+  def modalities_start_at
+    spaces.joins(:modality).order("modalities.start_at ASC").first.modality.start_at
+  end
+  
+  def modalities_end_at
+    return spaces.joins(:modality).order("modalities.end_at DESC").first.modality.end_at
+  end
 end
