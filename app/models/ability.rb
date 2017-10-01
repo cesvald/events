@@ -7,7 +7,7 @@ class Ability
     can :read, :all
     
     can :manage, :bookings do |booking|
-      (booking.location == 'Ashram' and current_user.admin_ashram?) || (booking.location == 'Morada' and current_user.admin_morada?)
+      (booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
     end
     
   end

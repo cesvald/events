@@ -25,6 +25,7 @@ nav.navbar.navbar-default
 								li
 									= link_to "Detalle por modalidades", report_detail_event_path({id: @event.id, by: "spaces", format: "xlsx"})
 									= link_to "Detalle por estadías", report_detail_event_path({id: @event.id, by: "stays", format: "xlsx"})
+									= link_to "Detalle por fechas", report_detail_event_path({id: @event.id, by: "dates", format: "xlsx"})
 
 			ul.nav.navbar-nav.navbar-right
 				li.dropdown

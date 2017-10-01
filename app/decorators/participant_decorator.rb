@@ -34,6 +34,13 @@ class ParticipantDecorator < Draper::Decorator
     number_to_currency source.due, unit: 'USD', precision: 2, delimiter: '.'
   end
   
+  def display_stays_dates
+    stays_s = ""
+    source.stays.order(start_at: :asc).each do |stay|
+      stays_s += stay.to_s + " - "
+    end
+    return stays_s[0..-3]
+  end
   
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

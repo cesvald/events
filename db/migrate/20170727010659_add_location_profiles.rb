@@ -1,11 +1,11 @@
 class AddLocationProfiles < ActiveRecord::Migration
   def up
-    Profile.create(name:"admin_ashram")
-    Profile.create(name:"admin_morada")
+    Profile.create(name:"hoster_ashram")
+    Profile.create(name:"hoster_morada")
   end
   
   def down
-    Profile.where(name:"admin_ashram").first.destroy
-    Profile.where(name:"admin_morada").first.destroy
+    Profile.where(name:"hoster_ashram").first.destroy
+    Profile.where(name:"hoster_morada").first.destroy
   end
 end

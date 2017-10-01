@@ -23,7 +23,7 @@ class Participant < ActiveRecord::Base
     end
   }
   
-  delegate :display_spaces_amount, :display_stays_amount, :display_payments_amount, :display_due_spaces, :display_due_stays, :display_due, to: :decorator
+  delegate :display_spaces_amount, :display_stays_amount, :display_payments_amount, :display_due_spaces, :display_due_stays, :display_due, :display_stays_dates, to: :decorator
   
   # Using decorators
   def decorator
@@ -123,4 +123,5 @@ class Participant < ActiveRecord::Base
   def modalities_end_at
     return spaces.joins(:modality).order("modalities.end_at DESC").first.modality.end_at
   end
+  
 end

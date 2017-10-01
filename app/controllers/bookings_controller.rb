@@ -96,7 +96,7 @@ class BookingsController < BaseHostingController
     
     def check_location_profile
     	if not can? :manage, @booking
-    		flash[:warning] = "No tiene permisos para realizar esta acción"
+    		flash.now.alert = "No tiene permisos para realizar esta acción"
     		redirect_to(:back)
     	end
     end

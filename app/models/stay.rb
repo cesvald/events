@@ -20,4 +20,9 @@ class Stay < ActiveRecord::Base
   def when_to_s
     start_at < participant.spaces.last.modality.end_at ? 'Estadía Pre' : 'Estadía Post'
   end
+  
+  def to_s
+    return "#{I18n.l start_at, format: :date } al #{I18n.l end_at, format: :date} en #{place}" unless start_at.nil? and end_at.nil?
+  end
+  
 end
