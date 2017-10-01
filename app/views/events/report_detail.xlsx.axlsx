@@ -15,7 +15,7 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
             if participant.air_ticket.nil?
                 sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, "", "", "", participant.display_stays_dates]
             else
-                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, "Llega el #{l participant.air_ticket.leave_at} a #{participant.air_ticket.arrive_to}", "Sale el #{l participant.air_ticket.arrive_at} desde #{participant.air_ticket.leave_from}", "#{l(participant.air_ticket.estimated_at) unless participant.air_ticket.estimated_at.nil?, participant.display_stays_dates}"]
+                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, "Llega el #{l participant.air_ticket.leave_at} a #{participant.air_ticket.arrive_to}", "Sale el #{l participant.air_ticket.arrive_at} desde #{participant.air_ticket.leave_from}", "#{l(participant.air_ticket.estimated_at) unless participant.air_ticket.estimated_at.nil?}", participant.display_stays_dates]
             end
         end
     else
