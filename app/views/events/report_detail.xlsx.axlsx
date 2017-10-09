@@ -10,12 +10,12 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
             sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), participant.spaces_amount, participant.payments_spaces, participant.due_spaces]
         end
     elsif params[:by] == "dates"
-        sheet.add_row ["Nombre", "Apellido", "Email", "País", "Llegada", "Salida", "Llegada Estimada a Cuenca", "Estadías"], style: table_header
+        sheet.add_row ["Nombre", "Apellido", "Email", "País", "Modalidades", "Llegada", "Salida", "Llegada Estimada a Cuenca", "Estadías"], style: table_header
         Event.find(params[:id]).participants.each do |participant|
             if participant.air_ticket.nil?
-                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, "", "", "", participant.display_stays_dates]
+                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), "", "", "", participant.display_stays_dates]
             else
-                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, "Llega el #{l participant.air_ticket.leave_at} a #{participant.air_ticket.arrive_to}", "Sale el #{l participant.air_ticket.arrive_at} desde #{participant.air_ticket.leave_from}", "#{l(participant.air_ticket.estimated_at) unless participant.air_ticket.estimated_at.nil?}", participant.display_stays_dates]
+                sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), "Llega el #{l participant.air_ticket.leave_at} a #{participant.air_ticket.arrive_to}", "Sale el #{l participant.air_ticket.arrive_at} desde #{participant.air_ticket.leave_from}", "#{l(participant.air_ticket.estimated_at) unless participant.air_ticket.estimated_at.nil?}", participant.display_stays_dates]
             end
         end
     else
