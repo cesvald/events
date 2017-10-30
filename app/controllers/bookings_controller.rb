@@ -4,8 +4,8 @@ class BookingsController < BaseHostingController
 	
 	before_action :add_locations
 	before_action :check_profiles
-	before_action :check_location_profile_create, only: [:create]
-	before_action :check_location_profile_update, only: [:update, :destroy, :edit]
+	#before_action :check_location_profile_create, only: [:create]
+	#before_action :check_location_profile_update, only: [:update, :destroy, :edit]
 	
 	def index
 		@booking = Booking.new
