@@ -20,7 +20,7 @@ class Lodging.Routers.Bookings extends Backbone.Router
 			$('#booking_guest_id').val(guest.id)
 
 		$('.datepicker').datepicker({
-	    	format: 'yyyy-mm-dd'
+	    	format: 'dd/mm/yyyy'
 		})
 
 		$('.start-datepicker').each( ->
@@ -39,14 +39,7 @@ class Lodging.Routers.Bookings extends Backbone.Router
 		endDatePicker = datepicker.data("end-datepicker")
 		$(endDatePicker).datepicker('setStartDate', date)
 
-	index: ->
-		view = new Lodging.Views.BookingsIndex()
-		$('body').html(view.render().el)
-
 	new: ->
-		view = new Lodging.Views.BookingsNew(collection: @locations)
-
-	edit: (id) ->
 		view = new Lodging.Views.BookingsNew(collection: @locations)
 
 	$.fn.tokenizeInput = ->

@@ -4,8 +4,8 @@ class BookingsController < BaseHostingController
 	
 	before_action :add_locations
 	before_action :check_profiles
-	#before_action :check_location_profile_create, only: [:create]
-	#before_action :check_location_profile_update, only: [:update, :destroy, :edit]
+	before_action :check_location_profile_create, only: [:create]
+	before_action :check_location_profile_update, only: [:update, :destroy, :edit]
 	
 	def index
 		@booking = Booking.new
@@ -97,7 +97,7 @@ class BookingsController < BaseHostingController
     
     def check_location_profile_update
     	@booking = Booking.find(params[:id])
-    	if not can? :manage,@booking
+    	unless (@booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (@booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
     	  flash[:notice] = "No tiene permisos para realizar esta acción"
     	  return redirect_to(:back)
     	end
@@ -105,7 +105,7 @@ class BookingsController < BaseHostingController
     
     def check_location_profile_create
     	@booking = Booking.new(booking_params)
-    	if not can? :manage, @booking
+    	unless (@booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (@booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
     	  flash[:notice] = "No tiene permisos para realizar esta acción"
     	  return redirect_to(:back)
     	end

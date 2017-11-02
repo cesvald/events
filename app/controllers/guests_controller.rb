@@ -14,7 +14,7 @@ class GuestsController < ApplicationController
 	before_filter :authenticate_token, only: [:auto_edit]
 	
 	def index
-		@guests = params[:q] ? Guest.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(Guest).page(params[:page])
+		@guests = params[:q] ? Guest.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(Guest).order(:name).page(params[:page])
 		respond_to do |format|
 			format.html
 			format.json  {render :json => @guests.map(&:attributes)}

@@ -12,6 +12,8 @@ window.Lodging =
   	new Lodging.Routers.Stays() if controller == "stays"
   	new Lodging.Routers.Payments() if controller == "payments"
   	new Lodging.Routers.Events() if controller == "events"
+  	new Lodging.Routers.Locations() if controller == "locations"
+  	
   	Backbone.history.stop()
   	Backbone.history.start( pushState: true )
 
@@ -22,3 +24,4 @@ $(document).ready ->
   ready()
 
 $(document).on('page:load', ready)
+

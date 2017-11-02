@@ -5,7 +5,7 @@ class LocationsController < BaseHostingController
   skip_before_action :authenticate_user, only: :calendar
   def calendar
     respond_to do |format|
-      @locations = Location.includes(houses: [ rooms: [ :beds ] ]).all
+      @locations = Location.includes(houses: [ rooms: [ :beds ] ]).all.order('houses.name ASC')
   		date_params[:year] = Time.now.year if date_params[:year].blank?
   		date_params[:month] = Time.now.month if date_params[:month].blank?
   

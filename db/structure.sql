@@ -74,7 +74,8 @@ CREATE TABLE beds (
     number integer NOT NULL,
     room_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    usable boolean DEFAULT true
 );
 
 
@@ -1442,4 +1443,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170705164854');
 INSERT INTO schema_migrations (version) VALUES ('20170720010645');
 
 INSERT INTO schema_migrations (version) VALUES ('20170727010659');
+
+INSERT INTO schema_migrations (version) VALUES ('20171102183529');
+
+INSERT INTO schema_migrations (version) VALUES ('20171102184827');
 

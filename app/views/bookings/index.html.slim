@@ -23,8 +23,8 @@ table.table.table-striped
         td= booking.bed.room.name
         td= booking.bed.number
         td= link_to "#{booking.guest.name} #{booking.guest.surname}", guest_path(booking.guest), class: "record-link"
-        td= booking.start_date
-        td= booking.end_date
+        td= l booking.start_date
+        td= l booking.end_date
         td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_booking_path(booking), :class => 'btn btn-default btn-xs'
           '

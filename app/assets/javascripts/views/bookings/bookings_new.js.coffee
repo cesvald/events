@@ -6,10 +6,8 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		"change #location_id": 'populateHousesList'
 		"change #house_id": 'populateRoomsList'
 		"change #room_id": 'populateBedsList'
-		"click #clean-guest-input-btn": 'cleanTokenInput'
-		"click .fa-minus-square-o": 'closeCalendar'
-		"click .fa-plus-square-o": 'openCalendar'
-		"click .token-occupied": 'blurTokenInput'
+		"click  #clean-guest-input-btn": 'cleanTokenInput'
+		"click  .token-occupied": 'blurTokenInput'
 
 	initialize: ->
 		location_id = $('#location_id').val()
@@ -28,8 +26,7 @@ class Lodging.Views.BookingsNew extends Backbone.View
 				@room = @rooms.get($('#room_id').val())
 				@beds = new Lodging.Collections.Beds()
 				@beds.reset(@room.get('beds'))
-
-
+		
 
 	populateHousesList: ->
 		location_id = $('#location_id').val()
@@ -85,23 +82,15 @@ class Lodging.Views.BookingsNew extends Backbone.View
 			@beds.each(@appendBedOption)
 
 	appendBedOption: (bed) ->
-		view = new Lodging.Views.BedsOption(model: bed)
-		$('#booking_bed_id').append(view.render().el)
+		if (window.location.href.indexOf('edit') == -1 and window.location.href.indexOf('new') == -1) or bed.attributes.usable
+			view = new Lodging.Views.BedsOption(model: bed)
+			$('#booking_bed_id').append(view.render().el)
 
 	cleanTokenInput: ->
 		$('#token-input-booking_guest_id').removeClass('token-occupied')
 		$('#token-input-booking_guest_id').val('')
 		$('#token-input-booking_guest_id').focus()
 		$('#booking_guest_id').val('')
-
-	closeCalendar: (event) ->
-		$(event.target).closest('.calendar-containor').find('.calendar-wrapper:first').hide()
-		$(event.target).removeClass('fa-minus-square-o').addClass('fa-plus-square-o')
-		$(event.target).parent().find('.record-link:first').hide()
-	openCalendar: ->
-		$(event.target).closest('.calendar-containor').find('.calendar-wrapper:first').show()
-		$(event.target).removeClass('fa-plus-square-o').addClass('fa-minus-square-o')
-		$(event.target).parent().find('.record-link:first').show()
 		
 	blurTokenInput: (event) ->
 		$(event.target).blur()
