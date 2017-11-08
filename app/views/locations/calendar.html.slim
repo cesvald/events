@@ -31,8 +31,8 @@
                   th Room
                   - for date in (@start_date..@end_date)
                     th #{date.day}
-              - current_house.rooms.each do |current_room|
-                - current_room.beds.order(:id).each do |bed|
+              - current_house.rooms.order(:id).each do |current_room|
+                - current_room.beds.each do |bed|
                     tr
                       td #{bed.room.name} #{bed.number}
                       - bookings = bed.bookings.between_dates(@start_date, @end_date)
