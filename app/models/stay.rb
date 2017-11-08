@@ -22,7 +22,7 @@ class Stay < ActiveRecord::Base
   end
   
   def to_s
-    return "#{I18n.l start_at, format: :date } al #{I18n.l end_at, format: :date} en #{place}" unless start_at.nil? and end_at.nil?
+    return "#{I18n.l start_at, format: :date } al #{I18n.l end_at, format: :date} en #{place}" unless start_at.nil? || end_at.nil?
   end
   
 end
