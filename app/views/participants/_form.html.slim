@@ -10,19 +10,25 @@
   h4 Modalidades
   = f.fields_for :participant_spaces do |builder|
     .row
-      .col-lg-4
+      .col-lg-3
         .form-group
           .form-label
             label.control-label Modalidad
           .form-wrapper
             = select_tag :modality_id, options_for_select(@event.modalities.pluck(:name, :id), builder.object.nil? || builder.object.space.nil? ? nil : builder.object.space.modality.id), class: "form-control modality_select", include_blank: true, required: true
-      .col-lg-4  
+      .col-lg-3  
         .form-group
           .form-label
             label.control-label Espacio
           .form-wrapper
             = builder.select :space_id, (builder.object.nil? || builder.object.space.nil? ? [] : options_for_select(builder.object.space.modality.spaces.joins(:place).pluck("places.name || ' (' || spaces.amount || ' USD)'", "spaces.id"), builder.object.space.id)), {}, {class: "form-control space_select", include_blank: true, required: true}
-      .col-lg-4  
+      .col-lg-3  
+        .form-group
+          .form-label
+            label.control-label Observaciones
+          .form-wrapper
+            = builder.text_field :note, class: "form-control"
+      .col-lg-3
         .form-group
           .form-label.invisible.control-label eliminar
           div= builder.link_to_remove "Eliminar", class: "btn btn-danger"

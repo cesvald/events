@@ -390,7 +390,8 @@ ALTER SEQUENCE modalities_id_seq OWNED BY modalities.id;
 CREATE TABLE participant_spaces (
     id integer NOT NULL,
     participant_id integer,
-    space_id integer
+    space_id integer,
+    note character varying
 );
 
 
@@ -1447,4 +1448,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170727010659');
 INSERT INTO schema_migrations (version) VALUES ('20171102183529');
 
 INSERT INTO schema_migrations (version) VALUES ('20171102184827');
+
+INSERT INTO schema_migrations (version) VALUES ('20171218173647');
 

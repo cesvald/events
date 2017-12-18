@@ -53,7 +53,7 @@ class ParticipantsController < BaseEventController
 	private
 
 		def participant_params
-			params.require(:participant).permit(:guest_id, :space_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :_destroy])
+			params.require(:participant).permit(:guest_id, :space_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :note, :_destroy])
 		end
 		
 		def set_event

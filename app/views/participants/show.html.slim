@@ -43,11 +43,13 @@
       tr
         th Modalidad
         th Valor
+        th Observaciones
     tbody
-      - @participant.spaces.each do |space|
+      - @participant.participant_spaces.each do |participant_space|
         tr
-          td= space.to_s_wihtout_amount
-          td= to_currency space.amount
+          td= participant_space.space.to_s_wihtout_amount
+          td= to_currency participant_space.space.amount
+          td= participant_space.note
   
   br
   br
