@@ -15,6 +15,7 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 			$('#token-input-participant_guest_id').addClass('token-occupied')
 			$('#participant_guest_id').val(guest.id)
 			
+		$('#token-input-participant_guest_id').attr('required', 'required')
 		
 		@modalities = new Lodging.Collections.Modalities()
 		@modalities.reset(gon.modalities)

@@ -12,6 +12,8 @@ class Participant < ActiveRecord::Base
   
   has_many :stays, dependent: :delete_all
   
+  validates_presence_of :guest
+  
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }
   scope :by_space, ->(space_id) { where('participant_spaces.space_id = ?', space_id) }
   scope :by_guest, ->(guest_id) { where( guest_id: guest_id ) }
