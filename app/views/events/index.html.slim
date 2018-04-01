@@ -1,6 +1,8 @@
-.page-header
+.page-header 
 	h1 Lista de Eventos
-	= link_to 'Nuevo Evento', new_event_path, class: "btn btn-primary btn-header"
+	- if can? :manage, Event
+		= link_to 'Nuevo Evento', new_event_path, class: "btn btn-primary btn-header"
+		= link_to "Administrar Permisos", users_path, class: "btn btn-primary btn-header" if can? :manage, :user
 	
 br
 
@@ -14,19 +16,18 @@ table.table
 
 	tbody
 		- @events.each do |event|
-			tr
-				td = event.name
-				td = event.start_at
-				td = event.end_at
-				td
-					= link_to 'Entrar', event_participants_path(event), class: "btn btn-primary btn-xs"
-					|&nbsp;
-					|&nbsp;
-					= link_to 'Editar', edit_event_path(event), class: "btn btn-default btn-xs"
-					|&nbsp;
-					|&nbsp;
-					= link_to 'Eliminar', event, data: {:confirm => 'Estás seguro de eliminar este evento?'}, :method => :delete, class: "btn btn-danger btn-xs"
-					
-					
-					
-					
+			- if can? :view, event
+				tr
+					td = event.name
+					td = event.start_at
+					td = event.end_at
+					td
+						= link_to 'Entrar', event_participants_path(event), class: "btn btn-primary btn-xs"
+						- if can? :manage, Event
+							|&nbsp;
+							|&nbsp;
+							= link_to 'Editar', edit_event_path(event), class: "btn btn-default btn-xs"
+							|&nbsp;
+							|&nbsp;
+							= link_to 'Eliminar', event, data: {:confirm => 'Estás seguro de eliminar este evento?'}, :method => :delete, class: "btn btn-danger btn-xs"
+							

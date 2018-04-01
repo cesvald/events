@@ -1,0 +1,6 @@
+h1 Nuevo Usuario
+
+br
+== render 'form', custom_url: url_for(controller: 'users', action: 'recreate'), method: :post
+br
+= link_to "Volver", :back

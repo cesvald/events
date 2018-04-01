@@ -13,7 +13,7 @@ es:
             participant: Participante
             participation: Participación
             payment: Pago
-            place: Lugar
+            place: Categoría
             profile: Perfil
             room: Habitación
             space: Espacio
@@ -23,7 +23,7 @@ es:
                 current_password: Contraseña actual
                 email: Correo electrónico
                 password: Contraseña
-                password_confirmation: Confirmación de la contraseña
+                password_confirmation: Vuelve a escribir la contraseña
                 remember_me: Recordarme
                 reset_password_token: Restablecer token contraseña
                 unlock_token: Desbloquear token
@@ -57,6 +57,7 @@ es:
                 end_at: "Termina el"
                 active: "Activo"
                 deposit_amount: "Depósito de seguridad (USD)"
+                international: "Iternacional"
             guest:
                 name: "Nombre"
                 surname: "Apellido"
@@ -80,6 +81,7 @@ es:
                 comments: "Comentarios adicionales"
                 is_initiate: "Es Iniciado"
                 age: Edad
+                outside: "A distancia?"
             house:
                 name: "Nombre"
                 sketch: Diagrama
@@ -91,6 +93,7 @@ es:
                 end_at: "Termina el"
             participation:
                 amount: Valor
+                guest_id: "Contacto"
             payment:
                 paid_at: "Pagado el"
                 amount: "Valor"
@@ -104,13 +107,13 @@ es:
             space:
                 place: "Lugar"
                 name: "Nombre"
-                amount: "Valor por noche de estadía (USD)"
+                amount: "Valor (USD)"
             stay:
                 start_at: "Inicial el"
                 end_at: "Termina el"
                 place: "Espacio"
-                amount: "Valor por noche (USD)"
-                place_id: "Espacio"
+                amount: "Valor (USD)"
+                place_id: "Categoría"
     
     participant:
         deposit:

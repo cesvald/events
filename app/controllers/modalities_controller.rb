@@ -7,12 +7,12 @@ class ModalitiesController < BaseEventController
   end
   
   def new
-    gon.places = Place.all
+    gon.places = parent.places
     new!
   end
   
   def edit
-    gon.places = Place.all
+    gon.places = parent.places
     edit!
   end
   

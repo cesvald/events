@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   
   resources :places
+  resources :users do
+    collection do
+      post :recreate
+    end
+    member do
+      get :reset_password
+    end
+  end
   
   resources :events do
     member do
@@ -10,6 +18,12 @@ Rails.application.routes.draw do
       get :report_general
     end
     resources :modalities, shallow: true
+    resources :places do
+      member do
+        get :remove
+        get :assign
+      end
+    end
     resources :participants do
       member do
         get :next_deposit_state
@@ -54,7 +68,7 @@ Rails.application.routes.draw do
     end
   end
   
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

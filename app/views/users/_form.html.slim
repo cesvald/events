@@ -1,0 +1,13 @@
+= bootstrap_form_for @user, url: custom_url, method: method do |f|
+	.row
+		.field.col-lg-3
+			= f.text_field :name
+		.field.col-lg-3
+			= f.text_field :surname
+		.field.col-lg-3
+			= f.text_field :email
+		.field.col-lg-3
+			label.control-label.required for="user_country"	País
+			= f.country_select :country, { include_blank: 'Selecciona un país' }, { class: 'form-control' } 
+	
+	= f.primary

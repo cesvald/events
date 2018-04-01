@@ -8,9 +8,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    @user.profiles << Profile.eventer
+    if params[:user] and params[:user][:country]
+        @user.profiles << Profile.coord_country
+    else
+        @user.profiles << Profile.coord_outside
+    end
+    @user.password = 'sbabaji7'
+    @user.save
+    redirect_to users_path
+  end
 
   # GET /resource/edit
   # def edit

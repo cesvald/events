@@ -175,7 +175,8 @@ CREATE TABLE events (
     active boolean,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deposit_amount numeric DEFAULT 0
+    deposit_amount numeric DEFAULT 0,
+    international boolean DEFAULT false
 );
 
 
@@ -227,7 +228,8 @@ CREATE TABLE guests (
     local_number character varying,
     comments text,
     is_initiate boolean,
-    age integer
+    age integer,
+    outside boolean DEFAULT false
 );
 
 
@@ -495,6 +497,36 @@ CREATE TABLE places (
 
 
 --
+-- Name: places_events; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE places_events (
+    id integer NOT NULL,
+    place_id integer,
+    event_id integer
+);
+
+
+--
+-- Name: places_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE places_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: places_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE places_events_id_seq OWNED BY places_events.id;
+
+
+--
 -- Name: places_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -724,7 +756,10 @@ CREATE TABLE users (
     reset_password_sent_at timestamp without time zone,
     remember_created_at timestamp without time zone,
     created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    country character varying,
+    name character varying,
+    surname character varying
 );
 
 
@@ -843,6 +878,13 @@ ALTER TABLE ONLY payments ALTER COLUMN id SET DEFAULT nextval('payments_id_seq':
 --
 
 ALTER TABLE ONLY places ALTER COLUMN id SET DEFAULT nextval('places_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY places_events ALTER COLUMN id SET DEFAULT nextval('places_events_id_seq'::regclass);
 
 
 --
@@ -999,6 +1041,14 @@ ALTER TABLE ONLY payments
 
 
 --
+-- Name: places_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY places_events
+    ADD CONSTRAINT places_events_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: places_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1144,6 +1194,20 @@ CREATE INDEX index_participants_on_guest_id ON participants USING btree (guest_i
 --
 
 CREATE INDEX index_payments_on_participant_id ON payments USING btree (participant_id);
+
+
+--
+-- Name: index_places_events_on_event_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_places_events_on_event_id ON places_events USING btree (event_id);
+
+
+--
+-- Name: index_places_events_on_place_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_places_events_on_place_id ON places_events USING btree (place_id);
 
 
 --
@@ -1312,6 +1376,22 @@ ALTER TABLE ONLY payments
 
 
 --
+-- Name: fk_places_events_event_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY places_events
+    ADD CONSTRAINT fk_places_events_event_id FOREIGN KEY (event_id) REFERENCES events(id);
+
+
+--
+-- Name: fk_places_events_place_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY places_events
+    ADD CONSTRAINT fk_places_events_place_id FOREIGN KEY (place_id) REFERENCES places(id);
+
+
+--
 -- Name: fk_profiles_users_profile_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1450,4 +1530,14 @@ INSERT INTO schema_migrations (version) VALUES ('20171102183529');
 INSERT INTO schema_migrations (version) VALUES ('20171102184827');
 
 INSERT INTO schema_migrations (version) VALUES ('20171218173647');
+
+INSERT INTO schema_migrations (version) VALUES ('20180331195323');
+
+INSERT INTO schema_migrations (version) VALUES ('20180331201331');
+
+INSERT INTO schema_migrations (version) VALUES ('20180331215544');
+
+INSERT INTO schema_migrations (version) VALUES ('20180401005733');
+
+INSERT INTO schema_migrations (version) VALUES ('20180401022849');
 

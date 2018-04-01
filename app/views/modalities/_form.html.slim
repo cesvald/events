@@ -6,11 +6,11 @@
       = f.text_field :start_at, value: f.object.start_at.nil? ? nil : l(f.object.start_at), required: true
     .col-lg-4
       = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at), required: true
-  h4 Espacios
+  h4 Categorías
   = f.fields_for :spaces do |builder|
     .row
       .field.col-lg-4
-        = builder.select :place_id, options_for_select(Place.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id))
+        = builder.select :place_id, options_for_select(@event.places.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id)), label: "Categoría"
       .field.col-lg-4
         = builder.number_field :amount, step: "any", required: true
       .field.col-lg-4
@@ -19,6 +19,8 @@
         
   
   = f.link_to_add "Adicionar espacio", :spaces, class: "btn btn-sm btn-default"
+  br
+  br
   br
   br
   .actions = f.primary

@@ -4,6 +4,7 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 
 	events:
 		"change .modality_select": 'populateSpacesList'
+		"click #clean-guest-input-btn": 'cleanTokenInput'
 		
 	initialize: ->
 		$('#participant_guest_id').tokenizeInput()
@@ -37,7 +38,13 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 			@spaces.reset(@modality.get('spaces'))
 			@spaces.each(@appendSpaceOption)
 			participantSelect.removeClass('active-space')
-			
+	
+	cleanTokenInput: () ->
+		$('#token-input-participant_guest_id').removeClass('token-occupied')
+		$('#token-input-participant_guest_id').val('')
+		$('#token-input-participant_guest_id').focus()
+		$('#participant_guest_id').val('')
+		
 	appendSpaceOption: (space)->
 		console.log space
 		view = new Lodging.Views.SpacesOption(model: space)
@@ -48,9 +55,9 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 		tokenizeField.tokenInput('/guests.json', {
 			crossDomain: false,
 			propertyToSearch: ["name", "surname", "email"]
-			hintText: "Search by name or email"
+			hintText: "Buscar por nombre o email"
 			noResultsText: "No results"
-			insertText: "Not found: Add Guest"
+			insertText: "No existe: Adicionar Contacto"
 			insertUrl: '/guests/new'
 			insertParam: 'email'
 			resultsLimit: 1
@@ -61,3 +68,5 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 			resultsFormatter: (item) ->
 				return "<li>" + "<div class='token-result-wrapper'><div>" + item.name + " " + item.surname + "</div><div>" + item.email + "</div></div></li>"
 		})
+		
+	

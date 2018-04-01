@@ -14,13 +14,19 @@ class GuestsController < ApplicationController
 	before_filter :authenticate_token, only: [:auto_edit]
 	
 	def index
-		@guests = params[:q] ? Guest.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(Guest).order(:name).page(params[:page])
+		@guests = current_user.admin? ? Guest.all : (current_user.coord_outside? ? Guest.by_outside(true) : Guest.by_country(current_user.country).by_outside(false))
+		@guests = params[:q] ? @guests.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(@guests).order(:name).page(params[:page])
 		respond_to do |format|
 			format.html
 			format.json  {render :json => @guests.map(&:attributes)}
 		end
 	end
 
+	def new
+		@back_url = URI(request.referer || root_path).path
+		new!
+	end
+	
 	def edit
 		@back_url = URI(request.referer || root_path).path
 		edit!
@@ -50,17 +56,17 @@ class GuestsController < ApplicationController
 	
 	end
 	
-	
 	def create
 		@guest = Guest.new(guest_params)
-    @guest.save
-    redirect_to guests_path
+	    @guest.save
+	    redirect_to (params[:back_url].present? ? params[:back_url] : guests_path)
 	end
 
-  private
+	
+	private
 
     def guest_params
-      params.require(:guest).permit(:name, :surname, :email, :country, :city, :phone_number, :mobile_number, :identification, :civil_status, :profession, :nationality, :health_condition, :receive_drug, :symptoms, :contact_name, :contact_kin, :contact_number, :hotel, :local_number, :comments, :is_initiate, :age)
+      params.require(:guest).permit(:name, :surname, :email, :country, :city, :phone_number, :mobile_number, :identification, :civil_status, :profession, :nationality, :health_condition, :receive_drug, :symptoms, :contact_name, :contact_kin, :contact_number, :hotel, :local_number, :comments, :is_initiate, :age, :outside)
     end
     
     def set_comming_from

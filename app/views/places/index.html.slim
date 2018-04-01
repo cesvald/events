@@ -1,21 +1,44 @@
-h1 Listing places
-
-table
-  thead
-    tr
-      th Name
-      th
-      th
-      th
-
-  tbody
-    - @places.each do |place|
-      tr
-        td = place.name
-        td = link_to 'Show', place
-        td = link_to 'Edit', edit_place_path(place)
-        td = link_to 'Destroy', place, data: {:confirm => 'Are you sure?'}, :method => :delete
-
-br
-
-= link_to 'New Place', new_place_path
+.page-header
+  h1 Categorías
+  == render 'form'
+  br
+  br
+  .row
+    .col-md-5.sm-12
+      h3 Categorías del Evento
+      table.table
+        thead
+          tr
+            th Nombre
+            th
+        tbody
+          - @own_places.each do |place|
+            tr
+              td = place.name
+              td = link_to 'Sacar del Evento', remove_event_place_path(@event, place), class: "btn btn-danger btn-xs"
+    
+    .col-md-5.col-md-offset-1.sm-12
+      h3 Todas las Categorías
+      = paginate @places
+      table.table
+        thead
+          tr
+            th Nombre
+            th
+            th
+      
+        tbody
+          - @places.each do |place|
+            - if not @own_places.include?(place)
+              tr
+                td = place.name
+                td.actions
+                  = link_to 'Adicionar al Evento', assign_event_place_path(@event, place), class: "btn btn-primary btn-xs"
+                  |&nbsp;
+                  = link_to 'Editar', edit_event_place_path(@event, place), class: "btn btn-default btn-xs"
+                  |&nbsp;
+                  = link_to 'Eliminar', event_place_path(@event, place), method: :delete, data: {confirm: "Desea eliminar esta categoría?"}, class: "btn btn-danger btn-xs"
+      
+      = paginate @places
+      
+      br

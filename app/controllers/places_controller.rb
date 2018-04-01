@@ -1,5 +1,48 @@
 class PlacesController < BaseEventController
-
+  
+  belongs_to :event, optional: true
+  
+  def index
+    @place = Place.new()
+    @places = Place.all.page(params[:page])
+    @own_places = parent.places.to_a
+  end
+  
+  def create
+    Place.create(place_params)
+    redirect_to :back
+  end
+  
+  def edit
+    @place = Place.find(params[:id])
+  end
+  
+  def assign
+    parent.places << Place.find(params[:id])
+    redirect_to :back
+  end
+  
+  def remove
+    place = Place.find(params[:id])
+    if parent.modalities.joins(:spaces).where('spaces.place_id = ?', params[:id]).any?
+      flash[:failure] = "Hay modalidades del evento que están usando esta categoría y no se puede eliminar"
+    else
+      parent.places.destroy(place)
+    end
+    
+    redirect_to :back
+  end
+  
+  def destroy
+    place = Place.find(params[:id])
+    if place.spaces.any? 
+      flash[:failure] = "Hay Modalidades de otros eventos que están usando esta categoría y no se puede eliminar"
+    else
+      place.destroy
+    end
+    redirect_to :back
+  end
+  
   private
 
     def place_params

@@ -3,35 +3,36 @@
 	= link_to 'Información personal', edit_guest_path(@participant.guest), class: "btn btn-primary btn-header btn-xs small-link"
 
 .participant-body
-  h5 Información del viaje
-  |&nbsp;
-  - if @participant.air_ticket.nil?
-    = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
-    br
-    br
-  - if not @participant.air_ticket.nil?
-    table.table.table-actions
-      thead
+  - if not @event.international?
+    h5 Información del viaje
+    |&nbsp;
+    - if @participant.air_ticket.nil?
+      = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
+      br
+      br
+    - if not @participant.air_ticket.nil?
+      table.table.table-actions
+        thead
+          tr
+            th Llega el
+            th Sale el
+            th Llega a
+            th Sale desde
+            th Llegada estimada a Cuenca
+            th
+            th
         tr
-          th Llega el
-          th Sale el
-          th Llega a
-          th Sale desde
-          th Llegada estimada a Cuenca
-          th
-          th
-      tr
-        td= l @participant.air_ticket.arrive_at
-        td= l @participant.air_ticket.leave_at
-        td= @participant.air_ticket.arrive_to
-        td= @participant.air_ticket.leave_from
-        td= l @participant.air_ticket.estimated_at
-        td.actions
-          = link_to "Editar", edit_event_participant_air_ticket_path(@event, @participant, @participant.air_ticket), class: "btn btn-xs btn-default"
-          |&nbsp;
-          = link_to "Eliminar", [@event, @participant, @participant.air_ticket], method: :delete, data: {confirm: "Estás seguro de eliminar este boleto aereo"}, class: "btn btn-xs btn-danger"
-  br
-  br
+          td= l @participant.air_ticket.arrive_at
+          td= l @participant.air_ticket.leave_at
+          td= @participant.air_ticket.arrive_to
+          td= @participant.air_ticket.leave_from
+          td= l @participant.air_ticket.estimated_at
+          td.actions
+            = link_to "Editar", edit_event_participant_air_ticket_path(@event, @participant, @participant.air_ticket), class: "btn btn-xs btn-default"
+            |&nbsp;
+            = link_to "Eliminar", [@event, @participant, @participant.air_ticket], method: :delete, data: {confirm: "Estás seguro de eliminar este boleto aereo"}, class: "btn btn-xs btn-danger"
+    br
+    br
   
   h5 Modalidades
   |&nbsp;
@@ -54,36 +55,36 @@
   br
   br
   
-  
-  h5 Estadías
-  |&nbsp;
-  = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
-  br
-  table.table.table-actions
-    thead
-      tr
-        th 
-        th Espacio
-        th Desde el
-        th Hasta el
-        th Valor total
-        th
-        th
-    - @participant.stays.order(:start_at).each do |stay|
-      tr
-        td
-          b= stay.when_to_s
-        td= stay.place
-        td= l stay.start_at, format: :date
-        td= l stay.end_at, format: :date
-        td= stay.display_detailed_total_amount
-        td
-          = link_to "Editar", edit_event_participant_stay_path(@event, @participant, stay), class: "btn btn-xs btn-default"
-          |&nbsp;
-          = link_to "Eliminar", [@event, @participant, stay], method: :delete, data: {confirm: "Estás seguro de eliminar esta estadía"}, class: "btn btn-xs btn-danger"
-  
-  br
-  br
+  - if not @event.international?
+    h5 Estadías
+    |&nbsp;
+    = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
+    br
+    table.table.table-actions
+      thead
+        tr
+          th 
+          th Espacio
+          th Desde el
+          th Hasta el
+          th Valor total
+          th
+          th
+      - @participant.stays.order(:start_at).each do |stay|
+        tr
+          td
+            b= stay.when_to_s
+          td= stay.place
+          td= l stay.start_at, format: :date
+          td= l stay.end_at, format: :date
+          td= stay.display_detailed_total_amount
+          td
+            = link_to "Editar", edit_event_participant_stay_path(@event, @participant, stay), class: "btn btn-xs btn-default"
+            |&nbsp;
+            = link_to "Eliminar", [@event, @participant, stay], method: :delete, data: {confirm: "Estás seguro de eliminar esta estadía"}, class: "btn btn-xs btn-danger"
+    
+    br
+    br
   
   h5 Pagos
   |&nbsp;
@@ -114,20 +115,22 @@
   br
   br
   
-  h5
-    = "Depósito de seguridad por #{to_currency @event.deposit_amount}"
+  - if not @event.international?
+    h5
+      = "Depósito de seguridad por #{to_currency @event.deposit_amount}"
+      |&nbsp;
+      |&nbsp;
+      |&nbsp;
+      |&nbsp;
+      span class=("deposit-state #{@participant.deposit_state}")
+        = t("participant.deposit.state.#{@participant.deposit_state}")
     |&nbsp;
     |&nbsp;
-    |&nbsp;
-    |&nbsp;
-    span class=("deposit-state #{@participant.deposit_state}")
-      = t("participant.deposit.state.#{@participant.deposit_state}")
-  |&nbsp;
-  |&nbsp;
-  = link_to @participant.next_deposit_state_action, next_deposit_state_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
+    = link_to @participant.next_deposit_state_action, next_deposit_state_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
   
-  br
-  br
+    br
+    br
+    
   br
   .row
     .col-md-offset-2.col-md-8
@@ -146,21 +149,22 @@
         tr.payment
           td Pago Modalidades
           td= to_currency  @participant.payments_spaces
-        tr.subtotal
-          td
-          td= "Subtotal #{to_currency @participant.due_spaces}"
-        tr.subheader
-          td Estadías
-          td 
-        tr
-          td Total Estadías
-          td= to_currency @participant.stays_amount
-        tr.payment
-          td Pago Estadías
-          td= to_currency @participant.payments_stays
-        tr.subtotal
-          td
-          td= "Subtotal #{to_currency @participant.due_stays}"
+        - if not @event.international?
+          tr.subtotal
+            td
+            td= "Subtotal #{to_currency @participant.due_spaces}"
+          tr.subheader
+            td Estadías
+            td 
+          tr
+            td Total Estadías
+            td= to_currency @participant.stays_amount
+          tr.payment
+            td Pago Estadías
+            td= to_currency @participant.payments_stays
+          tr.subtotal
+            td
+            td= "Subtotal #{to_currency @participant.due_stays}"
         tr.total-due
           td
             b Total

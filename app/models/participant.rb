@@ -17,6 +17,9 @@ class Participant < ActiveRecord::Base
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }
   scope :by_space, ->(space_id) { where('participant_spaces.space_id = ?', space_id) }
   scope :by_guest, ->(guest_id) { where( guest_id: guest_id ) }
+  scope :by_country, ->(country) { joins(:guest).where('guests.country': country) }
+  scope :by_outside, ->(outside) { joins(:guest).where('guests.outside': outside) }
+  
   scope :by_confirmed, -> (is_confirmed) {
     if is_confirmed.to_i == 0
       joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.participant_id').where('air_tickets.participant_id IS NOT NULL OR payments.participant_id IS NOT NULL')

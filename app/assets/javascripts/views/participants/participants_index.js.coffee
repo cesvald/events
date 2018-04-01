@@ -49,9 +49,9 @@ class Lodging.Views.ParticipantsIndex extends Backbone.View
 		tokenizeField.tokenInput('/guests.json', {
 			crossDomain: false,
 			propertyToSearch: ["name", "surname", "email"]
-			hintText: "Search by name or email"
+			hintText: "Buscar por nombre o email"
 			noResultsText: "No results"
-			insertText: "Not found: Add Guest"
+			insertText: "No existe: Adicionar Contacto"
 			insertUrl: '/guests/new'
 			insertParam: 'email'
 			resultsLimit: 1

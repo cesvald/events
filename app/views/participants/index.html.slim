@@ -8,19 +8,19 @@ h2 Buscar Por
 = form_tag event_participants_path, method: :get do
   .row
     .form-group.col-lg-3
-      = label_tag :by_guest, nil, class: "control-label"
+      = label_tag :by_guest, "Contacto", class: "control-label"
       .input-group
         = text_field_tag :by_guest, nil, :data => {:guest => (params[:by_guest] && !params[:by_guest].blank?) ? Guest.find(params[:by_guest]) : "" }, class: "form-control"
         span#clean-guest-btn.input-group-btn
           button.btn.btn-default[type="button"] X
     .form-group.col-lg-3
-      = label_tag :by_modality, nil, class: "control-label"
+      = label_tag :by_modality, "Modalidad", class: "control-label"
       = select_tag :by_modality, options_for_select(@event.modalities.pluck(:name, :id), params[:by_modality]), include_blank: true, class: "form-control"
     .form-group.col-lg-3
-      = label_tag :by_space, nil, class: "control-label"
+      = label_tag :by_space, "Categoría", class: "control-label"
       = select_tag :by_space, nil, include_blank: true, class: "form-control", disabled: :disabled, :data => { :space => params[:by_space] }
     .form-group.col-lg-2
-      = label_tag :by_confirmed, nil, class: "control-label"
+      = label_tag :by_confirmed, "Confirmado", class: "control-label"
       = select_tag :by_confirmed, options_for_select([["Si", 0], ["No", 1]], params[:by_confirmed]), include_blank: true, class: "form-control"
     .form-group.col-lg-1
       = label_tag :by_con, nil, class: "control-label invisible"

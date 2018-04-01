@@ -25,7 +25,7 @@ var DEFAULT_SETTINGS = {
 	// Display settings
     hintText: "Type in a search term",
     noResultsText: "No results",
-    searchingText: "Searching...",
+    searchingText: "Buscando...",
     deleteText: "&times;",
     insertText: "Insert token not found",
     animateDropdown: true,

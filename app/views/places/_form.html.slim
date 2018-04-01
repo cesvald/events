@@ -1,6 +1,6 @@
-= semantic_form_for @place do |f|
-  = f.inputs do
-    = f.input :name
-
-  = f.actions do
-    = f.action :submit, as: :input
+= form_for @place do |f|
+  .row
+    .col-lg-3
+      = f.text_field :name, placeholder: "Nombre", class: "form-control"
+    .col-lg-3
+      = f.submit class: "btn btn-primary"

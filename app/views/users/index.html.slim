@@ -1,0 +1,33 @@
+.page-header
+	h1 Usuarios
+	= link_to 'Crear Usuario', new_user_path, class: 'btn btn-primary btn-header'
+
+.row
+	.col-xs-12.col-sm-8
+		= paginate @users
+		table.table
+			tbody
+				thead
+					th Nombre
+					th Apellido
+					th Email
+					th Permisos
+					th
+				tbody
+					- @users.each do |user|
+						tr
+							td= user.name
+							td= user.surname
+							td= user.email
+							td= user.coord_country? ? user.country_name : (user.admin? ? "Administrador" : (user.coord_outside? ? "A Distancia" : ""))
+							td
+								.btn-group
+									button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+										| Acciones
+										span.caret
+									ul.dropdown-menu
+									  li = link_to 'Editar', edit_user_path(user)
+									  li = link_to 'Reiniciar Contraseña', reset_password_user_path(user)
+									  li = link_to 'Eliminar', user, data: {:confirm => '¿Estás seguro de eliminar este usuario?'}, :method => :delete
+			
+= paginate @users
