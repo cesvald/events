@@ -1,6 +1,6 @@
 class ModalitiesController < BaseEventController
   
-  belongs_to :event, optional: true
+  belongs_to :event
   
   def create
     create! { event_modalities_path(@modality.event) }

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       get :report_detail
       get :report_general
     end
-    resources :modalities, shallow: true
+    resources :modalities
     resources :places do
       member do
         get :remove

@@ -20,5 +20,5 @@ table.table
         td = modality.spaces_to_s
         td = l modality.start_at, format: :date
         td = l modality.end_at, format: :date
-        td = link_to 'Editar', edit_modality_path(modality), class: "btn btn-xs btn-default"
-        td = link_to 'Eliminar', modality, data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-xs btn-danger"
+        td = link_to 'Editar', edit_event_modality_path(@event, modality), class: "btn btn-xs btn-default"
+        td = link_to 'Eliminar', [@event, modality], data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-xs btn-danger"

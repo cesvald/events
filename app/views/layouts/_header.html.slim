@@ -38,9 +38,11 @@ nav.navbar.navbar-default
 					ul.dropdown-menu
 						- if session.has_key?(:profile) and session[:profile] == 'hoster'
 							li = link_to "Reporte Camas Ocupadas", monthly_guests_reports_bookings_path(date: {year: Time.now.year})
-							li = link_to "Administrar Eventos", events_path
+							- if current_user.eventer?
+								li = link_to "Administrar Eventos", events_path
 						- else
-							li = link_to "Administrar Hospedaje", bookings_path
+							- if current_user.hoster?
+								li = link_to "Administrar Hospedaje", bookings_path
 						li= link_to "Cambiar Contraseña", edit_user_registration_path, class: "menu-link"
 						li = link_to "Cerrar Sesión", destroy_user_session_path, :method => :delete
 						
