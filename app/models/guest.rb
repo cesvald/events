@@ -16,4 +16,14 @@ class Guest < ActiveRecord::Base
 	def to_s
 		"#{name} #{surname} (#{email})"
 	end
+	
+	def country_name
+		if country
+			country_name = ISO3166::Country[country]
+			if country_name
+	    		country_name.translations[I18n.locale.to_s] || country_name.name
+	    	end
+	    end
+	end
+	
 end

@@ -2,9 +2,7 @@ class GuestsController < ApplicationController
 	
 	inherit_resources
 	
-	has_scope :by_name
-	has_scope :by_surname
-	has_scope :by_email
+	has_scope :by_name, :by_surname, :by_email, :by_country
 
 	respond_to :html, :json
 	

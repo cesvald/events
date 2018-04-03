@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   resources :places
-  resources :users do
+  resources :users, only: [:index, :edit, :update, :create, :new] do
     collection do
       post :recreate
     end
