@@ -1,4 +1,6 @@
-= form_for @place do |f|
+= form_for [@event, @place] do |f|
+  - if @back_url
+    = hidden_field_tag :back_url, @back_url
   .row
     .col-lg-3
       = f.text_field :name, placeholder: "Nombre", class: "form-control"

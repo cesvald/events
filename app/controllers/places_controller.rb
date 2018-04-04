@@ -1,6 +1,6 @@
 class PlacesController < BaseEventController
   
-  belongs_to :event, optional: true
+  belongs_to :event
   
   def index
     @place = Place.new()
@@ -13,8 +13,15 @@ class PlacesController < BaseEventController
     redirect_to :back
   end
   
+  def update
+    @place = Place.find(params[:id])
+    @place.update_attributes(place_params)
+    redirect_to params[:back_url]
+  end
+  
   def edit
     @place = Place.find(params[:id])
+    @back_url = request.referrer
   end
   
   def assign

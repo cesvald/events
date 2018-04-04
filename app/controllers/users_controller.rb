@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     def recreate
         u = User.create(user_params)
         u.profiles << Profile.eventer
-        if params[:user] and params[:user][:country]
+        if params[:user] and params[:user][:country] and not params[:user][:country].blank?
             u.profiles << Profile.coord_country
         else
             u.profiles << Profile.coord_outside
