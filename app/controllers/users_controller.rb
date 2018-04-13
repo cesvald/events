@@ -11,14 +11,19 @@ class UsersController < ApplicationController
     end
     
     def recreate
-        u = User.create(user_params)
-        u.profiles << Profile.eventer
-        if params[:user] and params[:user][:country] and not params[:user][:country].blank?
-            u.profiles << Profile.coord_country
+        u = User.where(email: user_params[:email]).first
+        if u
+            u.update_attributes(user_params)
         else
-            u.profiles << Profile.coord_outside
+            u = User.create(user_params)
         end
-        u.password = 'sbabaji7'
+        u.profiles << Profile.eventer unless u.eventer?
+        if params[:user] and params[:user][:country] and not params[:user][:country].blank?
+            u.profiles << Profile.coord_country unless u.coord_country?
+        else
+            u.profiles << Profile.coord_outside unless u.coord_outside?
+        end
+        u.password = 'sbabaji7' if u.password.nil?
         u.save!
         redirect_to users_path
     end
