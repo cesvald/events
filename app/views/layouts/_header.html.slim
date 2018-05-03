@@ -9,7 +9,8 @@ nav.navbar.navbar-default
 			ul.nav.navbar-nav
 				- if session.has_key?(:profile) and session[:profile] == 'hoster'
 					li = link_to 'Reservas', bookings_path
-					li = link_to 'Camas', beds_path
+					- if not current_user.finance?
+						li = link_to 'Camas', beds_path
 					li = link_to 'Huéspedes', guests_path
 					li = link_to 'Calendario', calendar_locations_path(date: {year: Time.now.year, month: Time.now.month})
 				- if session.has_key?(:profile) and session[:profile] == 'eventer'
@@ -37,7 +38,8 @@ nav.navbar.navbar-default
 						span.caret
 					ul.dropdown-menu
 						- if session.has_key?(:profile) and session[:profile] == 'hoster'
-							li = link_to "Reporte Camas Ocupadas", monthly_guests_reports_bookings_path(date: {year: Time.now.year})
+							- if not current_user.finance?
+								li = link_to "Reporte Camas Ocupadas", monthly_guests_reports_bookings_path(date: {year: Time.now.year})
 							- if current_user.eventer?
 								li = link_to "Administrar Eventos", events_path
 						- else

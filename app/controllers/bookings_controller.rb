@@ -66,7 +66,7 @@ class BookingsController < BaseHostingController
 		if not @booking.errors.empty?
     	respond_with(@booking)
     else
-    	redirect_to bookings_path
+    	redirect_to booking_payments_path(@booking)
     end
 	end
 

@@ -95,9 +95,9 @@ class Participant < ActiveRecord::Base
   
   def next_deposit_state_action
     if deposit_pending?
-      return 'Deposito Abonado'
+      return 'Depósito Abonado'
     elsif deposit_given?
-      return 'Deposito Reembolsado'
+      return 'Depósito Reembolsado'
     elsif deposit_refunded?
       return 'Reiniciar a Pendiente'
     end

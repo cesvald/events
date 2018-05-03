@@ -1,4 +1,6 @@
-class PaymentsController < BaseEventController
+class PaymentsController < ApplicationController
+  
+  inherit_resources
   
   belongs_to :participant, :booking, polymorphic: true, optional: true
   

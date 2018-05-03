@@ -49,7 +49,7 @@ table.table.table-striped
         td= link_to bed.room.house.name, house_path(bed.room.house), class: "record-link", target: "_blank"
         td= bed.room.name
         td= bed.number
-        td
-          = link_to t('.book', :default => t("helpers.links.book")), new_booking_path(:location_id => bed.room.house.location.id, :house_id => bed.room.house.id, :room_id => bed.room.id, :booking => {:bed_id => bed.id}), :class => 'btn btn-default btn-xs'
+        - if current_user.finance?
+          td= link_to t('.book', :default => t("helpers.links.book")), new_booking_path(:location_id => bed.room.house.location.id, :house_id => bed.room.house.id, :room_id => bed.room.id, :booking => {:bed_id => bed.id}), :class => 'btn btn-default btn-xs'
 
 = paginate @beds

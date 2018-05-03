@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :profiles
   
-  [:eventer, :hoster, :admin, :hoster_ashram, :hoster_morada, :coord_country, :coord_outside].each do |name|
+  [:eventer, :hoster, :admin, :hoster_ashram, :hoster_morada, :coord_country, :coord_outside, :finance].each do |name|
     define_method "#{name}?" do
 			not profiles.where(name: name).empty?
 		end
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   
   def country_name
 		country_name = ISO3166::Country[country]
-    	country_name.translations[I18n.locale.to_s] || country_name.name
+    country_name.translations[I18n.locale.to_s] || country_name.name
 	end
 	
 end

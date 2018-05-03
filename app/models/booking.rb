@@ -39,7 +39,7 @@ class Booking < ActiveRecord::Base
   end
   
   def total_amount
-    days * amount
+    days * amount unless amount.nil?
   end
   
   def payments_amount
@@ -47,14 +47,14 @@ class Booking < ActiveRecord::Base
   end
   
   def due
-    total_amount - payments_amount
+    total_amount - payments_amount unless amount.nil?
   end
   
   def next_deposit_state_action
     if deposit_pending?
-      return 'Deposito Abonado'
+      return 'Depósito Abonado'
     elsif deposit_given?
-      return 'Deposito Reembolsado'
+      return 'Depóosito Reembolsado'
     elsif deposit_refunded?
       return 'Reiniciar a Pendiente'
     end

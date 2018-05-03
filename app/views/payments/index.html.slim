@@ -2,7 +2,28 @@
 	h4
 		= "Reserva de "
 		= link_to "#{@booking.guest.name} #{@booking.guest.surname}", guest_path(@booking.guest), class: "record-link"
-	
+
+= form_for @booking, html: { class: "form form-inline booking" } do |f|
+	.form-group
+		.row
+			.col-lg-12
+				= f.label :amount, :class => 'control-label'
+		= f.number_field :amount, {:class => 'form-control'}
+		= f.error_span(:amount)
+	.form-group
+		.row
+			.col-lg-12
+				= f.label :deposit_amount, :class => 'control-label'
+		= f.number_field :deposit_amount, {:class => 'form-control'}
+		= f.error_span(:deposit_amount)
+	.form-group
+		.row
+			.col-lg-12
+				span.invisible action
+		= f.submit nil, :class => 'btn btn-primary'
+
+br
+
 table.table
 	thead
 		tr
@@ -22,7 +43,7 @@ table.table
 			td= l @booking.start_date
 			td= l @booking.end_date
 			td= @booking.display_detailed_total_amount
-
+		
 h5.table-title Pagos
 |&nbsp;
 = link_to 'Nuevo Pago', new_booking_payment_path(@booking), :class => 'btn btn-primary btn-xs'
