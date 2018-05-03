@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   end
   
   resources :bookings do
+    member do
+      get :next_deposit_state
+    end
     resources :payments
   end
   

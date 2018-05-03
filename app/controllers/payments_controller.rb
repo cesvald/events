@@ -1,19 +1,36 @@
 class PaymentsController < BaseEventController
   
-  belongs_to :participant, optional: true
+  belongs_to :participant, :booking, polymorphic: true, optional: true
   
   before_action :set_event
   
+  def index
+    @booking = parent
+    index!
+  end
+  
   def create
-    create! { event_participant_path(@event, @participant) }
+    create! { session[:previous_url] }
   end
   
   def update
-    update! { event_participant_path(@event, @participant) }
+    update! { session[:previous_url] }
   end
   
   def destroy
-    destroy! { event_participant_path(@event, @participant) }
+    destroy! { url_for(request.referer) }
+  end
+  
+  def new
+    session[:previous_url] = request.referer
+    @payable = parent
+    new!
+  end
+  
+  def edit
+    session[:previous_url] = request.referer
+    @payable = parent
+    edit!
   end
   
   private
@@ -23,7 +40,7 @@ class PaymentsController < BaseEventController
     end
     
     def set_event
-      @event = Event.find(params[:event_id])
+      @event = Event.find(params[:event_id]) if params[:event_id]
     end
 end
 

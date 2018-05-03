@@ -8,9 +8,6 @@ class Lodging.Routers.Participants extends Backbone.Router
     newEdit: ->
         view = new Lodging.Views.ParticipantsNewEdit()
     
-    show: ->
-        view = new Lodging.Views.ParticipantsShow()
-    
     index: ->
         view = new Lodging.Views.ParticipantsIndex()
 	

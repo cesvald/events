@@ -1,27 +1,89 @@
-h1 Listing payments
+.page-header
+	h4
+		= "Reserva de "
+		= link_to "#{@booking.guest.name} #{@booking.guest.surname}", guest_path(@booking.guest), class: "record-link"
+	
+table.table
+	thead
+		tr
+			th= "Ubicación"
+			th= "Casa"
+			th= "Cuarto"
+			th= "Cama"
+			th= "Empieza el"
+			th= "Termina el"
+			th= "Valor total"
+	tbody
+		tr
+			td= @booking.bed.room.house.location.name
+			td= @booking.bed.room.house.name
+			td= @booking.bed.room.name
+			td= @booking.bed.number
+			td= l @booking.start_date
+			td= l @booking.end_date
+			td= @booking.display_detailed_total_amount
 
-table
-  thead
-    tr
-      th Participant
-      th Paid at
-      th Amount
-      th Description
-      th
-      th
-      th
+h5.table-title Pagos
+|&nbsp;
+= link_to 'Nuevo Pago', new_booking_payment_path(@booking), :class => 'btn btn-primary btn-xs'
+.row
+	.col-md-8
+		table.table.table-actions.table-striped
+			thead
+				tr
+					th Pagado el
+					th Valor
+					th Descripción
+					th
+		
+			tbody 
+				- @payments.each do |payment|
+					tr
+						td = l payment.paid_at, format: :date
+						td = to_currency payment.amount
+						td = payment.description
+						td
+							= link_to "Editar", edit_booking_payment_path(@booking, payment), class: "btn btn-xs btn-default"
+							|&nbsp;
+							= link_to "Eliminar", [@booking, payment], data: {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-xs btn-danger"
 
-  tbody
-    - @payments.each do |payment|
-      tr
-        td = payment.participant
-        td = payment.paid_at
-        td = payment.amount
-        td = payment.description
-        td = link_to 'Show', payment
-        td = link_to 'Edit', edit_payment_path(payment)
-        td = link_to 'Destroy', payment, data: {:confirm => 'Are you sure?'}, :method => :delete
 
+		h5.table-title
+			= "Depósito de seguridad por #{to_currency @booking.deposit_amount}"
+			|&nbsp;
+			|&nbsp;
+			|&nbsp;
+			|&nbsp;
+			span class=("deposit-state #{@booking.deposit_state}")
+				= t("participant.deposit.state.#{@booking.deposit_state}")
+		|&nbsp;
+		|&nbsp;
+		= link_to @booking.next_deposit_state_action, next_deposit_state_booking_path(@booking), class: "btn btn-primary btn-xs"
+		
 br
 
-= link_to 'New Payment', new_payment_path
+.row
+	.col-md-offset-2.col-md-7
+		table.table.summary-table
+			thead
+				tr
+					th
+						h5.table-title Resumen
+					th
+			tbody
+				tr
+					td Total Reserva
+					td= @booking.display_detailed_total_amount
+				tr.payment
+					td Pago Reserva
+					td= @booking.display_payments_amount
+				tr
+					td
+						b Total
+					td
+						b= @booking.display_due
+
+= link_to 'Volver', bookings_path(), class: "btn btn-default"
+	
+br
+br

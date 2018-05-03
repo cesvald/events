@@ -24,16 +24,25 @@
     .row
       .col-lg-2
         = f.label :guest_id, class: 'control-label'
-    .input-group
+    .input-group 
       = f.text_field :guest_id, (params.has_key?(:booking) && (not params[:booking][:guest_id].blank?)) ? { :class => 'form-control tokenizer-field', :data => { :guest => Guest.find(params[:booking][:guest_id]) } } : {:class => 'form-control tokenizer-field' }
       span#clean-guest-input-btn.input-group-btn
         button.btn.btn-default[type="button"] X
-  .form-group
-    .row
-      .col-lg-6
-        = f.label :amount, :class => 'control-label'
-    = f.number_field :amount, {:class => 'form-control'}
-    = f.error_span(:amount)
+    
+  - if method != 'get'
+    .form-group
+      .row
+        .col-lg-12
+          = f.label :amount, :class => 'control-label'
+      = f.number_field :amount, {:class => 'form-control'}
+      = f.error_span(:amount)
+      
+    .form-group
+      .row
+        .col-lg-12
+          = f.label :deposit_amount, :class => 'control-label'
+      = f.number_field :deposit_amount, {:class => 'form-control'}
+      = f.error_span(:deposit_amount)
   .form-group
     .row
       .col-lg-8

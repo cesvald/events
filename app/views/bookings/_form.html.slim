@@ -32,10 +32,16 @@
         button.btn.btn-default[type="button"] X
   .form-group
     .row
-      .col-lg-6
+      .col-lg-12
         = f.label :amount, :class => 'control-label'
     = f.number_field :amount, {:class => 'form-control'}
     = f.error_span(:amount)
+  .form-group
+    .row
+      .col-lg-12
+        = f.label :deposit_amount, :class => 'control-label'
+    = f.number_field :deposit_amount, {:class => 'form-control'}
+    = f.error_span(:deposit_amount)
   .form-group
     .row
       .col-lg-8

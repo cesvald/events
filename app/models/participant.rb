@@ -8,7 +8,7 @@ class Participant < ActiveRecord::Base
   has_many :spaces, through: :participant_spaces
   
   has_one :air_ticket, dependent: :delete
-  has_many :payments, dependent: :delete_all
+  has_many :payments, as: :payable, dependent: :delete_all
   
   has_many :stays, dependent: :delete_all
   

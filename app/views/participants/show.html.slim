@@ -4,7 +4,7 @@
 
 .participant-body
   - if not @event.international?
-    h5 Información del viaje
+    h5.table-title Información del viaje
     |&nbsp;
     - if @participant.air_ticket.nil?
       = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
@@ -34,7 +34,7 @@
     br
     br
   
-  h5 Modalidades
+  h5.table-title Modalidades
   |&nbsp;
   = link_to "Modificar Modalidades", edit_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
   br
@@ -56,7 +56,7 @@
   br
   
   - if not @event.international?
-    h5 Estadías
+    h5.table-title Estadías
     |&nbsp;
     = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
     br
@@ -86,7 +86,7 @@
     br
     br
   
-  h5 Pagos
+  h5.table-title Pagos
   |&nbsp;
   = link_to "Adicionar Pago", new_event_participant_payment_path(@event, @participant), class: 'btn btn-primary btn-xs'
   br
@@ -116,7 +116,7 @@
   br
   
   - if not @event.international?
-    h5
+    h5.table-title
       = "Depósito de seguridad por #{to_currency @event.deposit_amount}"
       |&nbsp;
       |&nbsp;
@@ -138,7 +138,7 @@
         thead
           tr
             th
-              h5 Resumen de un vistazo
+              h5.table-title Resumen de un vistazo
             th
         tr.subheader
           td Modalidades

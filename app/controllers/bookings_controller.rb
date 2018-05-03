@@ -70,10 +70,17 @@ class BookingsController < BaseHostingController
     end
 	end
 
+	def next_deposit_state
+		@booking = Booking.find(params[:id])
+		@booking.next_deposit_state
+		@booking.save!
+		redirect_to booking_payments_path(@booking)
+	end
+	
   private
 
     def booking_params
-      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id, :amount)
+      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id, :amount, :deposit_amount)
     end
 
     def search_params

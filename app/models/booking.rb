@@ -1,7 +1,9 @@
 class Booking < ActiveRecord::Base
   belongs_to :bed
   belongs_to :guest
-
+  
+  has_many :payments, as: :payable
+  
   validates :bed, :guest, :start_date, :end_date, presence: true
   validate :available
   validate :valid_dates
@@ -15,7 +17,60 @@ class Booking < ActiveRecord::Base
   scope :by_end_date, ->(end_date) { where('end_date = :end_date', {end_date: end_date}) }
   scope :between_dates, ->(start_date, end_date) { where('(start_date >= :start_date AND start_date <= :end_date) OR (end_date >= :start_date AND end_date <= :end_date) OR (start_date < :start_date AND end_date > :end_date)', {start_date: start_date, end_date: end_date}) }
   
-   def account
+  delegate :display_amount, :display_total_amount, :display_detailed_total_amount, :display_payments_amount, :display_due, to: :decorator
+
+  # Using decorators
+  def decorator
+    @decorator ||= BookingDecorator.new(self)
+  end
+  
+  [:given, :refunded, :pending].each do |name|
+    define_method "deposit_#{name}" do
+			self.deposit_state = "#{name}"
+		end
+		
+		define_method "deposit_#{name}?" do
+			self.deposit_state == "#{name}"
+		end
+  end
+  
+  def days
+    (end_date - start_date).to_i
+  end
+  
+  def total_amount
+    days * amount
+  end
+  
+  def payments_amount
+    payments.sum("amount")
+  end
+  
+  def due
+    total_amount - payments_amount
+  end
+  
+  def next_deposit_state_action
+    if deposit_pending?
+      return 'Deposito Abonado'
+    elsif deposit_given?
+      return 'Deposito Reembolsado'
+    elsif deposit_refunded?
+      return 'Reiniciar a Pendiente'
+    end
+  end
+  
+  def next_deposit_state
+    if deposit_pending?
+      deposit_given
+    elsif deposit_given?
+      deposit_refunded
+    elsif deposit_refunded?
+      deposit_pending
+    end
+  end
+  
+  def account
     if self.account > 0
       self.account
     else  
