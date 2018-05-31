@@ -4,7 +4,7 @@
   .field.col-lg-3
     = f.number_field :amount, step:'any', required: true
   .field.col-lg-3
-    = f.select :method, options_for_select(["Efectivo", "Paypal", "Banco"], f.object.method.nil? ? nil : f.object.method), required: true
+    = f.select :method, options_for_select(["Efectivo", "Paypal", "Banco", "Otro"], f.object.method.nil? ? nil : f.object.method), required: true
   - if @payable.class.name == 'Participant'
     .field.col-lg-3
       = f.select :reason, options_for_select(["Estadia", "Evento"], f.object.reason.nil? ? nil : f.object.reason), required: true

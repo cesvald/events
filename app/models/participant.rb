@@ -28,7 +28,7 @@ class Participant < ActiveRecord::Base
     end
   }
   
-  delegate :display_spaces_amount, :display_stays_amount, :display_payments_amount, :display_due_spaces, :display_due_stays, :display_due, :display_stays_dates, to: :decorator
+  delegate :display_spaces_amount, :display_stays_amount, :display_payments_amount, :display_due_spaces, :display_due_stays, :display_due, :display_stays_dates, :display_payments_method, to: :decorator
   
   # Using decorators
   def decorator

@@ -42,6 +42,10 @@ class ParticipantDecorator < Draper::Decorator
     return stays_s[0..-3]
   end
   
+  def display_payments_method
+    source.payments.select(:method).distinct.pluck(:method).join(",")
+  end
+  
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
