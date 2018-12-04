@@ -6,31 +6,35 @@
 br
 
 table.table
-  thead
-    tr
-      th Nombre
-      th Espacios
-      th Empieza
-      th Termina
-      th
-      th
-  tbody
-    - @modalities.each do |modality|
-      tr
-        td = modality
-        td = modality.spaces_to_s
-        td = l modality.start_at, format: :date
-        td = l modality.end_at, format: :date
-        td
-          .btn-group
-							button#btnGroup.btn.btn-light.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-								| Acciones
-								| &nbsp;
-								span.caret
-							.dropdown-menu aria-labelledby="btnGroup"
+	thead
+		tr
+			th Nombre
+			th Espacios
+			th Empieza
+			th Termina
+			th Tipo
+			th
+			th
+	tbody
+		- @modalities.order(:is_composed).each do |modality|
+			tr
+				td = modality
+				td = modality.spaces_to_s
+				td = l modality.start_at, format: :date
+				td = l modality.end_at, format: :date
+				td = (modality.is_composed ?  "Compuesta" : "Individual")
+				td
+					.btn-group
+						button#btnGroup.btn.btn-light.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+							| Acciones
+							| &nbsp;
+							span.caret
+						ul.dropdown-menu aria-labelledby="btnGroup"
+							li
 								= link_to 'Editar', edit_event_modality_path(@event, modality), class: "dropdown-item"
-								br
+							- if modality.is_composed
+								li
+									= link_to 'Composición', admin_modalities_event_modality_path(@event, modality), class: "dropdown-item"
+
+							li
 								= link_to 'Eliminar', [@event, modality], data: {:confirm => 'Are you sure?'}, :method => :delete, class: "dropdown-item"
-								- if modality.is_composed
-								  br
-								  = link_to 'Administrar Modalidades Compuestas', admin_modalities_event_modality_path(@event, modality), class: "dropdown-item"

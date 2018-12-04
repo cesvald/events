@@ -57,7 +57,7 @@ class ModalitiesController < BaseEventController
   private
 
     def modality_params
-      params.require(:modality).permit(:name, :event_id, :start_at, :end_at, :is_composed, spaces_attributes: [:id, :place_id, :amount, :_destroy])
+      params.require(:modality).permit(:name, :event_id, :start_at, :end_at, :is_composed, spaces_attributes: [:id, :place_id, :amount, :is_active, :_destroy])
     end
 end
 

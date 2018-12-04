@@ -19,6 +19,6 @@ class SpacesController < BaseEventController
   private
 
     def space_params
-      params.require(:space).permit(:event_id, :place_id, :amount)
+      params.require(:space).permit(:event_id, :place_id, :amount, :is_active)
     end
 end
