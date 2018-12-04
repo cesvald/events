@@ -1,0 +1,22 @@
+xlsx_package.use_shared_strings = true
+wb = xlsx_package.workbook
+table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
+table_cell = wb.styles.add_style alignment: {horizontal: :center}
+title = wb.styles.add_style b: true, sz: 14
+wb.add_worksheet(name: "Participantes - eventos") do |sheet|
+    row = ["Nombre", "Apellido", "Email", "País"]
+    modalities = Event.find(params[:id]).modalities.order(is_composed: :desc)
+    modalities.each do |modality|
+        row.push(modality.name)
+    end
+    row.push("Total Modalidades")
+    row.push("Total Pagos")
+    row.push("Total Deuda")
+    row.push("Método de Pago")
+    sheet.add_row row, style: table_header
+    
+    
+    Event.find(params[:id]).participants.each do |participant|
+        row = [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country]
+    end
+end

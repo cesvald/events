@@ -28,6 +28,7 @@ nav.navbar.navbar-default
 								ul.dropdown-menu
 									li
 										= link_to "Detalle por modalidades", report_detail_event_path({id: @event.id, by: "spaces", format: "xlsx"})
+										= link_to "Detalle por modalidades compuestas", report_composition_event_path({id: @event.id, by: "spaces", format: "xlsx"})
 										= link_to "Detalle por estadías", report_detail_event_path({id: @event.id, by: "stays", format: "xlsx"})
 										= link_to "Detalle por fechas", report_detail_event_path({id: @event.id, by: "dates", format: "xlsx"})
 					
@@ -46,5 +47,5 @@ nav.navbar.navbar-default
 							- if current_user.hoster?
 								li = link_to "Administrar Hospedaje", bookings_path
 						li= link_to "Cambiar Contraseña", edit_user_registration_path, class: "menu-link"
-						li = link_to "Cerrar Sesión", destroy_user_session_path, :method => :delete
+						li = button_to "Cerrar Sesión", destroy_user_session_path, :method => :delete
 						

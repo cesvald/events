@@ -1,6 +1,6 @@
 class EventsController < BaseEventController
   
-  custom_actions :resource => [:new_import]
+  custom_actions :resource => [:new_import, :report_composition]
   
   require 'csv'
   
@@ -46,6 +46,17 @@ class EventsController < BaseEventController
   def report_detail
     @participants = Event.find(params[:id]).participants
     @by = params[:by]
+    respond_to do |format|
+			format.xlsx {
+				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""
+			}
+			format.html
+		end
+  end
+  
+  def report_composition
+    @event = resource
+    @participants = @event.participants
     respond_to do |format|
 			format.xlsx {
 				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""

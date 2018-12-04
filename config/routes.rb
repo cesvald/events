@@ -16,8 +16,15 @@ Rails.application.routes.draw do
       post :import
       get :report_detail
       get :report_general
+      get :report_composition
     end
-    resources :modalities
+    resources :modalities do
+      member do
+        get :admin_modalities
+        post :assign_modality
+        get :remove_modality
+      end
+    end
     resources :places do
       member do
         get :remove

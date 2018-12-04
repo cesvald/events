@@ -107,6 +107,12 @@ gem 'loofah', '~> 2.2.1'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
+    gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
+  end
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'database_cleaner'
 end
 
 group :development do

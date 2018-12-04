@@ -1,0 +1,51 @@
+h1= @modality.name
+.row
+		.col-md-5.sm-12
+			h3 Composición de la Modalidad
+			table.table
+				thead
+					tr
+						th Nombre
+						th Espacios
+						th Descuento (USD)
+				tbody
+					- @modality.compositions.each do |composition|
+						tr
+							td = composition.submodality.name
+							td = composition.submodality.spaces_to_s
+							td = composition.display_discount
+							td = link_to 'Sacar de la Modalidad', remove_modality_event_modality_path(@event, @modality, submodality_id: composition.modality.id), class: "btn btn-danger btn-xs"
+		
+		.col-md-5.col-md-offset-1.sm-12
+			h3 Submodalidades
+			table.table
+				thead
+					tr
+						th Nombre
+						th Descuento (USD)
+				tbody
+					- @single_modalities.each do |modality|
+							- if not @modality.submodalities.include?(modality)
+								tr
+									td = modality.name
+									td.actions
+										= form_tag assign_modality_event_modality_path do
+											= hidden_field_tag :submodality_id, modality.id
+											.input-group
+												= number_field_tag :discount, nil, step: "any", required: true, class:"form-control"
+												.input-group-btn
+													= submit_tag "Adicionar", class: "btn btn-primary"
+
+h4 Categorías
+table.table
+	thead
+		tr
+			th Nombre
+			th Valor (USD)
+			th
+	tbody
+		- @modality.spaces.each do |space|
+				tr
+					td= space.place.name
+					td= space.display_amount
+					td

@@ -1,4 +1,5 @@
 = bootstrap_nested_form_for [@event, @modality] do |f|
+  = f.hidden_field :is_composed, value: params[:composed]
   .field.row
     .col-lg-4
       = f.text_field :name, required: true
@@ -6,19 +7,23 @@
       = f.text_field :start_at, value: f.object.start_at.nil? ? nil : l(f.object.start_at), required: true
     .col-lg-4
       = f.text_field :end_at, value: f.object.end_at.nil? ? nil : l(f.object.end_at), required: true
+  
+  
   h4 Categorías
   = f.fields_for :spaces do |builder|
     .row
       .field.col-lg-4
-        = builder.select :place_id, options_for_select(@event.places.pluck(:name, :id), (builder.object.nil? ? nil : builder.object.place_id)), label: "Categoría"
+        = builder.text_field :place_name, value: builder.object.place.name, readonly: :readonly
+        = builder.hidden_field :place_id, value: builder.object.place_id
       .field.col-lg-4
-        = builder.number_field :amount, step: "any", required: true
+        - if params[:composed].present? and params[:composed] == "1"
+          = builder.number_field :amount, step: "any", readonly: :readonly
+        - else
+          = builder.number_field :amount, step: "any", required: true
       .field.col-lg-4
-        label.invisible.control-label eliminar
-        div= builder.link_to_remove "Eliminar", class: "btn btn-danger"
+        br
+        = builder.check_box :is_active, label: "Activo"
         
-  
-  = f.link_to_add "Adicionar espacio", :spaces, class: "btn btn-sm btn-default"
   br
   br
   br

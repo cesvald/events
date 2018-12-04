@@ -1,3 +1,50 @@
+GIT
+  remote: https://github.com/rspec/rspec-core.git
+  revision: 7b6b9c3f2e2878213f97d6fc9e9eb23c323cfe1c
+  branch: master
+  specs:
+    rspec-core (3.8.pre)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-expectations.git
+  revision: a132fa41bdd588f9abe9444f6f1fb152f52e9531
+  branch: master
+  specs:
+    rspec-expectations (3.8.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-mocks.git
+  revision: 5b09361a12f5abc8e89f6f16a14d854bda378ead
+  branch: master
+  specs:
+    rspec-mocks (3.8.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-rails.git
+  revision: de6d35a90e2fb79ce7bb23f762fe1e7d6e66d9d2
+  branch: master
+  specs:
+    rspec-rails (3.8.pre)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (= 3.8.pre)
+      rspec-expectations (= 3.8.pre)
+      rspec-mocks (= 3.8.pre)
+      rspec-support (= 3.8.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-support.git
+  revision: 5a1c6756a9d8322fc18639b982e00196f452974d
+  branch: master
+  specs:
+    rspec-support (3.8.pre)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -36,6 +83,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (6.0.3)
     axlsx (2.0.1)
       htmlentities (~> 4.3.1)
@@ -61,6 +110,13 @@ GEM
     builder (3.2.2)
     byebug (8.2.1)
     cancan (1.6.10)
+    capybara (2.18.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (>= 2.0, < 4.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -84,6 +140,7 @@ GEM
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
     crass (1.0.3)
+    database_cleaner (1.7.0)
     debug_inspector (0.0.2)
     devise (3.5.3)
       bcrypt (~> 3.0)
@@ -92,6 +149,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    diff-lcs (1.3)
     draper (2.1.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -105,6 +163,11 @@ GEM
     ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.6.0)
+    factory_girl (4.9.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.9.0)
+      factory_girl (~> 4.9.0)
+      railties (>= 3.0.0)
     formtastic (3.1.3)
       actionpack (>= 3.2.13)
     formtastic-bootstrap (3.1.1)
@@ -154,6 +217,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.99)
+    mini_mime (1.0.0)
     mini_portile2 (2.1.0)
     minitest (5.8.3)
     modware (0.1.2)
@@ -178,6 +242,7 @@ GEM
       pg (>= 0.17)
       rails (>= 4.0)
       responders
+    public_suffix (3.0.2)
     puma (3.9.1)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -339,6 +404,8 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    xpath (2.1.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -353,11 +420,14 @@ DEPENDENCIES
   bootstrap_form
   byebug
   cancan
+  capybara
   carrierwave
   coffee-rails (~> 4.1.0)
   country_select
+  database_cleaner
   devise (~> 3.5.3)
   draper
+  factory_girl_rails
   formtastic
   formtastic-bootstrap
   gon
@@ -378,6 +448,11 @@ DEPENDENCIES
   rails-observers
   rails_12factor
   ranked-model
+  rspec-core!
+  rspec-expectations!
+  rspec-mocks!
+  rspec-rails!
+  rspec-support!
   rubyzip (= 1.0.0)
   sass-rails (~> 5.0)
   schema_associations

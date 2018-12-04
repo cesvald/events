@@ -658,7 +658,6 @@ CREATE TABLE spaces (
     updated_at timestamp without time zone NOT NULL
 );
 
-
 --
 -- Name: spaces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
