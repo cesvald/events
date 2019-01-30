@@ -56,7 +56,6 @@ class EventsController < BaseEventController
   
   def report_composition
     @event = resource
-    @participants = @event.participants
     respond_to do |format|
 			format.xlsx {
 				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""

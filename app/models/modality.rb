@@ -10,6 +10,7 @@ class Modality < ActiveRecord::Base
 	validates_presence_of :name, :start_at, :end_at
 	
 	scope :composed, ->(composed) { where('is_composed = :composed', {composed: composed}) }
+	scope :compositions_by_name, -> { compositions.joins(:submodalities).order("modalities.name ASC") }
 	
 	def add_discount(composition)
 		spaces.each do |space|
