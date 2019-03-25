@@ -1,5 +1,5 @@
 = bootstrap_nested_form_for [@event, @modality] do |f|
-  = f.hidden_field :is_composed, value: (!f.object.is_composed.nil? ? f.object.is_composed : params[:composed])
+  = f.hidden_field :is_composed, value: (!f.object.name.nil? ? f.object.is_composed : params[:composed])
   .field.row
     .col-lg-4
       = f.text_field :name, required: true
