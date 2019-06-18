@@ -26,12 +26,14 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
             modalities.each_with_index do |modality, index|
                 if found_composed
                     comp = compositions[$i]
-                    space = comp.submodality.spaces.where(place_id: composed_space.place.id).first
-                    if(modality.name != space.modality.name)
-                        row[index + 4] = "0"
-                    else
-                        row[index + 4] = space["amount"] - comp.discount
-                        $i += 1 if $i < comp.submodality.spaces.size
+                    if comp
+                        space = comp.submodality.spaces.where(place_id: composed_space.place.id).first
+                        if(modality.name != space.modality.name)
+                            row[index + 4] = "0"
+                        else
+                            row[index + 4] = space["amount"] - comp.discount
+                            $i += 1 if $i < comp.submodality.spaces.size
+                        end
                     end
                 elsif composed_space.modality.name == modality.name && found_composed == false 
                     row[index + 4] = composed_space.amount
