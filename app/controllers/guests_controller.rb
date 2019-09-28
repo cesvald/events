@@ -1,6 +1,7 @@
 class GuestsController < ApplicationController
 	
 	inherit_resources
+	load_and_authorize_resource
 	
 	has_scope :by_name, :by_surname, :by_email, :by_country
 
@@ -12,7 +13,7 @@ class GuestsController < ApplicationController
 	before_filter :authenticate_token, only: [:auto_edit]
 	
 	def index
-		@guests = current_user.admin? ? Guest.all : (current_user.coord_outside? ? Guest.by_outside(true) : Guest.by_country(current_user.country).by_outside(false))
+		@guests = (current_user.admin? || current_user.doctor? || current_user.viewer?) ? Guest.all : (current_user.coord_outside? ? Guest.by_outside(true) : Guest.by_country(current_user.country).by_outside(false))
 		@guests = params[:q] ? @guests.where("name ILIKE :query OR surname ILIKE :query OR email ILIKE :query OR concat_ws(' ', name, surname) ILIKE :query", {query: "%#{params[:q]}%"}).page(params[:page]) : apply_scopes(@guests).order(:name).page(params[:page])
 		respond_to do |format|
 			format.html

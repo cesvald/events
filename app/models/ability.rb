@@ -2,19 +2,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(current_user, options = {})
-    current_user ||= User.new
+    
     
     if current_user.admin?
       can :manage, :all
     
     elsif current_user.coord_country? or current_user.coord_outside?
       can :manage, Guest
-      can :view, Event do |event|
+      can :read, Event do |event|
         event.international
       end
       can :manage, Participant
-      can :view, Modality
-      can :view, Space
+      can :read, Modality
+      can :read, Space
       can :manage, Payment
     end
     
@@ -22,5 +22,20 @@ class Ability
       (booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
     end
     
+    if current_user.doctor?
+      can :read, Guest
+    end
+    
+    if current_user.viewer?
+      can :read, Guest
+    end
+    
+    if current_user.hoster?
+      can :manage, Guest
+    end
+    
+    if current_user.eventer?
+      can :manage, Guest
+    end
   end
 end

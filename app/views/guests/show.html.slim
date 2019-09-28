@@ -1,20 +1,89 @@
 - model_class = Guest
 .page-header
-  h1=t '.title', :default => model_class.model_name.human.titleize
+  h4= "Información de #{@guest}"
 
-p
-  strong= model_class.human_attribute_name(:name) + ':'
-  br
-  = @guest.name
-p
-  strong= model_class.human_attribute_name(:surname) + ':'
-  br
-  = @guest.surname
-p
-  strong= model_class.human_attribute_name(:email) + ':'
-  br
-  = @guest.email
+.row
+  .col-xs-12.col-md-3
+    p
+      b País de residencia: 
+      spam= @guest.country_name
+  .col-xs-12.col-md-3
+    p
+      b Ciudad de residencia: 
+      spam= @guest.city
+  .col-xs-12.col-md-3
+    p
+      b Teléfono Casa:
+      spam= @guest.phone_number
+  .col-xs-12.col-md-3
+    p
+      b Teléfono Móvil: 
+      spam= @guest.mobile_number
+  .col-xs-12.col-md-3
+    p
+      b Número de Pasaporte / Cédula: 
+      spam= @guest.identification
+  .col-xs-12.col-md-3
+    p
+      b Estado Civíl: 
+      spam= @guest.civil_status
+  .col-xs-12.col-md-3
+    p
+      b Profesión u ocupación: 
+      spam= @guest.profession
+  .col-xs-12.col-md-3
+    p
+      b Nacionalidad: 
+      spam= @guest.nationality
+  .col-xs-12.col-md-3
+    p
+      b Edad: 
+      spam= @guest.age
 
-= link_to t('.back', :default => t("helpers.links.back")), guests_path, :class => 'btn btn-default'
-'
-= link_to t('.edit', :default => t("helpers.links.edit")), edit_guest_path(@guest), :class => 'btn btn-default'
+.page-header
+  h4 Otros datos:
+
+.row
+  .col-xs-12
+    p
+      b ¿Posee alguna condición de salud que requiera control médico especial? 
+      = @guest.health_condition
+  .col-xs-12
+    p
+      b ¿Recibe algún fármaco de prescripción médica y uso delicado? 
+      = @guest.receive_drug
+  .col-xs-12
+    p
+      b ¿Presenta algún síntoma no usual (diarrea, nausea, vómito, dolor de cabeza, cuerpo o garganta)? 
+      = @guest.symptoms
+  .col-xs-12
+    p
+      b En caso de emergencia podemos contactar a: 
+      = @guest.contact_name
+  .col-xs-12
+    p
+      b Parentesco: 
+      = @guest.contact_kin
+  .col-xs-12
+    p
+      b Teléfono de contacto: 
+      = @guest.contact_number
+  .col-xs-12
+    p
+      b ¿En qué hotel se está hospedando en Cuenca durante el Encuentro? 
+      = @guest.hotel
+  .col-xs-12
+    p
+      b ¿Cuenta con algún número de teléfono local: (hotel, móvil)? 
+      = @guest.local_number
+  .col-xs-12
+    p
+      b Comentarios adicionales: 
+      = @guest.contact_name
+  
+      
+    
+    
+= link_to "Volver", guests_path, :class => 'btn btn-default'
+br
+br

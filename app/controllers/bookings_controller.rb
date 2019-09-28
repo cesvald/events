@@ -93,13 +93,15 @@ class BookingsController < BaseHostingController
     end
     
     def check_profiles
-    	if not current_user.hoster?
-    		if current_user.eventer?
-    			return redirect_to events_path
-    		else
-    			sign_out current_user
-    		end
-    	end
+    	if current_user.eventer? && !current_user.hoster?
+  			return redirect_to events_path
+  		elsif
+  			current_user.doctor?
+  			return redirect_to guests_path
+  		elsif !current_user.admin? || !current_user.hoster?
+  			sign_out current_user
+  			return redirect_to new_session_path(User.new)
+  		end
     end
     
     def check_location_profile_update
