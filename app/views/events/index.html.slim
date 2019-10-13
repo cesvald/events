@@ -16,7 +16,7 @@ table.table
 
 	tbody
 		- @events.each do |event|
-			- if can? :view, event
+			- if can? :read, event
 				tr
 					td = event.name
 					td = event.start_at
