@@ -96,7 +96,7 @@ class BookingsController < BaseHostingController
     	if current_user.eventer? && !current_user.hoster?
   			return redirect_to events_path
   		elsif
-  			current_user.doctor?
+  			current_user.doctor? || current_user.viewer?
   			return redirect_to guests_path
   		elsif !current_user.admin? || !current_user.hoster?
   			sign_out current_user

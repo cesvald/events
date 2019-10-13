@@ -9,9 +9,7 @@ class Ability
     
     elsif current_user.coord_country? or current_user.coord_outside?
       can :manage, Guest
-      can :read, Event do |event|
-        event.international
-      end
+      can :read, Event, :international => true
       can :manage, Participant
       can :read, Modality
       can :read, Space
@@ -28,14 +26,6 @@ class Ability
     
     if current_user.viewer?
       can :read, Guest
-    end
-    
-    if current_user.hoster?
-      can :manage, Guest
-    end
-    
-    if current_user.eventer?
-      can :manage, Guest
     end
   end
 end
