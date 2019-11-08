@@ -102,7 +102,7 @@ gem 'carrierwave'
 gem 'ranked-model'
 
 #For security reasons gem updated
-gem 'loofah', '~> 2.2.1'
+gem 'loofah', '~> 2.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
