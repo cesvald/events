@@ -139,7 +139,7 @@ GEM
     country_select (3.1.1)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
-    crass (1.0.3)
+    crass (1.0.5)
     database_cleaner (1.7.0)
     debug_inspector (0.0.2)
     devise (3.5.3)
@@ -211,7 +211,7 @@ GEM
       sprockets (> 2, < 4)
       tilt
     libv8 (3.16.14.13)
-    loofah (2.2.2)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -437,7 +437,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   less-rails
-  loofah (~> 2.2.1)
+  loofah (~> 2.3.1)
   momentjs-rails (>= 2.9.0)
   nested_form
   pg
