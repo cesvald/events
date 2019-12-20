@@ -12,6 +12,8 @@ class Participant < ActiveRecord::Base
   
   has_many :stays, dependent: :delete_all
   
+  has_and_belongs_to_many :bookings
+  
   validates_presence_of :guest
   
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }

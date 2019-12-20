@@ -43,12 +43,16 @@
     thead
       tr
         th Modalidad
+        th Desde el
+        th Hasta el
         th Valor
         th Observaciones
     tbody
       - @participant.participant_spaces.each do |participant_space|
         tr
           td= participant_space.space.to_s_wihtout_amount
+          td= l participant_space.space.modality.start_at, format: :date
+          td= l participant_space.space.modality.end_at, format: :date
           td= to_currency participant_space.space.amount
           td= participant_space.note
   

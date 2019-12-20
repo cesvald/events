@@ -3,6 +3,7 @@ class Booking < ActiveRecord::Base
   belongs_to :guest
   
   has_many :payments, as: :payable
+  has_and_belongs_to_many :participants
   
   validates :bed, :guest, :start_date, :end_date, presence: true
   validate :available
