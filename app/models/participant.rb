@@ -6,15 +6,17 @@ class Participant < ActiveRecord::Base
   accepts_nested_attributes_for :participant_spaces, :allow_destroy => true
   
   has_many :spaces, through: :participant_spaces
-  
   has_one :air_ticket, dependent: :delete
   has_many :payments, as: :payable, dependent: :delete_all
-  
   has_many :stays, dependent: :delete_all
-  
-  has_and_belongs_to_many :bookings
+  has_and_belongs_to_many :bookings, join_table: :participants_bookings
+  has_many :change_logs, as: :logable
+  attr_accessor :author_id
   
   validates_presence_of :guest
+  
+  after_create :add_create_log
+  after_destroy :add_destroy_log
   
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }
   scope :by_space, ->(space_id) { where('participant_spaces.space_id = ?', space_id) }
@@ -131,4 +133,17 @@ class Participant < ActiveRecord::Base
     return spaces.joins(:modality).order("modalities.end_at DESC").first.modality.end_at
   end
   
+  def add_create_log
+    change_logs.create(change: "creó al participante #{to_s}", author_id: author_id)
+  end
+  
+  def add_destroy_log
+    change_log = spaces.first.modality.event.change_logs.new(change: "eliminó al participante #{to_s}", author_id: author_id)
+    change_log.is_reviewed = false if is_confirmed
+    change_log.save
+  end
+  
+  def show_path
+    Rails.application.routes.url_helpers.event_participant_path(spaces.first.modality.event, self)
+  end
 end

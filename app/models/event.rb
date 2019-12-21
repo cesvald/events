@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
     has_many :modalities
     has_and_belongs_to_many :places,  :join_table => :places_events
+    has_many :change_logs, as: :logable
+    attr_accessor :author_id
     
     delegate :display_deposit_amount, to: :decorator
 

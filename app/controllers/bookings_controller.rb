@@ -43,11 +43,12 @@ class BookingsController < BaseHostingController
 		end
 		@bookings = @bookings.order(start_date: :desc)
 		@bookings = Kaminari.paginate_array(@bookings).page params[:page]
-
+		@changes_count = ChangeLog.type("Participant").reviewed(false).count
 	end
 
 	def new
-		@booking = Booking.new
+		@booking = Booking.new()
+		@booking.guest_id = params[:guest_id] if params[:guest_id].present?
 	end
 
 	def create

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :change_logs
+  
   resources :events do
     member do
       get :new_import

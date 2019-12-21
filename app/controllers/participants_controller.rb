@@ -51,10 +51,15 @@ class ParticipantsController < BaseEventController
 		update! { event_participant_path(@event, @participant) }
 	end
 	
+	def show
+		@participant = resource
+		@bookings = Kaminari.paginate_array(@participant.bookings).page params[:page]
+	end
+	
 	private
 
 		def participant_params
-			params.require(:participant).permit(:guest_id, :space_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :note, :_destroy])
+			params.require(:participant).permit(:guest_id, :space_id, :author_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :note, :_destroy])
 		end
 		
 		def set_event

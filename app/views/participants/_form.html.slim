@@ -8,7 +8,7 @@
           = f.text_field :guest_id, :data => {:guest => @participant.guest}
           span#clean-guest-input-btn.input-group-btn class=(action_name == 'edit' ? 'invisible' : '')
             button.btn.btn-default[type="button"] X
-  
+  = f.hidden_field :author_id, value: current_user.id
   h4 Modalidades
   = f.fields_for :participant_spaces do |builder|
     .row

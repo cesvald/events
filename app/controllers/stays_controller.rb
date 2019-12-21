@@ -20,7 +20,7 @@ class StaysController < BaseEventController
   private
 
     def stay_params
-      params.require(:stay).permit(:participant_id, :place_id, :end_at, :start_at, :amount)
+      params.require(:stay).permit(:participant_id, :place_id, :end_at, :start_at, :amount, :author_id)
     end
     
     def set_event

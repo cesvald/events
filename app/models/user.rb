@@ -17,4 +17,7 @@ class User < ActiveRecord::Base
     country_name.translations[I18n.locale.to_s] || country_name.name
 	end
 	
+	def to_s
+	  "#{name} #{surname}"
+	end
 end
