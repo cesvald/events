@@ -5,6 +5,7 @@ class Stay < ActiveRecord::Base
   
   after_create :add_create_log
   before_destroy :add_destroy_log
+  after_update :add_update_log
   
   scope :after_date, -> (date) {where("start_at > :date OR end_at > :date", date: date)}
   scope :is_reviewed, -> (is_reviewed) {where(is_reviewed: is_reviewed)}
@@ -33,15 +34,18 @@ class Stay < ActiveRecord::Base
   end
   
   def add_create_log
-    participant.change_logs.create(change: "creó la estadía #{to_s}", author_id: author_id, is_reviewed: false)
+    is_reviewed = participant.confirmed? ? false : true
+    participant.change_logs.create(change: "creó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
   end
   
   def add_update_log
-    participant.change_logs.create(change: "actualizó la estadía  #{to_s}", author_id: author_id, is_reviewed: false)
+    is_reviewed = participant.confirmed? ? false : true
+    participant.change_logs.create(change: "actualizó la estadía  #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
   end
   
   def add_destroy_log
-    participant.spaces.first.modality.event.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: false)
+    is_reviewed = participant.confirmed? ? false : true
+    participant.spaces.first.modality.event.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
   end
   
 end

@@ -53,11 +53,12 @@ class BookingsController < BaseHostingController
 
 	def create
 		@booking = Booking.new(booking_params)
+		@booking.participants << Participant.find(params[:participant_id]) if params.has_key?(:participant_id)
     @booking.save
     if not @booking.errors.empty?
     	respond_with(@booking)
     else
-    	redirect_to bookings_path
+    	params.has_key?(:back_url) ? redirect_to(params[:back_url]) : redirect_to(bookings_path)
     end
 	end
 

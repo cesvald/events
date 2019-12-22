@@ -1,5 +1,9 @@
 = form_for @booking, method: method, html: { class: "form form-inline booking" } do |f|
   = render "layouts/error_messages", :target => @booking
+  - if params.has_key?(:back_url)
+    = hidden_field_tag :back_url, params[:back_url]
+  - if params.has_key?(:participant_id)
+    = hidden_field_tag :participant_id, params[:participant_id]
   .form-group
     .row
       .col-lg-2

@@ -54,6 +54,7 @@ class ParticipantsController < BaseEventController
 	def show
 		@participant = resource
 		@bookings = Kaminari.paginate_array(@participant.bookings).page params[:page]
+		@changes = Kaminari.paginate_array(@participant.change_logs).page params[:page]
 	end
 	
 	private

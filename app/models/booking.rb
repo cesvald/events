@@ -3,7 +3,13 @@ class Booking < ActiveRecord::Base
   belongs_to :guest
   
   has_many :payments, as: :payable
-  has_and_belongs_to_many :participants
+  has_and_belongs_to_many :participants, join_table: :participants_bookings
+  has_many :change_logs, as: :logable
+  attr_accessor :author_id
+  
+  after_create :add_create_log
+  before_destroy :add_destroy_log
+  after_update :add_update_log
   
   validates :bed, :guest, :start_date, :end_date, presence: true
   validate :available
@@ -94,5 +100,21 @@ class Booking < ActiveRecord::Base
         errors.add(:invalid_dates, "La fecha final debe ser mayor a la fecha inicial")
       end
     end
+  end
+  
+  def add_create_log
+    booking.change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true)
+    participant.change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
+      
+  end
+  
+  def add_update_log
+    booking.change_logs.create(change: "actualizó la reserva  #{self}", author_id: author_id, is_reviewed: true)
+    participant.change_logs.create(change: "actualizó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
+  end
+  
+  def add_destroy_log
+    ChangeLog.create(change: "eliminó la reserva #{self}", author_id: author_id, is_reviewed: true, logable_type: "Booking")
+    participant.change_logs.create(change: "eliminó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
   end
 end

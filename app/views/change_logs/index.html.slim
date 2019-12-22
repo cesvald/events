@@ -1,33 +1,5 @@
 h3 Cambios
 
-table.table
-  thead
-    tr
-      th Realizado el
-      th Cambio
-      th Revisado
-      th
-  tbody
-    - @change_logs.each do |change|
-      tr
-        td= l change.created_at
-        td= change
-        td
-          - if change.is_reviewed && change.reviewer.present?
-            = "Revisado el #{l change.reviewed_at} por #{change.reviewer}"
-          - elsif change.is_reviewed == false
-            = "Pendiente de Revisión"
-          - else
-            = "Automático"
-        td
-          .btn-group
-						button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-							| Acciones
-							span.caret
-						ul.dropdown-menu
-						  - if change.logable_id.present?
-						    li = link_to 'Ver Detalles', change.logable.show_path
-						  
-      
-      
+= render 'list', changes: @change_logs
+
       

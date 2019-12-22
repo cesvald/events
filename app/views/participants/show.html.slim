@@ -10,6 +10,9 @@ div
     li role="presentation"
       a href="#bookings" aria-controls="bookings" role="tab" data-toggle="tab"
         | Reservas
+    li role="presentation"
+      a href="#changes" aria-controls="changes" role="tab" data-toggle="tab"
+        | Cambios
   .tab-content
     #details.participant-body.tab-pane.active
       - if not @event.international?
@@ -193,5 +196,9 @@ div
       br
       h5.table-title Reservas
       |&nbsp;
-      = link_to "Adicionar Reserva", new_booking_path(guest_id: @participant.guest_id), class: 'btn btn-primary btn-xs'
+      = link_to "Adicionar Reserva", new_booking_path(booking: {guest_id: @participant.guest_id}, participant_id: @participant.id, back_url: "#{url_for([@event, @participant])}#bookings"), class: 'btn btn-primary btn-xs'
       = render 'bookings/list', {bookings: @bookings}
+    #changes.tab-pane
+      br
+      h5.table-title Cambios
+      =render 'change_logs/list', {changes: @changes}
