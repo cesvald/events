@@ -1,6 +1,7 @@
 table.table
   thead
     tr
+      th Id
       th Realizado el
       th Cambio
       th Revisado
@@ -8,6 +9,7 @@ table.table
   tbody
     - changes.each do |change|
       tr
+        td= change.id
         td= l change.created_at
         td= change
         td
@@ -30,4 +32,4 @@ table.table
 						  - elsif change.is_reviewed && change.reviewer.present?
 						    li = link_to 'Pendiente Revisión', change_log_path(change, change_log: {is_reviewed: false, reviewed_at: nil, reviewer_id: nil}), method: :patch
 
-= paginate changes
+= paginate changes, remote: true

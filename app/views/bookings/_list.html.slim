@@ -35,5 +35,6 @@ table.table.table-striped
 							- if not current_user.finance?
 								li= link_to t('.edit', :default => t("helpers.links.edit")), edit_booking_path(booking)
 								li= link_to t('.destroy', :default => t("helpers.links.destroy")), booking_path(booking), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Estás seguro?')) }
+								li= link_to 'Ver reservas del huesped', bookings_path("booking[guest_id]": booking.guest_id)
 	
-= paginate bookings
+= paginate bookings, :params => { :anchor => 'bookings' }

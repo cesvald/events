@@ -4,3 +4,7 @@ class Lodging.Views.ParticipantsShow extends Backbone.View
 		
 	initialize: ->
 		$('a[href="' +window.location.hash+ '"]').tab('show')
+		$('#navigation a').click( ->
+		  location.hash = $(this).attr('aria-controls')
+		)
+		

@@ -10,6 +10,8 @@ class Lodging.Views.BookingsNew extends Backbone.View
 		"click  .token-occupied": 'blurTokenInput'
 
 	initialize: ->
+		$('.remote-change').click()
+		
 		location_id = $('#location_id').val()
 		house_id = $('#house_id').val()
 		room_id = $('#room_id').val()

@@ -45,7 +45,7 @@ class Stay < ActiveRecord::Base
   
   def add_destroy_log
     is_reviewed = participant.confirmed? ? false : true
-    participant.spaces.first.modality.event.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
   end
   
 end

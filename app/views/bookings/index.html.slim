@@ -1,9 +1,43 @@
-- model_class = Booking
-- @booking = Booking.new
-.page-header
-	h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
-	- if not current_user.finance?
-		= link_to t('.new', :default => t("helpers.links.new")), new_booking_path, :class => 'btn btn-primary btn-header'
-		= link_to "Revisar Cambios", change_logs_path 
-= render :partial => "search_form", locals: {method: 'get'}
-= render 'list', { bookings: @bookings }
+ul#navigation.nav.nav-tabs role="tablist"
+    li.active role="presentation"
+      a href="#bookings" aria-controls="bookings" role="tab" data-toggle="tab"
+        | Reservas
+    li role="presentation"
+      a href="#participant_changes" aria-controls="participant_changes" role="tab" data-toggle="tab"
+        = "Cambios en Eventos (#{@pending_changes_for_review_count})"
+    li role="presentation"
+      a href="#changes" aria-controls="changes" role="tab" data-toggle="tab"
+        | Cambios en Reservas
+.tab-content
+  #bookings.tab-pane.active
+    .page-header
+      h3 Reservas
+      - if not current_user.finance?
+        = link_to t('.new', :default => t("helpers.links.new")), new_booking_path, :class => 'btn btn-primary btn-header'
+        = link_to "Revisar Cambios", change_logs_path 
+    = render :partial => "search_form", locals: {method: 'get'}
+    = render 'list', { bookings: @bookings }
+  #participant_changes.tab-pane
+    .page-header
+      h3 Cambios en Eventos
+    = form_tag change_logs_path, method: :get, "data-type": "script", remote: true do
+      = hidden_field_tag "type[]", "Participant"
+      = hidden_field_tag "type[]", "Event"
+      .row
+        .col.col-xs-12.col-md-3
+          = label_tag "Revisado?"
+          = select_tag :was_reviewed, options_for_select([['Pendiente Revisión', 0],['Revisados', 1], ['Todos', 2]], params[:was_reviewed]), class: 'form-control'
+        .col.col-xs-12.col-md-3
+          = label_tag "Realizado Desde"
+          = text_field_tag "created_at[started_at]", nil, class: "datepicker start-datepicker form-control", :data => {"end-datepicker": "#created_at_finished_at"}
+        .col.col-xs-12.col-md-3
+          = label_tag "Realizado Hasta"
+          = text_field_tag "created_at[finished_at]", nil, class: "datepicker form-control"
+        .col.col-xs-12.col-md-2
+          = submit_tag "Filtrar", class: "btn btn-primary remote-change"
+    #change_log_content
+      
+  #changes.tab-pane
+    .page-header
+      h3 Cambios en Reservas
+  

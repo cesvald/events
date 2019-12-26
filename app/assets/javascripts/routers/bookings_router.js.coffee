@@ -1,7 +1,7 @@
 class Lodging.Routers.Bookings extends Backbone.Router
 	routes:
 		"*actions": 'new'
-
+		
 	initialize: ->
 		self = @
 
@@ -23,22 +23,43 @@ class Lodging.Routers.Bookings extends Backbone.Router
 	    	format: 'dd/mm/yyyy'
 		})
 
+		$('.hidden_field_date').each( ->
+			if this.value != ''
+				dateArray = $(this).val().split("-")
+				dateField = $(this).data('date-field')
+				$(dateField).val(dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0])
+		)
+		
 		$('.start-datepicker').each( ->
 			self.updateEndDate($(this)) if this.val isnt ''
 		)
 		
-		$('.start-datepicker').datepicker().on('change', (e) ->
-			self.updateEndDate($(e.target))
+		$('.datepicker').datepicker().on('change', (e) ->
+			if typeof $(e.target).data('end-datepicker') != 'undefined'
+				self.updateEndDate($(e.target))
+			self.updateHiddenDate($(e.target))
 		)
 
+		$('.datepicker').on('input', (e) ->
+			self.updateHiddenDate($(e.target)) if this.value == ''
+		)
+		
 		$('.alert').delay(5000).slideUp(1000)
    
 	updateEndDate: (datepicker) ->
-		dateArray = datepicker.val().split("-")
-		date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2])
-		endDatePicker = datepicker.data("end-datepicker")
+		dateArray = datepicker.val().split("/")
+		date = new Date(dateArray[2], dateArray[1] - 1, dateArray[0])
+		endDatePicker = datepicker.data("end-datepicker") 
 		$(endDatePicker).datepicker('setStartDate', date)
-
+	
+	updateHiddenDate: (datepicker) ->
+		hiddenDate = datepicker.data('hidden-datepicker');
+		if datepicker.val() == ''
+			$(hiddenDate).val('')
+		else
+			dateArray = datepicker.val().split("/")
+			$(hiddenDate).val(dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0])
+		
 	new: ->
 		view = new Lodging.Views.BookingsNew(collection: @locations)
 

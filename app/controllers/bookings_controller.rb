@@ -39,11 +39,11 @@ class BookingsController < BaseHostingController
 			if (not booking_params[:end_date].blank?) && (not booking_params[:start_date].blank?)
 				@bookings = @bookings.between_dates(booking_params[:start_date], booking_params[:end_date])
 			end
-
 		end
 		@bookings = @bookings.order(start_date: :desc)
+		@pending_changes_for_review_count = ChangeLog.type(["Participant", "Event"]).reviewed(false).count
+		
 		@bookings = Kaminari.paginate_array(@bookings).page params[:page]
-		@changes_count = ChangeLog.type("Participant").reviewed(false).count
 	end
 
 	def new

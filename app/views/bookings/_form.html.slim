@@ -22,6 +22,7 @@
       .col-lg-2
         = f.label :bed_id, :class => 'control-label'
     = f.select :bed_id, options_for_select(Bed.where(room: @booking.bed.room).pluck(:number, :id), @booking.bed.id), {:include_blank => true}, {:class => 'form-control'}
+  = @booki
   .form-group
     .row
       .col-lg-2
