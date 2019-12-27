@@ -8,3 +8,6 @@ class Lodging.Views.ParticipantsShow extends Backbone.View
 		  location.hash = $(this).attr('aria-controls')
 		)
 		
+		$('.remote-change').click()
+		adminEvd.setupDatePicker()
+		

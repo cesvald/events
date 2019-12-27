@@ -1,6 +1,6 @@
 = bootstrap_form_for [@event, @participant, @stay] do |f|
-  = f.hidden_field :author_id, value: current_user.id
   .row
+    = f.hidden_field :author_id, value: current_user.id
     .field.col-lg-3
       = f.select :place_id, options_for_select(Place.pluck(:name, :id), f.object.place.nil? ? nil : f.object.place), required: true
     .field.col-lg-3

@@ -1,40 +1,42 @@
 table.table.table-striped
-	thead
-		tr
-			th= "Ubicación"
-			th= "Casa"
-			th= "Cuarto"
-			th= "Cama"
-			th= "Huésped"
-			th= "Inicia el"
-			th= "Termina el"
-			- if current_user.finance?
-				th= "Valor total"
-				th= "Pago total"
-			th= "Acciones"
-	tbody
-		- bookings.each do |booking|
-			tr
-				td= booking.bed.room.house.location.name
-				td= link_to booking.bed.room.house.name, house_path(booking.bed.room.house), class: "record-link", target: "_blank"
-				td= booking.bed.room.name
-				td= booking.bed.number
-				td= link_to "#{booking.guest.name} #{booking.guest.surname}", guest_path(booking.guest), class: "record-link"
-				td= l booking.start_date
-				td= l booking.end_date
-				- if current_user.finance?
-					td= booking.display_total_amount if booking.amount
-					td= booking.display_payments_amount
-				td
-					.btn-group
-						button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-							| Acciones
-							span.caret
-						ul.dropdown-menu
-							li= link_to "Ver Detalles", booking_payments_path(booking) if current_user.finance?
-							- if not current_user.finance?
-								li= link_to t('.edit', :default => t("helpers.links.edit")), edit_booking_path(booking)
-								li= link_to t('.destroy', :default => t("helpers.links.destroy")), booking_path(booking), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Estás seguro?')) }
-								li= link_to 'Ver reservas del huesped', bookings_path("booking[guest_id]": booking.guest_id)
-	
+  thead
+    tr
+      th= "Ubicación"
+      th= "Casa"
+      th= "Cuarto"
+      th= "Cama"
+      th= "Huésped"
+      th= "Inicia el"
+      th= "Termina el"
+      - if current_user.finance?
+        th= "Valor total"
+        th= "Pago total"
+      th= "Acciones"
+  tbody
+    - bookings.each do |booking|
+      tr class=(booking.participants.any? ? "booking_stay" : nil)
+        td= booking.bed.room.house.location.name
+        td= link_to booking.bed.room.house.name, house_path(booking.bed.room.house), class: "record-link", target: "_blank"
+        td= booking.bed.room.name
+        td= booking.bed.number
+        td= link_to "#{booking.guest.name} #{booking.guest.surname}", guest_path(booking.guest), class: "record-link"
+        td= l booking.start_date
+        td= l booking.end_date
+        - if current_user.finance?
+          td= booking.display_total_amount if booking.amount
+          td= booking.display_payments_amount
+        td
+          - if can? :manage, Booking || current_user.finance?
+            .btn-group
+              button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+                | Acciones
+                span.caret
+              ul.dropdown-menu
+                li= link_to "Ver Detalles", booking_payments_path(booking) if current_user.finance?
+                - if can? :manage, Booking
+                  li= link_to t('.edit', :default => t("helpers.links.edit")), edit_booking_path(booking)
+                  li= link_to t('.destroy', :default => t("helpers.links.destroy")), booking_path(booking), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Estás seguro?')) }
+                  li= link_to 'Ver reservas del huesped', bookings_path("booking[guest_id]": booking.guest_id)
+                  - if booking.participants.any?
+                    li= link_to 'Ver detalles del participante', booking.participants.first.show_path
 = paginate bookings, :params => { :anchor => 'bookings' }

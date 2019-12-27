@@ -2,10 +2,8 @@ class BookingsController < BaseHostingController
 	
 	respond_to :html, :json
 	
-	before_action :add_locations
-	before_action :check_profiles
-	#before_action :check_location_profile_create, only: [:create]
-	#before_action :check_location_profile_update, only: [:update, :destroy, :edit]
+	before_action :add_locations, :check_profiles
+	before_action :set_author, only: :destroy
 	
 	def index
 		@booking = Booking.new
@@ -61,6 +59,10 @@ class BookingsController < BaseHostingController
     	params.has_key?(:back_url) ? redirect_to(params[:back_url]) : redirect_to(bookings_path)
     end
 	end
+	
+	def destroy
+		destroy! {"#{request.referer}#bookings"}
+	end
 
 	def update
 		@booking = Booking.find(params[:id])
@@ -68,7 +70,7 @@ class BookingsController < BaseHostingController
 		if not @booking.errors.empty?
     	respond_with(@booking)
     else
-    	redirect_to booking_payments_path(@booking)
+    	redirect_to bookings_path
     end
 	end
 
@@ -82,7 +84,7 @@ class BookingsController < BaseHostingController
   private
 
     def booking_params
-      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id, :amount, :deposit_amount)
+      params.require(:booking).permit(:start_date, :end_date, :bed_id, :guest_id, :amount, :deposit_amount, :author_id)
     end
 
     def search_params
@@ -100,25 +102,13 @@ class BookingsController < BaseHostingController
   		elsif
   			current_user.doctor? || current_user.viewer?
   			return redirect_to guests_path
-  		elsif !current_user.admin? || !current_user.hoster?
+  		elsif !current_user.admin? && !current_user.hoster?
   			sign_out current_user
   			return redirect_to new_session_path(User.new)
   		end
     end
     
-    def check_location_profile_update
-    	@booking = Booking.find(params[:id])
-    	unless (@booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (@booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
-    	  flash[:notice] = "No tiene permisos para realizar esta acción"
-    	  return redirect_to(:back)
-    	end
-    end
-    
-    def check_location_profile_create
-    	@booking = Booking.new(booking_params)
-    	unless (@booking.bed.room.house.location.name == 'Ashram' and current_user.hoster_ashram?) || (@booking.bed.room.house.location.name == 'Morada' and current_user.hoster_morada?)
-    	  flash[:notice] = "No tiene permisos para realizar esta acción"
-    	  return redirect_to(:back)
-    	end
+    def set_author
+      resource.author_id = current_user.id
     end
 end

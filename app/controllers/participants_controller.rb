@@ -1,6 +1,7 @@
 class ParticipantsController < BaseEventController
 	
 	before_action :set_event
+	before_action :set_author, only: :destroy
 	before_action :send_modalities, only: [:edit, :new, :index]
 	
 	has_scope :by_modality
@@ -54,13 +55,13 @@ class ParticipantsController < BaseEventController
 	def show
 		@participant = resource
 		@bookings = Kaminari.paginate_array(@participant.bookings).page(params[:page])
-		@changes = Kaminari.paginate_array(@participant.change_logs).page(params[:change_page])
+		@changes = Kaminari.paginate_array(@participant.change_logs.order(created_at: :desc)).page(params[:change_page])
 	end
 	
 	private
 
 		def participant_params
-			params.require(:participant).permit(:guest_id, :space_id, :author_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :note, :_destroy])
+			params.require(:participant).permit(:guest_id, :space_id, :author_id, participant_spaces_attributes: [:id, :participant_id, :space_id, :note, :author_id, :_destroy])
 		end
 		
 		def set_event
@@ -79,5 +80,9 @@ class ParticipantsController < BaseEventController
 		def generate_auth_token
 			SecureRandom.uuid.gsub(/\-/,'')
 		end
+		
+		def set_author
+    		resource.author_id = current_user.id
+    	end
 end
 

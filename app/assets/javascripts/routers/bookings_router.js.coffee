@@ -4,7 +4,12 @@ class Lodging.Routers.Bookings extends Backbone.Router
 		
 	initialize: ->
 		self = @
-
+		
+		$('a[href="' +window.location.hash+ '"]').tab('show')
+		$('#navigation a').click( ->
+		  location.hash = $(this).attr('aria-controls')
+		)
+		
 		@locations = new Lodging.Collections.Locations()
 		if typeof gon isnt 'undefined'
 			@locations.reset( gon.locations )
@@ -19,46 +24,9 @@ class Lodging.Routers.Bookings extends Backbone.Router
 			$('#token-input-booking_guest_id').addClass('token-occupied')
 			$('#booking_guest_id').val(guest.id)
 
-		$('.datepicker').datepicker({
-	    	format: 'dd/mm/yyyy'
-		})
-
-		$('.hidden_field_date').each( ->
-			if this.value != ''
-				dateArray = $(this).val().split("-")
-				dateField = $(this).data('date-field')
-				$(dateField).val(dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0])
-		)
-		
-		$('.start-datepicker').each( ->
-			self.updateEndDate($(this)) if this.val isnt ''
-		)
-		
-		$('.datepicker').datepicker().on('change', (e) ->
-			if typeof $(e.target).data('end-datepicker') != 'undefined'
-				self.updateEndDate($(e.target))
-			self.updateHiddenDate($(e.target))
-		)
-
-		$('.datepicker').on('input', (e) ->
-			self.updateHiddenDate($(e.target)) if this.value == ''
-		)
+		adminEvd.setupDatePicker()
 		
 		$('.alert').delay(5000).slideUp(1000)
-   
-	updateEndDate: (datepicker) ->
-		dateArray = datepicker.val().split("/")
-		date = new Date(dateArray[2], dateArray[1] - 1, dateArray[0])
-		endDatePicker = datepicker.data("end-datepicker") 
-		$(endDatePicker).datepicker('setStartDate', date)
-	
-	updateHiddenDate: (datepicker) ->
-		hiddenDate = datepicker.data('hidden-datepicker');
-		if datepicker.val() == ''
-			$(hiddenDate).val('')
-		else
-			dateArray = datepicker.val().split("/")
-			$(hiddenDate).val(dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0])
 		
 	new: ->
 		view = new Lodging.Views.BookingsNew(collection: @locations)

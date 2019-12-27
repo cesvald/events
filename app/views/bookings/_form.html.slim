@@ -1,5 +1,6 @@
 = form_for @booking, html: { class: "form form-inline booking" } do |f|
   = render "layouts/error_messages", :target => @booking
+  = f.hidden_field :author_id, value: current_user.id
   .form-group
     .row
       .col-lg-2

@@ -103,18 +103,26 @@ class Booking < ActiveRecord::Base
   end
   
   def add_create_log
-    booking.change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true)
-    participant.change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
+    change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true)
+    participants.first.change_logs.create(change: "creó la reserva #{self}", author_id: author_id, is_reviewed: true) if participants.any?
       
   end
   
   def add_update_log
-    booking.change_logs.create(change: "actualizó la reserva  #{self}", author_id: author_id, is_reviewed: true)
-    participant.change_logs.create(change: "actualizó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
+    change_logs.create(change: "actualizó la reserva  #{self}", author_id: author_id, is_reviewed: true)
+    participants.first.create(change: "actualizó la reserva #{self}", author_id: author_id, is_reviewed: true) if participants.any?
   end
   
   def add_destroy_log
     ChangeLog.create(change: "eliminó la reserva #{self}", author_id: author_id, is_reviewed: true, logable_type: "Booking")
-    participant.change_logs.create(change: "eliminó la reserva #{self}", author_id: author_id, is_reviewed: true) if booking.participant.present?
+    participants.first.change_logs.create(change: "eliminó la reserva #{self}", author_id: author_id, is_reviewed: true) if participants.any?
+  end
+  
+  def show_path
+    Rails.application.routes.url_helpers.edit_booking_path(self)
+  end
+  
+  def to_s
+    "#{I18n.l start_date} - #{I18n.l end_date} #{guest}"
   end
 end

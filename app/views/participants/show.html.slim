@@ -15,11 +15,13 @@ div
         | Cambios
   .tab-content
     #details.participant-body.tab-pane.active
+      br
       - if not @event.international?
         h5.table-title Información del viaje
         |&nbsp;
         - if @participant.air_ticket.nil?
-          = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
+          - if can? :manage, AirTicket
+            = link_to "Adicionar Boleto Aereo", new_event_participant_air_ticket_path(@event, @participant), class: 'btn btn-primary btn-xs'
           br
           br
         - if not @participant.air_ticket.nil?
@@ -40,15 +42,17 @@ div
               td= @participant.air_ticket.leave_from
               td= l @participant.air_ticket.estimated_at
               td.actions
-                = link_to "Editar", edit_event_participant_air_ticket_path(@event, @participant, @participant.air_ticket), class: "btn btn-xs btn-default"
-                |&nbsp;
-                = link_to "Eliminar", [@event, @participant, @participant.air_ticket], method: :delete, data: {confirm: "Estás seguro de eliminar este boleto aereo"}, class: "btn btn-xs btn-danger"
+                - if can? :manage, AirTicket
+                  = link_to "Editar", edit_event_participant_air_ticket_path(@event, @participant, @participant.air_ticket), class: "btn btn-xs btn-default"
+                  |&nbsp;
+                  = link_to "Eliminar", [@event, @participant, @participant.air_ticket], method: :delete, data: {confirm: "Estás seguro de eliminar este boleto aereo"}, class: "btn btn-xs btn-danger"
         br
         br
       
       h5.table-title Modalidades
       |&nbsp;
-      = link_to "Modificar Modalidades", edit_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
+      - if can? :manage, Participant
+        = link_to "Modificar Modalidades", edit_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
       br
       
       table.table.table-actions
@@ -74,7 +78,8 @@ div
       - if not @event.international?
         h5.table-title Estadías
         |&nbsp;
-        = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
+        - if can? :manage, Stay
+          = link_to "Adicionar Estadía", new_event_participant_stay_path(@event, @participant), class: 'btn btn-primary btn-xs'
         br
         table.table.table-actions
           thead
@@ -95,16 +100,18 @@ div
               td= l stay.end_at, format: :date
               td= stay.display_detailed_total_amount
               td
-                = link_to "Editar", edit_event_participant_stay_path(@event, @participant, stay), class: "btn btn-xs btn-default"
-                |&nbsp;
-                = link_to "Eliminar", [@event, @participant, stay], method: :delete, data: {confirm: "Estás seguro de eliminar esta estadía"}, class: "btn btn-xs btn-danger"
+                - if can? :manage, Stay
+                  = link_to "Editar", edit_event_participant_stay_path(@event, @participant, stay), class: "btn btn-xs btn-default"
+                  |&nbsp;
+                  = link_to "Eliminar", [@event, @participant, stay], method: :delete, data: {confirm: "Estás seguro de eliminar esta estadía"}, class: "btn btn-xs btn-danger"
         
         br
         br
       
       h5.table-title Pagos
       |&nbsp;
-      = link_to "Adicionar Pago", new_event_participant_payment_path(@event, @participant), class: 'btn btn-primary btn-xs'
+      - if can? :manage, Payment
+        = link_to "Adicionar Pago", new_event_participant_payment_path(@event, @participant), class: 'btn btn-primary btn-xs'
       br
       table.table.table-actions
         thead
@@ -124,9 +131,10 @@ div
             td= payment.reason
             td= payment.description
             td.actions
-              = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"
-              |&nbsp;
-              = link_to "Eliminar", [@event, @participant, payment], method: :delete, data: {confirm: "Estás seguro de eliminar este pago"}, class: "btn btn-xs btn-danger"
+              - if can? :manage, Payment
+                = link_to "Editar", edit_event_participant_payment_path(@event, @participant, payment), class: "btn btn-xs btn-default"
+                |&nbsp;
+                = link_to "Eliminar", [@event, @participant, payment], method: :delete, data: {confirm: "Estás seguro de eliminar este pago"}, class: "btn btn-xs btn-danger"
       
       br
       br
@@ -142,7 +150,8 @@ div
             = t("participant.deposit.state.#{@participant.deposit_state}")
         |&nbsp;
         |&nbsp;
-        = link_to @participant.next_deposit_state_action, next_deposit_state_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
+        - if can? :manage, Participant
+          = link_to @participant.next_deposit_state_action, next_deposit_state_event_participant_path(@event, @participant), class: "btn btn-primary btn-xs"
       
         br
         br
@@ -196,9 +205,31 @@ div
       br
       h5.table-title Reservas
       |&nbsp;
-      = link_to "Adicionar Reserva", new_booking_path(booking: {guest_id: @participant.guest_id}, participant_id: @participant.id, back_url: "#{url_for([@event, @participant])}#bookings"), class: 'btn btn-primary btn-xs'
+      - if can? :manage, Booking
+        = link_to "Adicionar Reserva", new_booking_path(booking: {guest_id: @participant.guest_id}, participant_id: @participant.id, back_url: "#{url_for([@event, @participant])}#bookings"), class: 'btn btn-primary btn-xs'
       = render 'bookings/list', {bookings: @bookings}
     #changes.tab-pane
       br
       h5.table-title Cambios
-      =render 'change_logs/list', {changes: @changes}
+      br
+      br
+      = form_tag change_logs_path, method: :get, "data-type": "script", remote: true do
+        .row
+          = hidden_field_tag :logable_type, "Participant"
+          = hidden_field_tag :logable_id, @participant.id
+          .col.col-xs-12.col-md-2
+            = label_tag "Revisado?"
+            = select_tag :was_reviewed, options_for_select([['Pendiente Revisión', 0],['Revisados', 1], ['Todos', 2]], params[:was_reviewed]), class: 'form-control'
+          .col.col-xs-12.col-md-3
+            = label_tag "Realizado Desde"
+            = text_field_tag "created_at[started_at]", nil, class: "datepicker start-datepicker form-control", :data => {"end-datepicker": "#created_at_finished_at", "hidden-datepicker": "#hidden_created_at_started_at"}
+            = hidden_field_tag "created_at[started_at]", (params.has_key?(:created_at) && params[:created_at].has_key?(:started_at) ? params[:created_at][:started_at] : nil), id: "hidden_created_at_started_at", class: "hidden_field_date", :data => {"date-field": "#created_at_started_at"}
+          .col.col-xs-12.col-md-3
+            = label_tag "Realizado Hasta"
+            = text_field_tag "created_at[finished_at]", nil, class: "datepicker form-control", :data => {"hidden-datepicker": "#hidden_created_at_finished_at"}
+            = hidden_field_tag "created_at[finished_at]", (params.has_key?(:created_at) && params[:created_at].has_key?(:finished_at) ? params[:created_at][:finished_at] : nil), id: "hidden_created_at_finished_at", class: "hidden_field_date", :data => {"date-field": "#created_at_finished_at"}
+          .col.col-xs-12.col-md-1
+            = label_tag "Filtrar", "FiltrarFiltrar", class: "invisible"
+            = submit_tag "Filtrar", class: "btn btn-primary remote-change"
+      br
+      #change_log_content

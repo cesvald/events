@@ -2,7 +2,8 @@ class AirTicketsController < BaseEventController
   
   belongs_to :participant, optional: true
   before_action :set_event
-  
+  before_action :set_author, only: :destroy
+    
   def create
     create! do |format|
       format.html {
@@ -34,11 +35,15 @@ class AirTicketsController < BaseEventController
   private
 
     def air_ticket_params
-      params.require(:air_ticket).permit(:participant_id, :arrive_at, :arrive_to, :leave_at, :leave_from, :estimated_at)
+      params.require(:air_ticket).permit(:participant_id, :arrive_at, :arrive_to, :leave_at, :leave_from, :estimated_at, :author_id)
     end
     
     def set_event
       @event = Event.find(params[:event_id])
+    end
+    
+    def set_author
+      resource.author_id = current_user.id
     end
     
     def add_stays

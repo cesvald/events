@@ -5,6 +5,8 @@ class PaymentsController < ApplicationController
   belongs_to :participant, :booking, polymorphic: true, optional: true
   
   before_action :set_event
+  before_action :set_author, only: :destroy
+  
   
   def index
     @booking = parent
@@ -38,11 +40,15 @@ class PaymentsController < ApplicationController
   private
   
     def payment_params
-      params.require(:payment).permit(:participant_id, :paid_at, :amount, :description, :method, :reason)
+      params.require(:payment).permit(:participant_id, :paid_at, :amount, :description, :method, :reason, :author_id)
     end
     
     def set_event
       @event = Event.find(params[:event_id]) if params[:event_id]
+    end
+    
+    def set_author
+      resource.author_id = current_user.id
     end
 end
 

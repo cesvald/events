@@ -1,5 +1,6 @@
 = bootstrap_form_for [@event, @participant, @air_ticket] do |f|
   .row
+    = f.hidden_field :author_id, value: current_user.id
     .field.col-lg-4
       = f.text_field :arrive_at, value: f.object.arrive_at.nil? ? nil : l(f.object.arrive_at), required: true
       = f.error_span(:arrive_at)

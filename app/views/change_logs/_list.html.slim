@@ -21,15 +21,16 @@ table.table
             = "Automático"
         td
           .btn-group
-						button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-							| Acciones
-							span.caret
-						ul.dropdown-menu
-						  - if change.logable_id.present?
-						    li = link_to 'Ver Detalles', change.logable.show_path
-						  - if change.is_reviewed == false
-						    li = link_to 'Marcar Revisado', change_log_path(change, change_log: {is_reviewed: true, reviewed_at: Time.now, reviewer_id: current_user.id}), method: :patch
-						  - elsif change.is_reviewed && change.reviewer.present?
-						    li = link_to 'Pendiente Revisión', change_log_path(change, change_log: {is_reviewed: false, reviewed_at: nil, reviewer_id: nil}), method: :patch
+            button.btn.btn-default.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+              | Acciones
+              span.caret
+            ul.dropdown-menu
+              - if change.logable_id.present?
+                li = link_to 'Ver Detalles', change.logable.show_path
+              - if can? :manage, ChangeLog
+                - if change.is_reviewed == false
+                  li = link_to 'Marcar Revisado', change_log_path(change, change_log: {is_reviewed: true, reviewed_at: Time.now, reviewer_id: current_user.id}), method: :patch
+                - elsif change.is_reviewed && change.reviewer.present?
+                  li = link_to 'Marcar Pendiente Revisión', change_log_path(change, change_log: {is_reviewed: false, reviewed_at: nil, reviewer_id: nil}), method: :patch
 
 = paginate changes, remote: true

@@ -1,7 +1,7 @@
 class ChangeLogsController < ApplicationController
   
   inherit_resources
-  has_scope :reviewed, :was_reviewed
+  has_scope :reviewed, :was_reviewed, :type_of
   has_scope :type, type: :array
   has_scope :created_at, using: %i[started_at finished_at], type: :hash
   
@@ -28,7 +28,7 @@ class ChangeLogsController < ApplicationController
   
   protected
     def collection
-      get_collection_ivar || set_collection_ivar(end_of_association_chain.page(params[:page]))
+      get_collection_ivar || set_collection_ivar(end_of_association_chain.order(created_at: :desc).page(params[:page]))
     end
   
 end

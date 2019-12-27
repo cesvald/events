@@ -2,6 +2,7 @@ class StaysController < BaseEventController
   
   belongs_to :participant, optional: true
   before_action :set_event
+  before_action :set_author, only: :destroy
   
   def create
     create! { event_participant_path(@event, @participant) }
@@ -25,6 +26,10 @@ class StaysController < BaseEventController
     
     def set_event
       @event = Event.find(params[:event_id])
+    end
+    
+    def set_author
+      resource.author_id = current_user.id
     end
 end
 
