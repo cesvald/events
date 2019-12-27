@@ -2,7 +2,8 @@ class ChangeLogsController < ApplicationController
   
   inherit_resources
   has_scope :reviewed, :was_reviewed, :type_of
-  has_scope :type, type: :array
+  has_scope :logable_types, type: :array
+  has_scope :logable_ids, type: :array
   has_scope :created_at, using: %i[started_at finished_at], type: :hash
   
   respond_to :js, :only => :index

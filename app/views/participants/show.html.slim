@@ -215,8 +215,8 @@ div
       br
       = form_tag change_logs_path, method: :get, "data-type": "script", remote: true do
         .row
-          = hidden_field_tag :logable_type, "Participant"
-          = hidden_field_tag :logable_id, @participant.id
+          = hidden_field_tag "logable_types[]", "Participant"
+          = hidden_field_tag "logable_ids[]", @participant.id
           .col.col-xs-12.col-md-2
             = label_tag "Revisado?"
             = select_tag :was_reviewed, options_for_select([['Pendiente Revisión', 0],['Revisados', 1], ['Todos', 2]], params[:was_reviewed]), class: 'form-control'
