@@ -39,7 +39,7 @@ class BookingsController < BaseHostingController
 			end
 		end
 		@bookings = @bookings.order(start_date: :desc)
-		@pending_changes_for_review_count = ChangeLog.type(["Participant", "Event"]).reviewed(false).count
+		@pending_changes_for_review_count = ChangeLog.logable_types(["Participant", "Event"]).reviewed(false).count
 		
 		@bookings = Kaminari.paginate_array(@bookings).page params[:page]
 	end
