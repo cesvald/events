@@ -26,4 +26,8 @@ class Payment < ActiveRecord::Base
     is_reviewed = participant.payments.count == 1 && participant.air_ticket.nil? ? false : true
     participant.change_logs.create(change: "eliminó el pago #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
   end
+  
+  def to_s
+    "#{display_amount} el #{I18n.l paid_at}"
+  end
 end
