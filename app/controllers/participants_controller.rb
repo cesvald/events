@@ -14,7 +14,7 @@ class ParticipantsController < BaseEventController
 	end
 	
 	def index
-		@participants = current_user.admin? ? @event.participants : (current_user.coord_outside? ? @event.participants.by_outside(true) : @event.participants.by_country(current_user.country))
+		@participants = current_user.admin? || current_user.coord_eventer? ? @event.participants : (current_user.coord_outside? ? @event.participants.by_outside(true) : @event.participants.by_country(current_user.country))
 		@participants = apply_scopes(@participants).page(params[:page])
 	end
 	
