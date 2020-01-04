@@ -6,6 +6,9 @@ class Event < ActiveRecord::Base
     
     delegate :display_deposit_amount, to: :decorator
 
+    scope :after_date, -> (date) { where("events.end_at >= ?", date) }
+    scope :by_international, -> (is_international) { where(international: is_international) }
+    
     # Using decorators
     def decorator
         @decorator ||= EventDecorator.new(self)

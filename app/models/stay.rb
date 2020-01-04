@@ -34,18 +34,15 @@ class Stay < ActiveRecord::Base
   end
   
   def add_create_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "creó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "creó la estadía #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def add_update_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "actualizó la estadía  #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "actualizó la estadía  #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def add_destroy_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "eliminó la estadía #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
 end

@@ -3,6 +3,9 @@ ul#navigation.nav.nav-tabs role="tablist"
       a href="#bookings" aria-controls="bookings" role="tab" data-toggle="tab"
         | Reservas
     li role="presentation"
+      a href="#participants" aria-controls="participants" role="tab" data-toggle="tab"
+        | Participantes
+    li role="presentation"
       a href="#participant_changes" aria-controls="participant_changes" role="tab" data-toggle="tab"
         = "Cambios (#{@pending_changes_for_review_count})"
 .tab-content
@@ -37,4 +40,18 @@ ul#navigation.nav.nav-tabs role="tablist"
           = submit_tag "Filtrar", class: "btn btn-primary remote-change"
     br
     #change_log_content
+
+  #participants.tab-pane
+    = form_tag participants_path, method: :get, "data-type": "script", class: "invisible", remote: true do
+      .row
+        = hidden_field_tag :after_date, Date.today - 1.month
+        = hidden_field_tag :by_confirmed, 0
+        = hidden_field_tag :by_international, 0
+        .col.col-xs12.col-md-2
+          = label_tag "Confirmado"
+          = select_tag :by_confirmed, options_for_select([['Si', 0]])
+        .col.col-xs-12.col-md-1
+            = label_tag "Filtrar", "FiltrarFiltrar", class: "invisible"
+            = submit_tag "Filtrar", class: "btn btn-primary remote-change"
   
+    #participant_content

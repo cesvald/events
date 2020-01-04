@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
   
   resources :change_logs
+  resources :participants, only: :index
   
   resources :events do
     member do

@@ -1,6 +1,10 @@
 .page-header
 	h4= @participant.guest
-	= link_to 'Información personal', edit_guest_path(@participant.guest), class: "btn btn-primary btn-header btn-xs small-link"
+	- if can? :manage, Modality
+	  = link_to 'Información personal', edit_guest_path(@participant.guest), class: "btn btn-default btn-header btn-xs small-link"
+	  |&nbsp;
+	= link_to 'Solicitar revisión de reservas', change_logs_path(change_log: {is_reviewed: 0, logable_id: @participant.id, logable_type: 'Participant', change: "solicita revisión de cambios", author_id: current_user.id}), method: :post, class: "btn btn-xs small-link btn-primary btn-header"
+	
 
 div
   ul#navigation.nav.nav-tabs role="tablist"

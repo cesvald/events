@@ -1,21 +1,30 @@
 class ParticipantsController < BaseEventController
 	
-	before_action :set_event
-	before_action :set_author, only: :destroy
-	before_action :send_modalities, only: [:edit, :new, :index]
+	respond_to :js, :only => :index
 	
-	has_scope :by_modality
-	has_scope :by_space
-	has_scope :by_guest
-	has_scope :by_confirmed
+	before_action :set_event, :if => proc {params.has_key?(:event_id)}
+	before_action :set_author, only: :destroy
+	before_action :send_modalities, only: [:edit, :new, :index],  :if => proc {params.has_key?(:event_id)} 
+	
+	has_scope :by_modality, :by_space, :by_guest, :by_confirmed, :after_date
+	has_scope :by_international
 	
 	def create
 		create! { event_participants_path(@event) }
 	end
 	
 	def index
-		@participants = current_user.admin? || current_user.coord_eventer? ? @event.participants : (current_user.coord_outside? ? @event.participants.by_outside(true) : @event.participants.by_country(current_user.country))
+		if params.has_key?(:event)
+			@participants = current_user.admin? || current_user.coord_eventer? ? @event.participants : (current_user.coord_outside? ? @event.participants.by_outside(true) : @event.participants.by_country(current_user.country))
+		else 
+			@participants = Participant.all
+		end
+		@participants = Participant.after_date(Date.today - 1.month).by_international(0).by_confirmed(0)
 		@participants = apply_scopes(@participants).page(params[:page])
+		respond_to do |format|
+			format.html
+    		format.js {render layout: false, content_type: 'text/javascript'}
+		end
 	end
 	
 	def destroy

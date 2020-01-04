@@ -23,8 +23,13 @@ class ChangeLogsController < ApplicationController
     end
   end
   
+  def create
+    create! { request.referer }
+    flash[:notice] = "Solicitud enviada"
+  end
+  
   def change_log_params
-    params.require(:change_log).permit(:is_reviewed, :reviewed_at, :reviewer_id)
+    params.require(:change_log).permit(:is_reviewed, :reviewed_at, :reviewer_id, :logable_id, :logable_type, :change, :author_id)
   end
   
   protected

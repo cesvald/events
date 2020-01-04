@@ -14,8 +14,7 @@ class Payment < ActiveRecord::Base
   end
   
   def add_create_log
-    is_reviewed = payable.payments.count == 1 && payable.air_ticket.nil? ? false : true
-    payable.change_logs.create(change: "creó el pago #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    payable.change_logs.create(change: "creó el pago #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def add_update_log
@@ -23,8 +22,7 @@ class Payment < ActiveRecord::Base
   end
   
   def add_destroy_log
-    is_reviewed = payable.payments.count == 1 && payable.air_ticket.nil? ? false : true
-    payable.change_logs.create(change: "eliminó el pago #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    payable.change_logs.create(change: "eliminó el pago #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def to_s

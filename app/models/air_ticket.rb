@@ -8,17 +8,14 @@ class AirTicket < ActiveRecord::Base
   after_update :add_update_log
   
   def add_create_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "creó el boleto aéreo #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "creó el boleto aéreo #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def add_update_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "actualizó el boleto aéreo  #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "actualizó el boleto aéreo  #{to_s}", author_id: author_id, is_reviewed: true)
   end
   
   def add_destroy_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "eliminó el boleto aéreo #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "eliminó el boleto aéreo #{to_s}", author_id: author_id, is_reviewed: true)
   end
 end

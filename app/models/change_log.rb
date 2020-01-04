@@ -25,6 +25,6 @@ class ChangeLog < ActiveRecord::Base
   }
   
   def to_s
-    "#{author} #{change}"
+    "#{author} #{change} #{logable.present? ? " de #{logable.to_s}" : "" }"
   end
 end

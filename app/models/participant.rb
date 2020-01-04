@@ -23,12 +23,19 @@ class Participant < ActiveRecord::Base
   scope :by_guest, ->(guest_id) { where( guest_id: guest_id ) }
   scope :by_country, ->(country) { joins(:guest).where('guests.country': country) }
   scope :by_outside, ->(outside) { joins(:guest).where('guests.outside': outside) }
+  scope :after_date, ->(date) { joins(spaces: {modality: :event}).merge(Event.after_date(date)).distinct }
+  
+  scope :by_international, -> (is_international) {
+    is_international = is_international.to_i == 0 ? false : true
+    joins(spaces: {place: :events}).merge(Event.by_international(is_international))
+    
+  }
   
   scope :by_confirmed, -> (is_confirmed) {
     if is_confirmed.to_i == 0
-      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.participant_id').where('air_tickets.participant_id IS NOT NULL OR payments.participant_id IS NOT NULL')
+      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NOT NULL OR payments.payable_id IS NOT NULL').where('payments.payable_type = ?', 'Participant')
     elsif is_confirmed.to_i == 1
-      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.participant_id').where('air_tickets.participant_id IS NULL AND payments.participant_id IS NULL')
+      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NULL AND payments.payable_id IS NULL').where('payments.payable_type = ?', 'Participant')
     end
   }
   
