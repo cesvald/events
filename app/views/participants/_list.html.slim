@@ -25,7 +25,7 @@ table.table
                     li = link_to 'Cambiar participación', edit_event_participant_path(@event, participant)
                     li = link_to 'Eliminar', [@event, participant], data: {:confirm => '¿Estás seguro de eliminar este participante?'}, :method => :delete
           - else
-            = link_to 'Ver Detalles', [participant.spaces.first.place.events.first, participant], class: "btn btn-default"
+            = link_to 'Ver Detalles', [participant.spaces.first.modality.event, participant], class: "btn btn-default"
         
         
 = paginate @participants, remote: true

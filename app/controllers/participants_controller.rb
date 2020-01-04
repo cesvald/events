@@ -19,7 +19,6 @@ class ParticipantsController < BaseEventController
 		else 
 			@participants = Participant.all
 		end
-		@participants = Participant.after_date(Date.today - 1.month).by_international(0).by_confirmed(0)
 		@participants = apply_scopes(@participants).page(params[:page])
 		respond_to do |format|
 			format.html
