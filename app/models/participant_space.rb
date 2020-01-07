@@ -10,18 +10,15 @@ class ParticipantSpace < ActiveRecord::Base
   after_update :add_update_log
   
   def add_create_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "creó la modalidad #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "creó la modalidad #{to_s}", author_id: author_id)
   end
   
   def add_update_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "actualizó la modalidad  #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "actualizó la modalidad  #{to_s}", author_id: author_id)
   end
   
   def add_destroy_log
-    is_reviewed = participant.confirmed? ? false : true
-    participant.change_logs.create(change: "eliminó la modalidad #{to_s}", author_id: author_id, is_reviewed: is_reviewed)
+    participant.change_logs.create(change: "eliminó la modalidad #{to_s}", author_id: author_id)
   end
     
   def to_s
