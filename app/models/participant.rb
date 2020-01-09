@@ -16,7 +16,7 @@ class Participant < ActiveRecord::Base
   validates_presence_of :guest
   
   after_create :add_create_log
-  after_destroy :add_destroy_log
+  before_destroy :add_destroy_log, prepend: true
   
   scope :by_modality, ->(modality_id) { joins(:spaces).where('spaces.modality_id = ?', modality_id) }
   scope :by_space, ->(space_id) { where('participant_spaces.space_id = ?', space_id) }
@@ -146,7 +146,7 @@ class Participant < ActiveRecord::Base
   
   def add_destroy_log
     change_log = spaces.first.modality.event.change_logs.new(change: "eliminó al participante #{to_s}", author_id: author_id)
-    change_log.is_reviewed = false if is_confirmed
+    change_log.is_reviewed = false if confirmed?
     change_log.save
   end
   
