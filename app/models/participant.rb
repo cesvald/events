@@ -33,9 +33,9 @@ class Participant < ActiveRecord::Base
   
   scope :by_confirmed, -> (is_confirmed) {
     if is_confirmed.to_i == 0
-      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NOT NULL OR payments.payable_id IS NOT NULL').where('payments.payable_type = ?', 'Participant')
+      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NOT NULL OR (payments.payable_id IS NOT NULL AND payments.payable_type = ?)', 'Participant')
     elsif is_confirmed.to_i == 1
-      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NULL AND payments.payable_id IS NULL').where('payments.payable_type = ?', 'Participant')
+      joins('LEFT OUTER JOIN air_tickets ON participants.id = air_tickets.participant_id').joins('LEFT OUTER JOIN payments ON participants.id = payments.payable_id').where('air_tickets.participant_id IS NULL AND (payments.payable_id IS NULL AND payments.payable_type = ?)', 'Participant')
     end
   }
   
