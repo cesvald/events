@@ -110,7 +110,7 @@ class Booking < ActiveRecord::Base
   
   def add_update_log
     change_logs.create(change: "actualizó la reserva  #{self}", author_id: author_id, is_reviewed: true)
-    participants.first.create(change: "actualizó la reserva #{self}", author_id: author_id, is_reviewed: true) if participants.any?
+    participants.first.change_logs.create(change: "actualizó la reserva #{self}", author_id: author_id, is_reviewed: true) if participants.any?
   end
   
   def add_destroy_log
