@@ -1,4 +1,4 @@
-class Booking < ActiveRecord::Base
+class Booking < ApplicationRecord
   belongs_to :bed
   belongs_to :guest
   

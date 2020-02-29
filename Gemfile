@@ -2,22 +2,21 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '5.2.0'
 
 # Database and data related
-gem 'pg'
-gem 'pg_search'
-gem 'postgres-copy'
-gem 'schema_plus'
-gem 'schema_associations'
+gem 'pg', '~> 0.18'
+#gem 'postgres-copy'
+#gem 'schema_plus'
+#gem 'schema_associations'
 
-
-gem 'devise', '~> 3.5.3'
+gem 'devise'
 
 # Observers
 gem 'rails-observers'
 
 # Decorators
+gem 'activemodel-serializers-xml', git: 'https://github.com/rails/activemodel-serializers-xml'
 gem 'draper'
 
 # Use SCSS for stylesheets
@@ -27,6 +26,8 @@ gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem "bootstrap_flash_messages"
 gem 'bootstrap_form'
+
+gem 'listen'
 
 # bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
@@ -57,7 +58,7 @@ gem 'kaminari'
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 
 #Authorization gem
 gem 'cancan'
@@ -92,7 +93,7 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 # Another Tools
-gem 'has_scope', '0.6.0'
+gem 'has_scope'
 gem 'spectator-validates_email',  require: 'validates_email'
 gem 'inherited_resources'
 gem 'gon'
@@ -101,16 +102,10 @@ gem 'carrierwave'
 # Ordering
 gem 'ranked-model'
 
-#For security reasons gem updated
-gem 'loofah', '~> 2.3.1'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
-  end
-  gem 'factory_girl_rails'
+  #gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
 end

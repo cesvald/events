@@ -1,7 +1,7 @@
-class ChangeLog < ActiveRecord::Base
-  belongs_to :logable, polymorphic: true
-  belongs_to :reviewer, class_name: "User", foreign_key: "reviewer_id"
-  belongs_to :author, class_name: "User", foreign_key: "author_id"
+class ChangeLog < ApplicationRecord
+  belongs_to :logable, polymorphic: true, optional: true
+  belongs_to :reviewer, class_name: "User", foreign_key: "reviewer_id", optional: true
+  belongs_to :author, class_name: "User", foreign_key: "author_id", optional: true
   
   scope :logable_types, -> (types) {where(logable_type: types)}
   scope :logable_ids, -> (ids) {where(logable_id: ids)}

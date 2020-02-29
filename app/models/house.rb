@@ -1,4 +1,4 @@
-class House < ActiveRecord::Base
+class House < ApplicationRecord
   belongs_to :location
   has_many :rooms, :dependent => :destroy
   mount_uploader :sketch, SketchUploader

@@ -9,8 +9,8 @@ class GuestsController < ApplicationController
 	
 	after_filter :set_comming_from, only: :edit
 	
-	skip_before_filter :authenticate_user, only: [:auto_edit, :update, :not_access_allowed, :auto_update_success]
-	before_filter :authenticate_token, only: [:auto_edit]
+	skip_before_action :authenticate_user, only: [:auto_edit, :update, :not_access_allowed, :auto_update_success]
+	before_action :authenticate_token, only: [:auto_edit]
 	
 	def index
 		@guests = (current_user.admin? || current_user.doctor? || current_user.viewer? || current_user.coord_eventer? || current_user.hoster?) ? Guest.all : (current_user.coord_outside? ? Guest.by_outside(true) : Guest.by_country(current_user.country).by_outside(false))

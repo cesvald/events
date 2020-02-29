@@ -1,3 +1,3 @@
-class Historical < ActiveRecord::Base
-  belongs_to :location
+class Historical < ApplicationRecord
+  belongs_to :location, optional: true
 end

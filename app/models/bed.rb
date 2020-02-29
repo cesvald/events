@@ -1,4 +1,4 @@
-class Bed < ActiveRecord::Base
+class Bed < ApplicationRecord
   belongs_to :room
   has_many :bookings
   has_many :guests, through: :bookings
