@@ -7,7 +7,7 @@ class GuestsController < ApplicationController
 
 	respond_to :html, :json
 	
-	after_filter :set_comming_from, only: :edit
+	after_action :set_comming_from, only: :edit
 	
 	skip_before_action :authenticate_user, only: [:auto_edit, :update, :not_access_allowed, :auto_update_success]
 	before_action :authenticate_token, only: [:auto_edit]
