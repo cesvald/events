@@ -6,11 +6,7 @@ class User < ApplicationRecord
   
   has_and_belongs_to_many :profiles
   
-  Profile.all.pluck(:name).each do |name|
-    define_method "#{name}?" do
-			not profiles.where(name: name).empty?
-		end
-  end
+  
   
   def country_name
 		country_name = ISO3166::Country[country]
