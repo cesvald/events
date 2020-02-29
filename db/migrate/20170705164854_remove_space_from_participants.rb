@@ -1,4 +1,4 @@
-class RemoveSpaceFromParticipants < ActiveRecord::Migration
+class RemoveSpaceFromParticipants < ActiveRecord::Migration[4.2]
   def up
     remove_column :participants, :space_id, :integer
   end

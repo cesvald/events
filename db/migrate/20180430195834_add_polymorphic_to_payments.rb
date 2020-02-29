@@ -1,4 +1,4 @@
-class AddPolymorphicToPayments < ActiveRecord::Migration
+class AddPolymorphicToPayments < ActiveRecord::Migration[4.2]
   def up
     add_reference :payments, :payable, polymorphic: true, index: true
     Payment.all.each do |p|

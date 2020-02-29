@@ -1,4 +1,4 @@
-class CreateStays < ActiveRecord::Migration
+class CreateStays < ActiveRecord::Migration[4.2]
   def change
     create_table :stays do |t|
       t.belongs_to :participant, index: true, foreign_key: true

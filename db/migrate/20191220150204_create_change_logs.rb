@@ -1,4 +1,4 @@
-class CreateChangeLogs < ActiveRecord::Migration
+class CreateChangeLogs < ActiveRecord::Migration[4.2]
   def change
     create_table :change_logs do |t|
       t.text :change, null: false

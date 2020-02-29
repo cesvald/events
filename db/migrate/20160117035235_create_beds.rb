@@ -1,4 +1,4 @@
-class CreateBeds < ActiveRecord::Migration
+class CreateBeds < ActiveRecord::Migration[4.2]
   def change
     create_table :beds do |t|
       t.integer :number, null: false

@@ -1,4 +1,4 @@
-class CreateSpaces < ActiveRecord::Migration
+class CreateSpaces < ActiveRecord::Migration[4.2]
   def change
     create_table :spaces do |t|
       t.belongs_to :modality, index: true, foreign_key: true

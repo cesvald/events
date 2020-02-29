@@ -1,4 +1,4 @@
-class CreateAirTickets < ActiveRecord::Migration
+class CreateAirTickets < ActiveRecord::Migration[4.2]
   def change
     create_table :air_tickets do |t|
       t.belongs_to :participant, index: true, foreign_key: true
