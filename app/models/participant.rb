@@ -28,7 +28,6 @@ class Participant < ActiveRecord::Base
   scope :by_international, -> (is_international) {
     is_international = is_international.to_i == 0 ? false : true
     joins(spaces: {place: :events}).merge(Event.by_international(is_international))
-    
   }
   
   scope :by_confirmed, -> (is_confirmed) {
@@ -143,13 +142,13 @@ class Participant < ActiveRecord::Base
   def add_create_log
     change_logs.create(change: "creó al participante #{to_s}", author_id: author_id)
   end
-  
+
   def add_destroy_log
     change_log = spaces.first.modality.event.change_logs.new(change: "eliminó al participante #{to_s}", author_id: author_id)
     change_log.is_reviewed = false if confirmed?
     change_log.save
   end
-  
+
   def show_path
     Rails.application.routes.url_helpers.event_participant_path(spaces.first.modality.event, self)
   end
