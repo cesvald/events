@@ -14,8 +14,8 @@
 
 - @locations.each do |current_location|
   .calendar-containor.panel.panel-primary
-    .panel-heading
-      i.fa.fa-plus-square-o.fa-lg style="cursor: pointer"
+    .panel-heading.open-calendar.cursor-pointer
+      i.glyphicon.glyphicon-plus.fw-800.fs-20
       h4= " #{current_location.name} "
     .calendar-wrapper.panel-body style="display:none"
       - current_location.houses.each do |current_house|
@@ -44,3 +44,4 @@
                                 = "#{booking.guest.name} #{booking.guest.surname}"
                         - else
                           td
+  |&nbsp
