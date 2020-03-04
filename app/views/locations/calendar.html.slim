@@ -10,7 +10,7 @@
   .form-group
     = submit_tag "Ver Calendario", :class => 'btn btn-primary btn-left-space'
     | &nbsp
-    = link_to "Descargar Excel", calendar_locations_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
+    = link_to "Descargar Excel", calendar_locations_path({format: "xlsx"}.merge(params.permit('[date][month]', '[date][year]'))), class: 'btn btn-primary'
 
 - @locations.each do |current_location|
   .calendar-containor.panel.panel-primary
