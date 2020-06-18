@@ -13,9 +13,10 @@ class Ability
       can :manage, Payment
       can :read, ChangeLog
     end
-    
+
     if current_user.coord_eventer?
       can :manage, Guest
+      can :manage, User
       can :manage, Event
       can :manage, Participant
       can :manage, Modality
