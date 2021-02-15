@@ -3,7 +3,7 @@ class EventDecorator < Draper::Decorator
   include Draper::LazyHelpers
   
   def display_deposit_amount
-    number_to_currency source.deposit_amount, unit: 'USD', precision: 0, delimiter: '.'
+    number_to_currency object.deposit_amount, unit: 'USD', precision: 0, delimiter: '.'
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

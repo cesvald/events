@@ -4,11 +4,11 @@ class SpaceDecorator < Draper::Decorator
   include Draper::LazyHelpers
   
   def display_amount
-    number_to_currency source.amount, unit: 'USD', precision: 2, delimiter: '.'
+    number_to_currency object.amount, unit: 'USD', precision: 2, delimiter: '.'
   end
   
   def display_modality_space
-    "Modalidad #{source.modality} en #{source.place}"
+    "Modalidad #{object.modality} en #{object.place}"
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

@@ -10,7 +10,7 @@ class PlacesController < BaseEventController
   
   def create
     Place.create(place_params)
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   def update
@@ -26,7 +26,7 @@ class PlacesController < BaseEventController
   
   def assign
     parent.places << Place.find(params[:id])
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   def remove
@@ -37,7 +37,7 @@ class PlacesController < BaseEventController
       parent.places.destroy(place)
     end
     
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   def destroy
@@ -47,7 +47,7 @@ class PlacesController < BaseEventController
     else
       place.destroy
     end
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   private

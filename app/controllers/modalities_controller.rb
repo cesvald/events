@@ -26,7 +26,7 @@ class ModalitiesController < BaseEventController
   
   def destroy
     destroy! do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back(fallback_location: root_path) }
     end
   end
   
@@ -39,7 +39,7 @@ class ModalitiesController < BaseEventController
     submodality = Modality.find(params[:submodality_id])
     composition = resource.compositions.create!(submodality: submodality, discount: params[:discount])
     resource.add_discount(composition)
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   def remove_modality
@@ -51,7 +51,7 @@ class ModalitiesController < BaseEventController
       resource.compositions.destroy(composition)
     end
     
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
   
   private

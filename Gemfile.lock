@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/carloslopes/rails-bootstrap-forms.git
+  revision: e9498e04634cb65cf36279e7d988d082410563a0
+  specs:
+    bootstrap_form (2.1.1)
+
+GIT
   remote: https://github.com/rails/activemodel-serializers-xml
   revision: 694f4071c6b16e4c8597cc323c241b5f787b3ea8
   specs:
@@ -72,9 +78,6 @@ GEM
     bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
     bootstrap_flash_messages (1.0.2)
-    bootstrap_form (4.5.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     builder (3.2.4)
     cancancan (3.2.1)
     carrierwave (2.1.1)
@@ -320,7 +323,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap3-datetimepicker-rails
   bootstrap_flash_messages
-  bootstrap_form
+  bootstrap_form!
   cancancan
   carrierwave
   coffee-rails

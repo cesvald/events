@@ -17,7 +17,7 @@ class AirTicketsController < BaseEventController
     destroy! do |format|
       format.html {
         @air_ticket.participant.stays.delete_all
-        redirect_to :back
+        redirect_back(fallback_location: root_path)
       }
     end
   end

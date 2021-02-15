@@ -26,7 +26,7 @@ gem "therubyracer"
 gem "less-rails" 
 gem 'twitter-bootstrap-rails'
 gem "bootstrap_flash_messages"
-gem 'bootstrap_form'
+gem "bootstrap_form", git: 'https://github.com/carloslopes/rails-bootstrap-forms.git'
 
 gem 'listen'
 

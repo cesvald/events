@@ -12,7 +12,7 @@ class SpacesController < BaseEventController
   
   def destroy
     destroy! do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back(fallback_location: root_path) }
     end
   end
   
