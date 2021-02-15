@@ -1,4 +1,4 @@
-class Modality < ActiveRecord::Base
+class Modality < ApplicationRecord
 	belongs_to :event
 	has_many :spaces, dependent: :delete_all
 	

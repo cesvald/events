@@ -1,4 +1,4 @@
-class AirTicket < ActiveRecord::Base
+class AirTicket < ApplicationRecord
     
   belongs_to :participant
   attr_accessor :author_id

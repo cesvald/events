@@ -1,4 +1,4 @@
-class Stay < ActiveRecord::Base
+class Stay < ApplicationRecord
   belongs_to :participant
   belongs_to :space
   attr_accessor :author_id

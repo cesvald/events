@@ -1,4 +1,4 @@
-class GuestMailer < ActionMailer::Base
+class GuestMailer < ApplicationMailer
   require 'mail'
   address = Mail::Address.new 'eventos@evdsky.com' # ex: "john@example.com"
   address.display_name = 'Escuela Valores Divinos'   # ex: "John Doe"

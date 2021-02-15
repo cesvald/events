@@ -1,4 +1,4 @@
-class Payment < ActiveRecord::Base
+class Payment < ApplicationRecord
   belongs_to :payable
   attr_accessor :author_id
   

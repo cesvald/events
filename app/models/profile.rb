@@ -1,4 +1,4 @@
-class Profile < ActiveRecord::Base
+class Profile < ApplicationRecord
 	
 	has_and_belongs_to_many :users
 	

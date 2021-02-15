@@ -7,4 +7,3 @@ class Lodging.Views.BookingsIndex extends Backbone.View
 		$('#navigation a').click( ->
 		  location.hash = $(this).attr('aria-controls')
 		)
-		alert 'here'

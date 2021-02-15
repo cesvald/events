@@ -11,13 +11,13 @@ gem 'pg_search'
 #gem 'schema_plus'
 #gem 'schema_associations'
 
-
 gem 'devise'
 
 # Observers
 gem 'rails-observers'
 
 # Decorators
+gem 'activemodel-serializers-xml', git: 'https://github.com/rails/activemodel-serializers-xml'
 gem 'draper'
 
 # Use SCSS for stylesheets
@@ -27,6 +27,8 @@ gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem "bootstrap_flash_messages"
 gem 'bootstrap_form'
+
+gem 'listen'
 
 # bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'

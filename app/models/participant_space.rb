@@ -1,4 +1,4 @@
-class ParticipantSpace < ActiveRecord::Base
+class ParticipantSpace < ApplicationRecord
   
   belongs_to :participant
   belongs_to :space

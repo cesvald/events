@@ -1,4 +1,4 @@
-class Space < ActiveRecord::Base
+class Space < ApplicationRecord
   belongs_to :place
   belongs_to :modality
   

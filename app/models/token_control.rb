@@ -1,4 +1,4 @@
-class TokenControl < ActiveRecord::Base
+class TokenControl < ApplicationRecord
   
   belongs_to :guest
   

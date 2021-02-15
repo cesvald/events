@@ -1,4 +1,4 @@
-class Configuration < ActiveRecord::Base
+class Configuration < ApplicationRecord
 		validates_presence_of :name
 		
 		class << self

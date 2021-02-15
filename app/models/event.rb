@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
     has_many :modalities
     has_and_belongs_to_many :places,  :join_table => :places_events
     has_many :change_logs, as: :logable
