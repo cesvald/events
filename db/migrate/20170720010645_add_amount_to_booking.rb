@@ -1,4 +1,4 @@
-class AddAmountToBooking < ActiveRecord::Migration
+class AddAmountToBooking < ActiveRecord::Migration[4.2]
   def change
     add_column :bookings, :amount, :integer
   end

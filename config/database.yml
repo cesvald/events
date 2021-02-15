@@ -2,18 +2,17 @@ default: &default
       adapter: postgresql
       encoding: unicode
       pool: 5
-      username: postgres
-      password: password
-      host:     <%= ENV['IP'] %>
+      username: oscardavidpenacabra
+      password: root
 
 development:
   <<: *default
-  database: app_development
+  database: hosting_app_development
 
 test:
   <<: *default
-  database: app_test
+  database: hosting_app_test
 
 production:
   <<: *default
-  database: app_production
+  database: hosting_app_production

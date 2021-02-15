@@ -1,4 +1,4 @@
-class AddTentsHouseAndBedsRecords < ActiveRecord::Migration
+class AddTentsHouseAndBedsRecords < ActiveRecord::Migration[4.2]
   def up
     location = Location.where(name:'Ashram').first
     if location

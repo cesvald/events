@@ -1,4 +1,4 @@
-class CreateParticipantsBookings < ActiveRecord::Migration
+class CreateParticipantsBookings < ActiveRecord::Migration[4.2]
   def change
     create_table :participants_bookings, id: false do |t|
       t.references :participant, index: true, foreign_key: true

@@ -1,4 +1,4 @@
-class CreateParticipantSpaces < ActiveRecord::Migration
+class CreateParticipantSpaces < ActiveRecord::Migration[4.2]
   def up
     create_table :participant_spaces do |t|
       t.belongs_to :participant, index: true, foreign_key: true

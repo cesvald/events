@@ -1,4 +1,4 @@
-class CreateTokenControl < ActiveRecord::Migration
+class CreateTokenControl < ActiveRecord::Migration[4.2]
   def change
     create_table :token_controls do |t|
       t.belongs_to :guest, index: true, foreign_key: true

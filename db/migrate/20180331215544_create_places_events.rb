@@ -1,4 +1,4 @@
-class CreatePlacesEvents < ActiveRecord::Migration
+class CreatePlacesEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :places_events do |t|
       t.belongs_to :place, index: true, foreign_key: true

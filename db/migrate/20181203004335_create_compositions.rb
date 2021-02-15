@@ -1,4 +1,4 @@
-class CreateCompositions < ActiveRecord::Migration
+class CreateCompositions < ActiveRecord::Migration[4.2]
   def change
     create_table :compositions do |t|
       t.belongs_to :modality, index: true, foreign_key: false

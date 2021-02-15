@@ -1,5 +1,5 @@
 class AirTicketsController < BaseEventController
-  
+  defaults :singleton => true
   belongs_to :participant, optional: true
   before_action :set_event
   before_action :set_author, only: :destroy
