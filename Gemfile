@@ -24,6 +24,7 @@ gem 'draper'
 gem 'sass-rails'
 gem "therubyracer"
 gem "less-rails" 
+gem "font-awesome-rails"
 gem 'twitter-bootstrap-rails'
 gem "bootstrap_flash_messages"
 gem "bootstrap_form", git: 'https://github.com/carloslopes/rails-bootstrap-forms.git'

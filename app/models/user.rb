@@ -6,7 +6,7 @@ class User < ApplicationRecord
   
   has_and_belongs_to_many :profiles
   
-  Profile.all.pluck(:name).each do |name|
+  ["hoster", "eventer", "admin", "hoster_ashram", "hoster_morada", "hoster_ashram", "hoster_morada", "coord_country", "coord_outside", "finance", "doctor", "viewer", "coord_eventer"].each do |name|
     define_method "#{name}?" do
 			not profiles.where(name: name).empty?
 		end

@@ -126,6 +126,8 @@ GEM
     erubi (1.10.0)
     execjs (2.7.0)
     ffi (1.14.2)
+    font-awesome-rails (4.7.0.7)
+      railties (>= 3.2, < 7)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
     formtastic-bootstrap (3.1.1)
@@ -330,6 +332,7 @@ DEPENDENCIES
   country_select
   devise
   draper
+  font-awesome-rails
   formtastic
   formtastic-bootstrap
   gon
