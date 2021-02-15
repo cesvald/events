@@ -4,7 +4,7 @@
 	  = link_to 'Nuevo Participante', new_event_participant_path(@event), class: "btn btn-primary btn-header"
 	- if current_user.admin?
 	  = link_to 'Importar participantes', new_import_event_path(@event), class: "btn btn-primary btn-header"
-	  = link_to 'Enviar link de suscripción', send_suscription_mail_event_participants_path({event_id: @event.id}.merge(params)), class: "btn, btn-primary btn-header"
+	  //= link_to 'Enviar link de suscripción', send_suscription_mail_event_participants_path({event_id: @event.id}.merge(<)), class: "btn, btn-primary btn-header"
 h2 Buscar Por
 = form_tag event_participants_path, method: :get do
   .row
