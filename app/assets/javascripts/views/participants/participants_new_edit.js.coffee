@@ -9,7 +9,7 @@ class Lodging.Views.ParticipantsNewEdit extends Backbone.View
 	initialize: ->
 		$('#participant_guest_id').tokenizeInput()
 		
-		if $('#participant_guest_id').data('guest') isnt null && $('#participant_guest_id').data('guest') isnt ''
+		if typeof $('#participant_guest_id').data('guest') isnt "undefined" && $('#participant_guest_id').data('guest') isnt null && $('#participant_guest_id').data('guest') isnt ''
 			guest = $('#participant_guest_id').data('guest')
 			$('#token-input-participant_guest_id').val(guest.name + " " + guest.surname + " (" + guest.email + ")")
 			$('#token-input-participant_guest_id').attr('readonly', 'readonly')
