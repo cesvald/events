@@ -48,7 +48,7 @@ class EventsController < BaseEventController
     @by = params[:by]
     respond_to do |format|
 			format.xlsx {
-				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""
+				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
 			}
 			format.html
 		end
@@ -58,7 +58,7 @@ class EventsController < BaseEventController
     @event = resource
     respond_to do |format|
 			format.xlsx {
-				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.today.strftime('%Y %m %d')}.xlsx\""
+				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
 			}
 			format.html
 		end
