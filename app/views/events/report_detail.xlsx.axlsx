@@ -6,12 +6,12 @@ title = wb.styles.add_style b: true, sz: 14
 wb.add_worksheet(name: "Participantes - eventos") do |sheet|
     if params[:by] == "spaces"
         sheet.add_row ["Nombre", "Apellido", "Email", "País", "Modalidades", "Total Modalidades", "Total Pagos", "Deuda", "Método de Pago"], style: table_header
-        Event.find(params[:id]).participants.each do |participant|
+        @participants.each do |participant|
             sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), participant.spaces_amount, participant.payments_spaces, participant.due_spaces, participant.display_payments_method]
         end
     elsif params[:by] == "dates"
         sheet.add_row ["Nombre", "Apellido", "Email", "País", "Modalidades", "Llegada", "Salida", "Llegada Estimada a Cuenca", "Estadías"], style: table_header
-        Event.find(params[:id]).participants.each do |participant|
+        @participants.each do |participant|
             if participant.air_ticket.nil?
                 sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.spaces_to_s.gsub("<br>", " "), "", "", "", participant.display_stays_dates]
             else
@@ -20,7 +20,7 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
         end
     else
         sheet.add_row ["Nombre", "Apellido", "Email", "País", "Noches", "Total estadías", "Total Pagos", "Deuda", "Método de Pago", "Fechas Estadías", "Llegada estimada a Cuenca"], style: table_header
-        Event.find(params[:id]).participants.each do |participant|
+        @participants.each do |participant|
             sheet.add_row [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, participant.stays_days, participant.stays_amount, participant.payments_stays, participant.due_stays, participant.display_payments_method, participant.display_stays_dates, "#{l(participant.air_ticket.estimated_at) if participant.air_ticket.present? and participant.air_ticket.estimated_at.present?}"]
         end
     end

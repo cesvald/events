@@ -44,7 +44,7 @@ class EventsController < BaseEventController
   end
   
   def report_detail
-    @participants = Event.find(params[:id]).participants
+    @participants = User.participants_by_role(current_user, Event.find(params[:id]))
     @by = params[:by]
     respond_to do |format|
 			format.xlsx {
@@ -55,7 +55,7 @@ class EventsController < BaseEventController
   end
   
   def report_composition
-    @event = resource
+    @participants = User.participants_by_role(current_user, resource)
     respond_to do |format|
 			format.xlsx {
 				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.now.strftime('%Y %m %d')}.xlsx\""

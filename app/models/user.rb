@@ -20,4 +20,8 @@ class User < ApplicationRecord
 	def to_s
 	  "#{name} #{surname}"
 	end
+
+  def self.participants_by_role(user, event)
+    user.admin? || user.coord_eventer? ? event.participants : (user.coord_outside? ? event.participants.by_outside(true) : event.participants.by_country(user.country))
+  end
 end

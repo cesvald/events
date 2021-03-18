@@ -15,7 +15,7 @@ class ParticipantsController < BaseEventController
 	
 	def index
 		if params.has_key?(:event_id)
-			@participants = current_user.admin? || current_user.coord_eventer? ? @event.participants : (current_user.coord_outside? ? @event.participants.by_outside(true) : @event.participants.by_country(current_user.country))
+			@participants = User.participants_by_role(current_user, @event)
 		else 
 			@participants = Participant.all
 		end

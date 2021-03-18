@@ -16,7 +16,7 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
     sheet.add_row row, style: table_header
     
     
-    Event.find(params[:id]).participants.each do |participant|
+    @participants.each do |participant|
         row = [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country]
         composed_space = participant.spaces.composed(true).first
         if composed_space

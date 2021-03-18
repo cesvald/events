@@ -8,7 +8,7 @@ Upload latest.dump to S3 and make it public
 heroku pg:backups restore 'https://s3.amazonaws.com/skyiniciados-temp/latest.dump' DATABASE_URL --remote sky_staging
 
 ==Restore Locally==
-pg_restore --verbose --clean --no-acl --no-owner -h localhost -U ubuntu -d app_development latest.dump
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d hosting_app_development latest.dump
 
 
 GIT REBASE
