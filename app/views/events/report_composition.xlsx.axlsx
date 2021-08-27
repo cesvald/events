@@ -15,7 +15,6 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
     row.push("Método de Pago")
     sheet.add_row row, style: table_header
     
-    
     @participants.each do |participant|
         row = [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country]
         composed_space = participant.spaces.composed(true).first
@@ -53,8 +52,13 @@ wb.add_worksheet(name: "Participantes - eventos") do |sheet|
                     if space == nil
                         $i += 1
                     elsif(modality.name == space.modality.name)
-                        row[index + 4] = space["amount"]
-                        $i += 1
+                        total_space_amount = 0
+                        while space != nil && modality.name == space.modality.name
+                            total_space_amount += space["amount"].to_f
+                            $i += 1
+                            space = spaces[$i]
+                        end
+                        row[index + 4] = total_space_amount
                     elsif row[index + 4] == nil || row[index + 4] == ''
                         row[index + 4] = '0'
                     end
