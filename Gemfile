@@ -99,6 +99,7 @@ gem 'spectator-validates_email',  require: 'validates_email'
 gem 'inherited_resources'
 gem 'gon'
 gem 'carrierwave'
+gem 'mimemagic', '0.3.7'
 
 # Ordering
 gem 'ranked-model'
