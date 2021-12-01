@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: hosting_app_development
+  database: events_development
 
 test:
   <<: *default
-  database: hosting_app_test
+  database: events_test
 
 production:
   <<: *default
-  database: hosting_app_production
+  database: events_production
