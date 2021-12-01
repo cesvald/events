@@ -5,6 +5,16 @@ GIT
     bootstrap_form (2.1.1)
 
 GIT
+  remote: https://github.com/meleyal/backbone-on-rails.git
+  revision: 8952da16397913f6a73a66a2e7accebde22f6eac
+  specs:
+    backbone-on-rails (1.2.0.0)
+      eco
+      ejs
+      jquery-rails
+      railties
+
+GIT
   remote: https://github.com/rails/activemodel-serializers-xml
   revision: 99c9d5d09bc20483c89e23ce4650d5c2b092f16c
   specs:
@@ -67,11 +77,6 @@ GEM
     axlsx_rails (0.5.2)
       actionpack (>= 3.1)
       axlsx (>= 2.0.1)
-    backbone-on-rails (1.2.0.0)
-      eco
-      ejs
-      jquery-rails
-      railties
     bcrypt (3.1.16)
     bootstrap-datepicker-rails (1.9.0.1)
       railties (>= 3.0)
@@ -324,7 +329,7 @@ DEPENDENCIES
   activemodel-serializers-xml!
   axlsx
   axlsx_rails
-  backbone-on-rails
+  backbone-on-rails!
   bcrypt
   bootstrap-datepicker-rails
   bootstrap3-datetimepicker-rails

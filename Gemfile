@@ -71,7 +71,7 @@ gem 'cancancan'
 # Front end stuff
 gem 'jquery-rails'
 gem 'slim-rails'
-gem 'backbone-on-rails'
+gem 'backbone-on-rails', git: 'https://github.com/meleyal/backbone-on-rails.git'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
