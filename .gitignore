@@ -15,4 +15,4 @@
 /log/*
 !/log/.keep
 /tmp
-latest.dump
+./latest.dump

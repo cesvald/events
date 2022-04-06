@@ -1,6 +1,5 @@
 class Stay < ApplicationRecord
   belongs_to :participant
-  belongs_to :space
   belongs_to :place
 
   attr_accessor :author_id
