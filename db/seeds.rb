@@ -1,16 +1,12 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-['Sebastian', 'Valentina', 'Maria Teresa', 'Florencia'].each do |name|
-	Guest.find_or_create_by name: name, surname: 'evd', email: "#{name}@gmail.com"
-end
+ashram = Location.find_by_name('Ashram')
+morada = Location.find_by_name('Morada')
 
-ashram = Location.create name: 'Ashram'
-morada = Location.create name: 'Morada'
-
-morada_house = House.create location: morada, name: 'Casa 1'
+morada_house = House.find_by_name('Casa 1')
 
 ['Muladhara', 'Swadisthana', 'Manipura', 'Anahata', 'Vishuda', 'Ajna'].each do |name|
-	room = Room.create house: morada_house, name: name
+	room = morada_house.rooms.find_by_name(name)
 	if room.name == 'Muladhara' || room.name == 'Manipura'
 		[1, 2].each do |number|
 			Bed.create room: room, number: number
@@ -28,19 +24,19 @@ morada_house = House.create location: morada, name: 'Casa 1'
 	end
 end
 
-morada_house = House.create location: morada, name: 'Casa 2'
+morada_house = House.find_by_name('Casa 2')
 ['A', 'B', 'C', 'D'].each do |name|
-	room = Room.create house: morada_house, name: name
+	room = morada_house.rooms.find_by_name(name)
 	[1, 2].each do |number|
 		Bed.create room: room, number: number
 	end
 end
 
-['Durga', 'Ganesha', 'Gauri', 'Kali', 'Yoga Shala'].each do |name|
-	house = House.create location: ashram, name: name
+['Durga', 'Ganesha', 'Gauri', 'Kali', 'Yoga Shala', 'Carpas'].each do |name|
+	house = House.find_by_name(name)
 	
 	['A', 'B', 'C', 'D'].each do |name|
-		room = Room.create house: house, name: name
+		room = house.rooms.find_by_name(name)
 		if (house.name == 'Durga') || (house.name == 'Kali' && (room.name == 'A' || room.name == 'D')) || (house.name == 'Ganesha' && room.name != 'C')
 			[1, 2].each do |number|
 				Bed.create room: room, number: number
@@ -56,10 +52,20 @@ end
 				Bed.create room: room, number: number
 			end
 		end
-	end
-end
 
-['Ashram', 'Morada', 'Cuenta propia', 'Seva', 'Cercanos'].each do |name|
-	Place.create(name: name)
+	end
+
+	if house.name == 'Carpas'
+		(1..20).each do |room_number|
+			p 'ROOM NUMBER IS'
+			p room_number.to_s
+			room = house.rooms.find_by_name(room_number.to_s)
+			p 'room found fine'
+			p room.id
+			[1,2,3].each do |number|
+				Bed.create room: room, number: number
+			end
+		end
+	end
 end
 
