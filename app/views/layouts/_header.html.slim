@@ -21,7 +21,7 @@ nav.navbar.navbar-default
 							li = link_to "Categorias", event_places_path(@event)
 						li = link_to 'Contactos', guests_path
 						- if can? :manage, Modality
-							li = link_to 'Calendario', calendar_locations_path(date: {year: Time.now.year, month: Time.now.month})
+							li = link_to 'Calendario', calendar_locations_path(year: Time.now.year, month: Time.now.month)
 						- if can? :manage, Participant
 							li.dropdown
 								a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 

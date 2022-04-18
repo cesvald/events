@@ -6,11 +6,11 @@ class LocationsController < BaseHostingController
   def calendar
     respond_to do |format|
       @locations = Location.includes(houses: [ rooms: [ :beds ] ]).all.order('houses.name ASC')
-  		date_params[:year] = Time.now.year if date_params[:year].blank?
-  		date_params[:month] = Time.now.month if date_params[:month].blank?
+  		params[:year] = Time.now.year if params[:year].blank?
+  		params[:month] = Time.now.month if params[:month].blank?
   
-  		@start_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, 1)
-  		@end_date = Date.new(date_params[:year].to_i, date_params[:month].to_i, -1)
+  		@start_date = Date.new(params[:year].to_i, params[:month].to_i, 1)
+  		@end_date = Date.new(params[:year].to_i, params[:month].to_i, -1)
       format.xlsx {
         response.headers['Content-Disposition'] = "attachment; filename=\"Calendar #{@start_date.strftime('%B %Y')}.xlsx\""
       }
@@ -24,8 +24,6 @@ class LocationsController < BaseHostingController
       params.require(:location).permit(:name)
     end
 
-    def date_params
-    	params.require(:date).permit(:year, :month)
-    end
+  
 end
 

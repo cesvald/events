@@ -7,7 +7,7 @@
 	.form-group
     = submit_tag "View Report", :class => 'btn btn-primary btn-left-space'
     | &nbsp
-    = link_to "Download Excel", monthly_guests_reports_bookings_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
+    /= link_to "Download Excel", monthly_guests_reports_bookings_path({format: "xlsx"}.merge(params)), class: 'btn btn-primary'
 
 - @locations_bookings.each do |location|
 	h3= location[:name]
