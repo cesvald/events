@@ -1,20 +1,33 @@
+# == Schema Information
+#
+# Table name: participants
+#
+#  id            :integer          not null, primary key
+#  guest_id      :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  deposit_state :string           default("pending")
+#
 class Participant < ApplicationRecord
   
+  acts_as_paranoid
+
   belongs_to :guest
   
-  has_many :participant_spaces, dependent: :delete_all
+  has_many :participant_spaces, dependent: :destroy
   accepts_nested_attributes_for :participant_spaces, :allow_destroy => true
   
   has_many :spaces, through: :participant_spaces
-  has_one :air_ticket, dependent: :delete
-  has_many :payments, as: :payable, dependent: :delete_all
-  has_many :stays, dependent: :delete_all
+  has_one :air_ticket, dependent: :destroy
+  has_many :payments, as: :payable, dependent: :destroy
+  has_many :stays, dependent: :destroy
   has_and_belongs_to_many :bookings, join_table: :participants_bookings
-  has_many :change_logs, as: :logable
+  has_many :change_logs, as: :logable, dependent: :destroy
   attr_accessor :author_id
   
   validates_presence_of :guest
   
+  before_destroy { bookings.clear }
   after_create :add_create_log
   before_destroy :add_destroy_log, prepend: true
   

@@ -1,5 +1,21 @@
+# == Schema Information
+#
+# Table name: air_tickets
+#
+#  id             :integer          not null, primary key
+#  participant_id :integer
+#  arrive_at      :datetime
+#  arrive_to      :string
+#  leave_at       :datetime
+#  leave_from     :string
+#  estimated_at   :datetime
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
 class AirTicket < ApplicationRecord
-    
+  
+  acts_as_paranoid
+
   belongs_to :participant
   attr_accessor :author_id
   

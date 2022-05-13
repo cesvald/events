@@ -1,3 +1,10 @@
+# == Schema Information
+#
+# Table name: profiles
+#
+#  id   :integer          not null, primary key
+#  name :string
+#
 class Profile < ApplicationRecord
 	
 	has_and_belongs_to_many :users

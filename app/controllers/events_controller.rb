@@ -74,6 +74,25 @@ class EventsController < BaseEventController
 			format.html
 		end
   end
+
+  def duplicate
+    ActiveRecord::Base.transaction do
+      event = Event.find params[:id]
+      new_event = event.dup
+      new_event.name = new_event.name + " COPY"
+      new_event.save
+      event.modalities.each do |modality|
+        new_modality = modality.dup
+        new_event.modalities << new_modality
+        modality.spaces.each do |space|
+          new_space = space.dup
+          new_modality.spaces << new_space
+        end
+      end
+      new_event.places = event.places
+    end
+    redirect_to events_path
+  end
   
   private
     def event_params

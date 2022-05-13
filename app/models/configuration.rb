@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: configurations
+#
+#  id    :integer          not null, primary key
+#  name  :string
+#  value :text
+#
 class Configuration < ApplicationRecord
 		validates_presence_of :name
 		

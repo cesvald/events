@@ -7,6 +7,8 @@ gem 'rails', '5.2.4.5'
 # Database and data related
 gem 'pg'
 gem 'pg_search'
+gem 'annotate'
+gem 'paranoia'
 #gem 'postgres-copy'
 #gem 'schema_plus'
 #gem 'schema_associations'

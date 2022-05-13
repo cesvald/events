@@ -1,4 +1,16 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: stays
+#
+#  id             :integer          not null, primary key
+#  participant_id :integer
+#  place_id       :integer
+#  start_at       :datetime
+#  end_at         :datetime
+#  amount         :decimal(, )
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
 
 one:
   participant_id: 

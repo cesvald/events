@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get :report_detail
       get :report_general
       get :report_composition
+      post :duplicate
     end
     resources :modalities do
       member do

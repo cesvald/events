@@ -1,5 +1,17 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id         :integer          not null, primary key
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Location < ApplicationRecord
-	  validates :name, uniqueness: true, presence: true
-	  has_many :houses, :dependent => :destroy
-		has_many :historicals
+
+	acts_as_paranoid
+
+	validates :name, uniqueness: true, presence: true
+	has_many :houses, :dependent => :destroy
+	has_many :historicals
 end

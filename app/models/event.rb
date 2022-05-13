@@ -1,10 +1,29 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id             :integer          not null, primary key
+#  name           :string
+#  start_at       :date
+#  end_at         :date
+#  active         :boolean
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  deposit_amount :decimal(, )      default(0.0)
+#  international  :boolean          default(FALSE)
+#
 class Event < ApplicationRecord
-    has_many :modalities
+    
+    acts_as_paranoid
+
+    has_many :modalities, dependent: :destroy
     has_and_belongs_to_many :places,  :join_table => :places_events
-    has_many :change_logs, as: :logable
+    has_many :change_logs, as: :logable, dependent: :destroy
     attr_accessor :author_id
     
     delegate :display_deposit_amount, to: :decorator
+
+    before_destroy { places.clear }
 
     scope :after_date, -> (date) { where("events.end_at >= ?", date) }
     scope :by_international, -> (is_international) { where(international: is_international) }

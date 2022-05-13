@@ -1,4 +1,22 @@
+# == Schema Information
+#
+# Table name: bookings
+#
+#  id             :integer          not null, primary key
+#  start_date     :date             not null
+#  end_date       :date
+#  bed_id         :integer          not null
+#  guest_id       :integer          not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  amount         :decimal(, )
+#  deposit_amount :decimal(, )
+#  deposit_state  :string           default("pending")
+#
 class Booking < ApplicationRecord
+
+  acts_as_paranoid
+  
   belongs_to :bed
   belongs_to :guest
   

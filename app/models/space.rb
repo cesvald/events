@@ -1,8 +1,22 @@
+# == Schema Information
+#
+# Table name: spaces
+#
+#  id          :integer          not null, primary key
+#  modality_id :integer
+#  place_id    :integer
+#  amount      :decimal(, )      default(0.0)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  is_active   :boolean          default(TRUE), not null
+#
 class Space < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :place
   belongs_to :modality
   
-  has_many :participant_spaces, dependent: :delete_all
+  has_many :participant_spaces, dependent: :destroy
   has_many :participants, through: :participant_spaces
   
   scope :by_event, -> (event) { joins(:modality).where('modalities.event_id = ?', event.id) }

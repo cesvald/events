@@ -1,4 +1,18 @@
+# == Schema Information
+#
+# Table name: beds
+#
+#  id         :integer          not null, primary key
+#  number     :integer          not null
+#  room_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  usable     :boolean          default(TRUE)
+#
 class Bed < ApplicationRecord
+
+  acts_as_paranoid
+  
   belongs_to :room
   has_many :bookings
   has_many :guests, through: :bookings

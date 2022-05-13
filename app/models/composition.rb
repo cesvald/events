@@ -1,4 +1,16 @@
+# == Schema Information
+#
+# Table name: compositions
+#
+#  id             :integer          not null, primary key
+#  modality_id    :integer
+#  submodality_id :integer
+#  discount       :decimal(, )
+#
 class Composition < ApplicationRecord
+    
+    acts_as_paranoid
+
     belongs_to :modality
     belongs_to :submodality, class_name: 'Modality', foreign_key: :submodality_id, optional: true
     

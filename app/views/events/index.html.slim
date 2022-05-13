@@ -30,4 +30,9 @@ table.table
 							|&nbsp;
 							|&nbsp;
 							= link_to 'Eliminar', event, data: {:confirm => 'Estás seguro de eliminar este evento?'}, :method => :delete, class: "btn btn-danger btn-xs"
+							|&nbsp;
+							|&nbsp;
+							= form_tag duplicate_event_path(event), class: "d-inline" do
+								= submit_tag 'Duplicar', data: {confirm: '¿Estás seguro de duplicar este evento?'}
+
 							

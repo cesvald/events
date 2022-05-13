@@ -26,7 +26,8 @@ CREATE TABLE public.air_tickets (
     leave_from character varying,
     estimated_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -35,7 +36,6 @@ CREATE TABLE public.air_tickets (
 --
 
 CREATE SEQUENCE public.air_tickets_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -72,7 +72,8 @@ CREATE TABLE public.beds (
     room_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    usable boolean DEFAULT true
+    usable boolean DEFAULT true,
+    deleted_at timestamp without time zone
 );
 
 
@@ -81,7 +82,6 @@ CREATE TABLE public.beds (
 --
 
 CREATE SEQUENCE public.beds_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -110,7 +110,8 @@ CREATE TABLE public.bookings (
     updated_at timestamp without time zone NOT NULL,
     amount numeric,
     deposit_amount numeric,
-    deposit_state character varying DEFAULT 'pending'::character varying
+    deposit_state character varying DEFAULT 'pending'::character varying,
+    deleted_at timestamp without time zone
 );
 
 
@@ -119,7 +120,6 @@ CREATE TABLE public.bookings (
 --
 
 CREATE SEQUENCE public.bookings_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -145,10 +145,11 @@ CREATE TABLE public.change_logs (
     reviewer_id integer,
     is_reviewed boolean DEFAULT true,
     reviewed_at timestamp without time zone,
-    logable_type character varying,
     logable_id integer,
+    logable_type character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -180,7 +181,8 @@ CREATE TABLE public.compositions (
     id integer NOT NULL,
     modality_id integer,
     submodality_id integer,
-    discount numeric
+    discount numeric,
+    deleted_at timestamp without time zone
 );
 
 
@@ -189,7 +191,6 @@ CREATE TABLE public.compositions (
 --
 
 CREATE SEQUENCE public.compositions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -220,7 +221,6 @@ CREATE TABLE public.configurations (
 --
 
 CREATE SEQUENCE public.configurations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -248,7 +248,8 @@ CREATE TABLE public.events (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     deposit_amount numeric DEFAULT 0,
-    international boolean DEFAULT false
+    international boolean DEFAULT false,
+    deleted_at timestamp without time zone
 );
 
 
@@ -257,7 +258,6 @@ CREATE TABLE public.events (
 --
 
 CREATE SEQUENCE public.events_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -302,7 +302,8 @@ CREATE TABLE public.guests (
     comments text,
     is_initiate boolean,
     age integer,
-    outside boolean DEFAULT false
+    outside boolean DEFAULT false,
+    deleted_at timestamp without time zone
 );
 
 
@@ -311,7 +312,6 @@ CREATE TABLE public.guests (
 --
 
 CREATE SEQUENCE public.guests_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -337,7 +337,8 @@ CREATE TABLE public.historicals (
     start_date date,
     location_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -346,7 +347,6 @@ CREATE TABLE public.historicals (
 --
 
 CREATE SEQUENCE public.historicals_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -372,7 +372,8 @@ CREATE TABLE public.houses (
     location_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    open_stay boolean DEFAULT false
+    open_stay boolean DEFAULT false,
+    deleted_at timestamp without time zone
 );
 
 
@@ -381,7 +382,6 @@ CREATE TABLE public.houses (
 --
 
 CREATE SEQUENCE public.houses_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -404,7 +404,8 @@ CREATE TABLE public.locations (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -413,7 +414,6 @@ CREATE TABLE public.locations (
 --
 
 CREATE SEQUENCE public.locations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -440,7 +440,8 @@ CREATE TABLE public.modalities (
     updated_at timestamp without time zone NOT NULL,
     start_at timestamp without time zone,
     end_at timestamp without time zone,
-    is_composed boolean DEFAULT false NOT NULL
+    is_composed boolean DEFAULT false NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -449,7 +450,6 @@ CREATE TABLE public.modalities (
 --
 
 CREATE SEQUENCE public.modalities_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -472,7 +472,8 @@ CREATE TABLE public.participant_spaces (
     id integer NOT NULL,
     participant_id integer,
     space_id integer,
-    note character varying
+    note character varying,
+    deleted_at timestamp without time zone
 );
 
 
@@ -481,7 +482,6 @@ CREATE TABLE public.participant_spaces (
 --
 
 CREATE SEQUENCE public.participant_spaces_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -505,7 +505,8 @@ CREATE TABLE public.participants (
     guest_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deposit_state character varying DEFAULT 'pending'::character varying
+    deposit_state character varying DEFAULT 'pending'::character varying,
+    deleted_at timestamp without time zone
 );
 
 
@@ -524,7 +525,6 @@ CREATE TABLE public.participants_bookings (
 --
 
 CREATE SEQUENCE public.participants_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -552,8 +552,9 @@ CREATE TABLE public.payments (
     updated_at timestamp without time zone NOT NULL,
     method character varying,
     reason character varying DEFAULT 'Evento'::character varying,
+    payable_id integer,
     payable_type character varying,
-    payable_id integer
+    deleted_at timestamp without time zone
 );
 
 
@@ -562,7 +563,6 @@ CREATE TABLE public.payments (
 --
 
 CREATE SEQUENCE public.payments_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -585,7 +585,8 @@ CREATE TABLE public.places (
     id integer NOT NULL,
     name character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -605,7 +606,6 @@ CREATE TABLE public.places_events (
 --
 
 CREATE SEQUENCE public.places_events_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -625,7 +625,6 @@ ALTER SEQUENCE public.places_events_id_seq OWNED BY public.places_events.id;
 --
 
 CREATE SEQUENCE public.places_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -655,7 +654,6 @@ CREATE TABLE public.profiles (
 --
 
 CREATE SEQUENCE public.profiles_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -686,7 +684,6 @@ CREATE TABLE public.profiles_users (
 --
 
 CREATE SEQUENCE public.profiles_users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -710,7 +707,8 @@ CREATE TABLE public.rooms (
     name character varying NOT NULL,
     house_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -719,7 +717,6 @@ CREATE TABLE public.rooms (
 --
 
 CREATE SEQUENCE public.rooms_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -754,7 +751,8 @@ CREATE TABLE public.spaces (
     amount numeric DEFAULT 0,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    is_active boolean DEFAULT true NOT NULL
+    is_active boolean DEFAULT true NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -763,7 +761,6 @@ CREATE TABLE public.spaces (
 --
 
 CREATE SEQUENCE public.spaces_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -790,7 +787,8 @@ CREATE TABLE public.stays (
     end_at timestamp without time zone,
     amount numeric,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -799,7 +797,6 @@ CREATE TABLE public.stays (
 --
 
 CREATE SEQUENCE public.stays_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -831,7 +828,6 @@ CREATE TABLE public.token_controls (
 --
 
 CREATE SEQUENCE public.token_controls_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -870,7 +866,6 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1222,14 +1217,6 @@ ALTER TABLE ONLY public.rooms
 
 
 --
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: spaces spaces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1259,6 +1246,20 @@ ALTER TABLE ONLY public.token_controls
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: fk__change_logs_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX fk__change_logs_author_id ON public.change_logs USING btree (author_id);
+
+
+--
+-- Name: fk__change_logs_reviewer_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX fk__change_logs_reviewer_id ON public.change_logs USING btree (reviewer_id);
 
 
 --
@@ -1374,6 +1375,13 @@ CREATE INDEX index_participants_on_guest_id ON public.participants USING btree (
 
 
 --
+-- Name: index_payments_on_payable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_payments_on_payable_id ON public.payments USING btree (payable_id);
+
+
+--
 -- Name: index_payments_on_payable_type_and_payable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1465,163 +1473,202 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
--- Name: participants_bookings fk_rails_2a8fcefe31; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.participants_bookings
-    ADD CONSTRAINT fk_rails_2a8fcefe31 FOREIGN KEY (booking_id) REFERENCES public.bookings(id);
-
-
---
--- Name: stays fk_rails_36f663a6f0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.stays
-    ADD CONSTRAINT fk_rails_36f663a6f0 FOREIGN KEY (participant_id) REFERENCES public.participants(id);
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
--- Name: participant_spaces fk_rails_400c846ea9; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.participant_spaces
-    ADD CONSTRAINT fk_rails_400c846ea9 FOREIGN KEY (space_id) REFERENCES public.spaces(id);
-
-
---
--- Name: spaces fk_rails_48b93914f0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.spaces
-    ADD CONSTRAINT fk_rails_48b93914f0 FOREIGN KEY (place_id) REFERENCES public.places(id);
-
-
---
--- Name: token_controls fk_rails_5f059d47cc; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_controls
-    ADD CONSTRAINT fk_rails_5f059d47cc FOREIGN KEY (guest_id) REFERENCES public.guests(id);
-
-
---
--- Name: rooms fk_rails_7b991d0f09; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.rooms
-    ADD CONSTRAINT fk_rails_7b991d0f09 FOREIGN KEY (house_id) REFERENCES public.houses(id);
-
-
---
--- Name: air_tickets fk_rails_819318808c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: air_tickets fk_air_tickets_participant_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.air_tickets
-    ADD CONSTRAINT fk_rails_819318808c FOREIGN KEY (participant_id) REFERENCES public.participants(id);
+    ADD CONSTRAINT fk_air_tickets_participant_id FOREIGN KEY (participant_id) REFERENCES public.participants(id);
 
 
 --
--- Name: spaces fk_rails_88f394a196; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.spaces
-    ADD CONSTRAINT fk_rails_88f394a196 FOREIGN KEY (modality_id) REFERENCES public.modalities(id);
-
-
---
--- Name: bookings fk_rails_8a4f061ab6; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.bookings
-    ADD CONSTRAINT fk_rails_8a4f061ab6 FOREIGN KEY (bed_id) REFERENCES public.beds(id);
-
-
---
--- Name: participant_spaces fk_rails_8bbbb33a95; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.participant_spaces
-    ADD CONSTRAINT fk_rails_8bbbb33a95 FOREIGN KEY (participant_id) REFERENCES public.participants(id);
-
-
---
--- Name: modalities fk_rails_8bcf7ab06a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.modalities
-    ADD CONSTRAINT fk_rails_8bcf7ab06a FOREIGN KEY (event_id) REFERENCES public.events(id);
-
-
---
--- Name: participants_bookings fk_rails_8ca3b99a26; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.participants_bookings
-    ADD CONSTRAINT fk_rails_8ca3b99a26 FOREIGN KEY (participant_id) REFERENCES public.participants(id);
-
-
---
--- Name: historicals fk_rails_afc2f264f6; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.historicals
-    ADD CONSTRAINT fk_rails_afc2f264f6 FOREIGN KEY (location_id) REFERENCES public.locations(id);
-
-
---
--- Name: participants fk_rails_bd0f1059a5; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.participants
-    ADD CONSTRAINT fk_rails_bd0f1059a5 FOREIGN KEY (guest_id) REFERENCES public.guests(id);
-
-
---
--- Name: places_events fk_rails_c22f61bc37; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.places_events
-    ADD CONSTRAINT fk_rails_c22f61bc37 FOREIGN KEY (event_id) REFERENCES public.events(id);
-
-
---
--- Name: stays fk_rails_cda71e757b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.stays
-    ADD CONSTRAINT fk_rails_cda71e757b FOREIGN KEY (place_id) REFERENCES public.places(id);
-
-
---
--- Name: beds fk_rails_d65c5f355a; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: beds fk_beds_room_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.beds
-    ADD CONSTRAINT fk_rails_d65c5f355a FOREIGN KEY (room_id) REFERENCES public.rooms(id);
+    ADD CONSTRAINT fk_beds_room_id FOREIGN KEY (room_id) REFERENCES public.rooms(id);
 
 
 --
--- Name: houses fk_rails_dc56e8f04e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.houses
-    ADD CONSTRAINT fk_rails_dc56e8f04e FOREIGN KEY (location_id) REFERENCES public.locations(id);
-
-
---
--- Name: bookings fk_rails_e6267ecbed; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: bookings fk_bookings_bed_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.bookings
-    ADD CONSTRAINT fk_rails_e6267ecbed FOREIGN KEY (guest_id) REFERENCES public.guests(id);
+    ADD CONSTRAINT fk_bookings_bed_id FOREIGN KEY (bed_id) REFERENCES public.beds(id);
 
 
 --
--- Name: places_events fk_rails_ff765d818f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: bookings fk_bookings_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bookings
+    ADD CONSTRAINT fk_bookings_guest_id FOREIGN KEY (guest_id) REFERENCES public.guests(id);
+
+
+--
+-- Name: change_logs fk_change_logs_author_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.change_logs
+    ADD CONSTRAINT fk_change_logs_author_id FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
+-- Name: change_logs fk_change_logs_reviewer_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.change_logs
+    ADD CONSTRAINT fk_change_logs_reviewer_id FOREIGN KEY (reviewer_id) REFERENCES public.users(id);
+
+
+--
+-- Name: historicals fk_historicals_location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.historicals
+    ADD CONSTRAINT fk_historicals_location_id FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
+-- Name: houses fk_houses_location_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.houses
+    ADD CONSTRAINT fk_houses_location_id FOREIGN KEY (location_id) REFERENCES public.locations(id);
+
+
+--
+-- Name: modalities fk_modalities_event_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.modalities
+    ADD CONSTRAINT fk_modalities_event_id FOREIGN KEY (event_id) REFERENCES public.events(id);
+
+
+--
+-- Name: participant_spaces fk_participant_spaces_participant_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_spaces
+    ADD CONSTRAINT fk_participant_spaces_participant_id FOREIGN KEY (participant_id) REFERENCES public.participants(id);
+
+
+--
+-- Name: participant_spaces fk_participant_spaces_space_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_spaces
+    ADD CONSTRAINT fk_participant_spaces_space_id FOREIGN KEY (space_id) REFERENCES public.spaces(id);
+
+
+--
+-- Name: participants_bookings fk_participants_bookings_booking_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participants_bookings
+    ADD CONSTRAINT fk_participants_bookings_booking_id FOREIGN KEY (booking_id) REFERENCES public.bookings(id);
+
+
+--
+-- Name: participants_bookings fk_participants_bookings_participant_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participants_bookings
+    ADD CONSTRAINT fk_participants_bookings_participant_id FOREIGN KEY (participant_id) REFERENCES public.participants(id);
+
+
+--
+-- Name: participants fk_participants_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participants
+    ADD CONSTRAINT fk_participants_guest_id FOREIGN KEY (guest_id) REFERENCES public.guests(id);
+
+
+--
+-- Name: places_events fk_places_events_event_id; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.places_events
-    ADD CONSTRAINT fk_rails_ff765d818f FOREIGN KEY (place_id) REFERENCES public.places(id);
+    ADD CONSTRAINT fk_places_events_event_id FOREIGN KEY (event_id) REFERENCES public.events(id);
+
+
+--
+-- Name: places_events fk_places_events_place_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.places_events
+    ADD CONSTRAINT fk_places_events_place_id FOREIGN KEY (place_id) REFERENCES public.places(id);
+
+
+--
+-- Name: profiles_users fk_profiles_users_profile_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles_users
+    ADD CONSTRAINT fk_profiles_users_profile_id FOREIGN KEY (profile_id) REFERENCES public.profiles(id);
+
+
+--
+-- Name: profiles_users fk_profiles_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles_users
+    ADD CONSTRAINT fk_profiles_users_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: rooms fk_rooms_house_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.rooms
+    ADD CONSTRAINT fk_rooms_house_id FOREIGN KEY (house_id) REFERENCES public.houses(id);
+
+
+--
+-- Name: spaces fk_spaces_modality_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spaces
+    ADD CONSTRAINT fk_spaces_modality_id FOREIGN KEY (modality_id) REFERENCES public.modalities(id);
+
+
+--
+-- Name: spaces fk_spaces_place_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.spaces
+    ADD CONSTRAINT fk_spaces_place_id FOREIGN KEY (place_id) REFERENCES public.places(id);
+
+
+--
+-- Name: stays fk_stays_participant_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stays
+    ADD CONSTRAINT fk_stays_participant_id FOREIGN KEY (participant_id) REFERENCES public.participants(id);
+
+
+--
+-- Name: stays fk_stays_place_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stays
+    ADD CONSTRAINT fk_stays_place_id FOREIGN KEY (place_id) REFERENCES public.places(id);
+
+
+--
+-- Name: token_controls fk_token_controls_guest_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.token_controls
+    ADD CONSTRAINT fk_token_controls_guest_id FOREIGN KEY (guest_id) REFERENCES public.guests(id);
 
 
 --
@@ -1677,6 +1724,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181203014110'),
 ('20181203025216'),
 ('20191220142020'),
-('20191220150204');
+('20191220150204'),
+('20220513033918');
 
 

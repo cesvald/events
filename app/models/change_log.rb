@@ -1,4 +1,21 @@
+# == Schema Information
+#
+# Table name: change_logs
+#
+#  id           :integer          not null, primary key
+#  change       :text             not null
+#  author_id    :integer
+#  reviewer_id  :integer
+#  is_reviewed  :boolean          default(TRUE)
+#  reviewed_at  :datetime
+#  logable_id   :integer
+#  logable_type :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 class ChangeLog < ApplicationRecord
+  acts_as_paranoid
+  
   belongs_to :logable, polymorphic: true, optional: true
   belongs_to :reviewer, class_name: "User", foreign_key: "reviewer_id", optional: true
   belongs_to :author, class_name: "User", foreign_key: "author_id", optional: true
