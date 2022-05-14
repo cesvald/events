@@ -3,15 +3,20 @@
 = form_tag calendar_locations_path, {method: 'get', class: "form form-inline form-bottom-space"} do
   .form-group
     = label_tag "Año", "Año", :class => 'control-label'
-    = select_year(params[:year].to_i, {start_year: 2016}, class: 'form-control')
+    = select_year(params[:date][:year].to_i, {start_year: 2016}, class: 'form-control')
   .form-group
+    | &nbsp
+    | &nbsp
     = label_tag "Mes", "Mes", :class => 'control-label'
-    = select_month(params[:month].to_i, {}, class: 'form-control')
+    = select_month(params[:date][:month].to_i, {}, class: 'form-control')
   .form-group
+    | &nbsp
+    | &nbsp
+    | &nbsp
     = submit_tag "Ver Calendario", :class => 'btn btn-primary btn-left-space'
     | &nbsp
-    = link_to "Descargar Excel", calendar_locations_path({format: "xlsx"}.merge(params.permit(:year, :month))), class: 'btn btn-primary'
-
+    = link_to "Descargar Excel", calendar_locations_path({format: "xlsx"}.merge("date[year]": params[:date][:year], "date[month]": params[:date][:month])), class: 'btn btn-primary'
+br
 - @locations.each do |current_location|
   .calendar-containor.panel.panel-primary
     .panel-heading.open-calendar.cursor-pointer
@@ -20,11 +25,11 @@
     .calendar-wrapper.panel-body style="display:none"
       - current_location.houses.each do |current_house|
         .calendar-containor.panel.panel-default
-          .panel-heading
-            i.fa.fa-minus-square-o.fa-lg style="cursor: pointer"
+          .panel-heading.open-calendar.cursor-pointer
+            i.fa.fa-plus-square-o.fa-lg style="cursor: pointer"
             h4= " #{current_house.name} "
             = link_to "View House Sketch", house_path(current_house), class: "record-link", target: "_blank"
-          .calendar-wrapper.panel-body
+          .calendar-wrapper.panel-body style="display: none"
             table.table.table-striped
               thead
                 tr
