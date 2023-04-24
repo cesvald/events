@@ -48,7 +48,7 @@ class EventsController < BaseEventController
     @by = params[:by]
     respond_to do |format|
 			format.xlsx {
-				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
+				response.headers['Content-Disposition'] = "attachment; filename=\" Detalle #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
 			}
 			format.html
 		end
@@ -58,12 +58,22 @@ class EventsController < BaseEventController
     @participants = User.participants_by_role(current_user, resource)
     respond_to do |format|
 			format.xlsx {
-				response.headers['Content-Disposition'] = "attachment; filename=\" #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
+				response.headers['Content-Disposition'] = "attachment; filename=\"Detalle por modalidades separadas #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
 			}
 			format.html
 		end
   end
   
+  def report_payment_methods
+    @participants = User.participants_by_role(current_user, resource)
+    respond_to do |format|
+			format.xlsx {
+				response.headers['Content-Disposition'] = "attachment; filename=\"Pagos por modalidad #{DateTime.now.strftime('%Y %m %d')}.xlsx\""
+			}
+			format.html
+		end
+  end
+
   def report_general
     @event = Event.find params[:id]
     @by = params[:by]

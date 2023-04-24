@@ -1,0 +1,22 @@
+xlsx_package.use_shared_strings = true
+wb = xlsx_package.workbook
+table_header = wb.styles.add_style b: true, alignment: {horizontal: :center}
+table_cell = wb.styles.add_style alignment: {horizontal: :center}
+title = wb.styles.add_style b: true, sz: 14
+wb.add_worksheet(name: "Participantes - Metodo de pago") do |sheet|
+    row = ["Nombre", "Apellido", "Email", "País", "Fecha de Pago", "Razón", "Descripción"]
+    Payment::PAYMENT_METHODS.each do |payment_method|
+      row.push(payment_method)
+    end
+    sheet.add_row row, style: table_header
+    
+    @participants.each do |participant|
+        participant.payments.each do |payment|
+          row = [participant.guest.name, participant.guest.surname, participant.guest.email, participant.guest.country, payment.paid_at, payment.reason, payment.description]
+          Payment::PAYMENT_METHODS.each do |payment_method|
+            payment_method == payment.method ? row.push(payment.amount) : row.push(0)
+          end
+          sheet.add_row row
+        end
+    end
+end

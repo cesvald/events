@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get :report_detail
       get :report_general
       get :report_composition
+      get :report_payment_methods
       post :duplicate
     end
     resources :modalities do

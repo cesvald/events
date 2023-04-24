@@ -27,6 +27,8 @@ class Payment < ApplicationRecord
   
   delegate :display_amount, to: :decorator
   
+  PAYMENT_METHODS = ["Efectivo", "Paypal", "Banco", "Página Web", "Sede", "Otro"]
+  
   def decorator
     @decorator ||= StayDecorator.new(self)
   end
