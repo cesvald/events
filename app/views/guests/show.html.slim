@@ -39,6 +39,11 @@
     p
       b Edad: 
       spam= @guest.age
+  - if @guest.swami_name.present?
+    .col-xs-12.col-md-3
+      p
+        b Nombre de Swami: 
+        spam= @guest.swami_name
 
 .page-header
   h4 Otros datos:

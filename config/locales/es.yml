@@ -50,8 +50,6 @@ es:
                 guest: "Huésped"
                 room_id: "Cuarto"
                 room: "Cuarto"
-              
-         
             event:
                 name: "Nombre"
                 start_at: "Inicia el"
@@ -83,6 +81,7 @@ es:
                 is_initiate: "Es Iniciado"
                 age: Edad
                 outside: "A distancia?"
+                swami_name: "Nombre de Swami"
             house:
                 name: "Nombre"
                 sketch: Diagrama

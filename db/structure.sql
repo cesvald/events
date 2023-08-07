@@ -303,7 +303,8 @@ CREATE TABLE public.guests (
     is_initiate boolean,
     age integer,
     outside boolean DEFAULT false,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    swami_name character varying
 );
 
 
@@ -1725,6 +1726,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181203025216'),
 ('20191220142020'),
 ('20191220150204'),
-('20220513033918');
+('20220513033918'),
+('20230807010424');
 
 
