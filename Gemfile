@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "3.1.4"
+ruby "3.2.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '7.0.7.2'
+gem 'rails', '7.1.5.1'
 
 # Database and data related
 gem 'pg'
@@ -48,8 +48,8 @@ gem 'formtastic'
 gem 'formtastic-bootstrap'
 
 # xml manipulation
-gem 'axlsx'
-gem 'axlsx_rails'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 
 #paginator
 gem 'kaminari'
