@@ -4,8 +4,8 @@ class PlacesController < BaseEventController
   
   def index
     @place = Place.new()
-    @places = Place.all.page(params[:page])
-    @own_places = parent.places.to_a
+    @places = Place.all.order(:name).page(params[:page])
+    @own_places = parent.places.order(:name).to_a
   end
   
   def create
@@ -15,7 +15,7 @@ class PlacesController < BaseEventController
   
   def update
     @place = Place.find(params[:id])
-    @place.update_attributes(place_params)
+    @place.update(place_params)
     redirect_to params[:back_url]
   end
   

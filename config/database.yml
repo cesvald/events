@@ -1,18 +1,23 @@
-default: &default
-      adapter: postgresql
-      encoding: unicode
-      pool: 5
-      username: ubuntu
-      password: password
-
 development:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: ubuntu
+  password: password
   database: events_development
 
 test:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: ubuntu
+  password: password
   database: events_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: ubuntu
+  password: password
   database: events_production

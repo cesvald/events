@@ -23,7 +23,7 @@
           .form-label
             label.control-label Categoría
           .form-wrapper
-            = builder.select :space_id, (builder.object.nil? || builder.object.space.nil? ? [] : options_for_select(builder.object.space.modality.spaces.joins(:place).pluck("places.name || ' (' || spaces.amount || ' USD)'", "spaces.id"), builder.object.space.id)), {}, {class: "form-control space_select", include_blank: true, required: true}
+            = builder.select :space_id, (builder.object.nil? || builder.object.space.nil? ? [] : options_for_select(builder.object.space.modality.spaces.joins(:place).pluck(Arel.sql("places.name || ' (' || spaces.amount || ' USD)'"), "spaces.id"), builder.object.space.id)), {}, {class: "form-control space_select", include_blank: true, required: true}
       .col-lg-3  
         .form-group
           .form-label

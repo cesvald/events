@@ -15,7 +15,7 @@ class LocationsController < BaseHostingController
         response.headers['Content-Disposition'] = "attachment; filename=\"Calendar #{@start_date.strftime('%B %Y')}.xlsx\""
       }
       format.html {
-        @search_params = params.require(:date).permit(:month, :year)
+        
       }
     end
 	end

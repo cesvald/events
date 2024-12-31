@@ -37,12 +37,12 @@ br
                   - for date in (@start_date..@end_date)
                     th #{date.day}
               - current_house.rooms.order(:id).each do |current_room|
-                - current_room.beds.each do |bed|
+                - current_room.beds.includes(:bookings).each do |bed|
                     tr
                       td #{bed.room.name} #{bed.number}
                       - bookings = bed.bookings.between_dates(@start_date, @end_date)
                       - for date in (@start_date..@end_date)
-                        - if not bookings.empty?
+                        - if bookings.any?
                           td
                             - for booking in bookings
                               - if date.between? booking.start_date, (booking.end_date - 1.day)

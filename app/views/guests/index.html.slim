@@ -9,22 +9,26 @@
       .col-lg-2
         = label_tag :name, "Nombre", :class => 'control-label'
     = text_field_tag :by_name, params[:by_name], {class: 'form-control'}
+  |&nbsp;
   .form-group
     .row
       .col-lg-2
         = label_tag :by_surname, "Apellido", :class => 'control-label' 
     = text_field_tag :by_surname, params[:by_surname], {class: 'form-control'}
+  |&nbsp;
   .form-group
     .row
       .col-lg-12
         = label_tag :by_email, "Correo electrónico", :class => 'control-label' 
     = text_field_tag :by_email, params[:by_email], {class: 'form-control'}
   - if not current_user.coord_country?
+    |&nbsp;
     .form-group
       .row
         .col-lg-12
           = label_tag :by_country, "País de residencia", :class => 'control-label' 
       = country_select :by_country, nil, { include_blank: 'Selecciona un país', selected: (params[:by_country] ? params[:by_country] : '') }, { class: 'form-control', name: 'by_country' }
+  |&nbsp;
   .form-group
     .row
       .col-lg-6

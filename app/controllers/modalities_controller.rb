@@ -3,7 +3,7 @@ class ModalitiesController < BaseEventController
   belongs_to :event
   
   def create
-    create! { event_modalities_path(@modality.event) }
+    create!(notice: "Modalidad creada exitosamente") { event_modalities_path(@modality.event) }
   end
   
   def new

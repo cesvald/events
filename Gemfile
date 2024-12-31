@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-ruby "2.6.6"
+ruby "3.3.6"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.4.5'
+gem 'rails', '7.2.2.1'
 
 # Database and data related
 gem 'pg'
-gem 'pg_search'
+#gem 'pg_search'
 gem 'annotate'
 gem 'paranoia'
 #gem 'postgres-copy'
@@ -24,10 +24,7 @@ gem 'draper'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
-gem "therubyracer"
-gem "less-rails" 
 gem "font-awesome-rails"
-gem 'twitter-bootstrap-rails'
 gem "bootstrap_flash_messages"
 gem "bootstrap_form", git: 'https://github.com/carloslopes/rails-bootstrap-forms.git'
 
@@ -38,6 +35,8 @@ gem 'bootstrap-datepicker-rails'
 
 # bootstrap-datetime-picker
 gem 'momentjs-rails'
+gem 'bootstrap-sass', '~> 3.4.1'
+gem 'sassc-rails', '>= 2.1.0'
 gem 'bootstrap3-datetimepicker-rails'
 
 # Rails-JQuery nested manager
@@ -48,12 +47,8 @@ gem 'formtastic'
 gem 'formtastic-bootstrap'
 
 # xml manipulation
-gem 'rubyzip'
-gem 'axlsx'
-gem 'axlsx_rails'
-
-# Third party mailer
-gem 'sparkpost_rails'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 
 #paginator
 gem 'kaminari'
@@ -97,11 +92,10 @@ gem 'puma'
 
 # Another Tools
 gem 'has_scope'
-gem 'spectator-validates_email',  require: 'validates_email'
 gem 'inherited_resources'
 gem 'gon'
 gem 'carrierwave'
-gem 'mimemagic', '0.3.7'
+#gem 'mimemagic', '0.3.7'
 
 # Ordering
 gem 'ranked-model'

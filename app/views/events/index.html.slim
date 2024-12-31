@@ -2,6 +2,7 @@
 	h1 Lista de Eventos
 	- if can? :manage, Event
 		= link_to 'Nuevo Evento', new_event_path, class: "btn btn-primary btn-header"
+		|&nbsp;
 		= link_to "Administrar Permisos", users_path, class: "btn btn-primary btn-header" if can? :manage, User
 	
 br

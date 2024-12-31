@@ -9,22 +9,26 @@
     .row
       .col-lg-2
         = f.label :location_id, class: 'control-label'
-    = f.select_tag :location_id, options_for_select(Location.pluck(:name, :id), (not params[:location_id].blank?) ? params[:location_id] : nil), {:include_blank => true, :class => 'form-control'}
+    = select_tag :location_id, options_for_select(Location.pluck(:name, :id), (not params[:location_id].blank?) ? params[:location_id] : nil), {:include_blank => true, :class => 'form-control'}
+  |&nbsp;
   .form-group
     .row
       .col-lg-2
         = f.label :house_id, class: 'control-label'
-    = f.select_tag :house_id, (not params[:location_id].blank?) ? options_for_select(House.where(location: params[:location_id]).pluck(:name, :id), params[:house_id]) : nil, (not params[:location_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+    = select_tag :house_id, (not params[:location_id].blank?) ? options_for_select(House.where(location: params[:location_id]).pluck(:name, :id), params[:house_id]) : nil, (not params[:location_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+  |&nbsp;
   .form-group
     .row
       .col-lg-2
         = f.label :room_id, class: 'control-label'
-    = f.select_tag :room_id, (not params[:house_id].blank?) ? options_for_select(Room.where(house: params[:house_id]).pluck(:name, :id), params[:room_id]) : nil, (not params[:room_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+    = select_tag :room_id, (not params[:house_id].blank?) ? options_for_select(Room.where(house: params[:house_id]).pluck(:name, :id), params[:room_id]) : nil, (not params[:room_id].blank?) ? {:include_blank => true, :class => 'form-control'} : {:include_blank => true, :class => 'form-control', :disabled => true}
+  |&nbsp;
   .form-group
     .row
       .col-lg-2
         = f.label :bed_id, class: 'control-label'
     = f.select :bed_id, (not params[:room_id].blank?) ? options_for_select(Bed.where(room: params[:room_id]).pluck(:number, :id), params[:booking][:bed_id]) : [], {:include_blank => true}, (not params[:room_id].blank?) ? {:class => 'form-control'} : {:class => 'form-control', :disabled => true}
+  |&nbsp;
   .form-group
     .row
       .col-lg-2
@@ -33,19 +37,21 @@
       = f.text_field :guest_id, (params.has_key?(:booking) && (not params[:booking][:guest_id].blank?)) ? { :class => 'form-control tokenizer-field', :data => { :guest => Guest.find(params[:booking][:guest_id]) } } : {:class => 'form-control tokenizer-field' }
       span#clean-guest-input-btn.input-group-btn
         button.btn.btn-default[type="button"] X
-    
+  |&nbsp;
   .form-group
     .row
       .col-lg-8
         = f.label :start_date, class: 'control-label'
     = f.text_field :start_date, {:class => 'form-control datepicker start-datepicker', :data => {"end-datepicker": "#booking_end_date", "hidden-datepicker": "#hidden_start_date"}}
     = f.hidden_field :start_date, id: "hidden_start_date", class: "hidden_field_date", data: {"date-field": "#booking_start_date"}, value: (params.has_key?(:booking) && params[:booking].has_key?(:start_date) ? params[:booking][:start_date] : nil)
+  |&nbsp;
   .form-group
     .row
       .col-lg-6
         = f.label :end_date, class: 'control-label'
     = f.text_field :end_date, {:class => 'form-control datepicker', :data => {"hidden-datepicker": "#hidden_end_date"}}
     = f.hidden_field :end_date, id: "hidden_end_date", class: "hidden_field_date", data: {"date-field": "#booking_end_date"}, value: (params.has_key?(:booking) && params[:booking].has_key?(:end_date) ? params[:booking][:end_date] : nil)
+  |&nbsp;
   .form-group
     .row
       .col-lg-6

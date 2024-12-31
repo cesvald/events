@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     def recreate
         u = User.where(email: user_params[:email]).first
         if u
-            u.update_attributes(user_params)
+            u.update(user_params)
         else
             u = User.create(user_params)
         end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
             u.profiles << Profile.coord_outside unless u.coord_outside?
             u.profiles.destroy(Profile.coord_country) if u.coord_country?
         end
-        u.update_attributes(user_params)
+        u.update(user_params)
         redirect_to users_path
     end
     
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     end
     
     def reset_password
-        User.find(params[:id]).update_attribute(:password, 'sbabaji7')
+        User.find(params[:id]).update(password: 'sbabaji7')
         flash[:notice] = "Contraseña reiniciada exitosamente"
         redirect_to users_path
     end
