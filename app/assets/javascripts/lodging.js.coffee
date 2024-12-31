@@ -17,11 +17,9 @@ window.Lodging =
   	Backbone.history.stop()
   	Backbone.history.start( pushState: true )
 
-ready = ->
+#$(document).ready ->
+#	console.log 'doc ready'
+#	Iniciados.singleInitialize()
+
+$(document).on "turbolinks:load", ->
 	Lodging.initialize()
-
-$(document).ready ->
-  ready()
-
-$(document).on('page:load', ready)
-

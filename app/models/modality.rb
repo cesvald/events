@@ -32,7 +32,7 @@ class Modality < ApplicationRecord
 		spaces.each do |space|
 			total_space = space.amount
 			total_space += (composition.submodality.spaces.where(place: space.place).first.amount - composition.discount)
-			space.update_attribute(:amount, total_space)
+			space.update(:amount, total_space)
 		end
 	end
 	
@@ -40,7 +40,7 @@ class Modality < ApplicationRecord
 		spaces.each do |space|
 			total_space = space.amount
 			total_space -= (composition.submodality.spaces.where(place: space.place).first.amount - composition.discount)
-			space.update_attribute(:amount, total_space)
+			space.update(:amount, total_space)
 		end
 	end
 	
@@ -49,6 +49,6 @@ class Modality < ApplicationRecord
 	end
 	
 	def spaces_to_s
-		spaces.joins(:place).pluck("places.name || ' (' ||  spaces.amount || ' USD)'").join(", ")
+		spaces.joins(:place).pluck(Arel.sql("places.name || ' (' ||  spaces.amount || ' USD)'")).join(", ")
 	end
 end

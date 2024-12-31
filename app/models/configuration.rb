@@ -34,7 +34,7 @@ class Configuration < ApplicationRecord
 	
 			def set key, value
 				begin
-					find_by_name(key).update_attribute :value, value
+					find_by_name(key).update :value, value
 				rescue
 					create!(name: key, value: value)
 				end

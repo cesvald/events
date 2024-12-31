@@ -10,7 +10,7 @@ class ParticipantsController < BaseEventController
 	has_scope :by_international
 	
 	def create
-		create! { event_participants_path(@event) }
+		create!(notice: "Participante creado exitosamente") { event_participants_path(@event) }
 	end
 	
 	def index

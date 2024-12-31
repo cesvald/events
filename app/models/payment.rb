@@ -17,7 +17,7 @@ class Payment < ApplicationRecord
 
   acts_as_paranoid
   
-  belongs_to :payable
+  belongs_to :payable, polymorphic: true
   attr_accessor :author_id
   
   after_create :add_create_log
