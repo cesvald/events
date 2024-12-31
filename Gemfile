@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-ruby "2.6.6"
+ruby "3.1.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.4.5'
+gem 'rails', '7.0.7.2'
 
 # Database and data related
 gem 'pg'
-gem 'pg_search'
+#gem 'pg_search'
 gem 'annotate'
 gem 'paranoia'
 #gem 'postgres-copy'
@@ -48,12 +48,8 @@ gem 'formtastic'
 gem 'formtastic-bootstrap'
 
 # xml manipulation
-gem 'rubyzip'
 gem 'axlsx'
 gem 'axlsx_rails'
-
-# Third party mailer
-gem 'sparkpost_rails'
 
 #paginator
 gem 'kaminari'
@@ -101,7 +97,7 @@ gem 'spectator-validates_email',  require: 'validates_email'
 gem 'inherited_resources'
 gem 'gon'
 gem 'carrierwave'
-gem 'mimemagic', '0.3.7'
+#gem 'mimemagic', '0.3.7'
 
 # Ordering
 gem 'ranked-model'

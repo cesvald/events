@@ -65,6 +65,20 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.sparkpostmail.com',
+    port:                 587,
+    domain:               'evdsky.com',
+    user_name:            'SMTP_Injection',
+    password:             Rails.application.credentials.dig(:sparkpost, :smtp_api_key),
+    authentication:       'login',
+    enable_starttls_auto: true,
+    open_timeout:         30,
+    read_timeout:         30 }
+
+  config.action_mailer.default_url_options = { :host => "https://eventos-evd.herokuapp.com" }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
