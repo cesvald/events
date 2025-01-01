@@ -55,6 +55,7 @@ gem 'kaminari'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
+gem 'terser'
 
 #Authorization gem
 gem 'cancancan'
