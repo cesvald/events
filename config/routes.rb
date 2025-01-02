@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   
+  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
+
   resources :places
-  resources :users do
+  resources :users, except: :show do
     collection do
       post :recreate
     end
@@ -82,8 +84,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  
-  devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
