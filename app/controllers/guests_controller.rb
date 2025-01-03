@@ -57,10 +57,10 @@ class GuestsController < ApplicationController
 	
 	def create
 		@guest = Guest.new(guest_params)
-	    @guest.save
-	    redirect_to (params[:back_url].present? ? params[:back_url] : guests_path)
+	  @guest.save
+		flash[:notice] = "Contacto creado exitosamente"
+	  redirect_to guests_path
 	end
-
 	
 	private
 
