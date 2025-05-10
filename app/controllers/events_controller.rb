@@ -108,4 +108,8 @@ class EventsController < BaseEventController
     def event_params
       params.require(:event).permit(:name, :start_at, :end_at, :active, :deposit_amount, :international)
     end
+
+    def collection
+			Event.all.order(start_at: :desc).page(params[:page])
+		end
 end

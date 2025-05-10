@@ -16,7 +16,7 @@ table.table
 			th
 
 	tbody
-		- @events.each do |event|
+		- collection.each do |event|
 			- if can? :read, event
 				tr
 					td = event.name
